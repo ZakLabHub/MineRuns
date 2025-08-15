@@ -4,13 +4,21 @@
   <meta charset="UTF-8">
   <title>ZakHub</title>
 
-  <!-- Polices en ligne -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Bungee&display=swap" rel="stylesheet">
-
   <style>
+    /* Polices locales */
+    @font-face {
+      font-family: 'SK Cuber';
+      src: url('fonts/sk-cuber.ttf') format('truetype');
+    }
+    @font-face {
+      font-family: 'Wedges';
+      src: url('fonts/wedges.ttf') format('truetype');
+    }
+
+    /* Styles généraux */
     body {
       margin: 0;
-      font-family: 'Bungee', sans-serif;
+      font-family: 'Wedges', sans-serif;
       background-color: white;
       color: purple;
       transition: background-color 0.3s, color 0.3s;
@@ -23,12 +31,13 @@
       padding: 15px 30px;
     }
 
-    /* Logo ZakHub */
+    /* Logo cliquable */
     .logo {
-      font-family: 'Orbitron', sans-serif;
+      font-family: 'SK Cuber', sans-serif;
       font-size: 2.5rem;
       color: purple;
       line-height: 1.1;
+      text-decoration: none; /* enlève le soulignement */
     }
 
     nav {
@@ -36,11 +45,16 @@
       gap: 20px;
       font-weight: bold;
       font-size: 1.1rem;
+      font-family: 'Wedges', sans-serif;
     }
 
     nav a {
       text-decoration: none;
       color: purple;
+    }
+
+    nav a:hover {
+      color: violet; /* effet hover léger */
     }
 
     .theme-toggle {
@@ -50,6 +64,7 @@
       color: black;
     }
 
+    /* Thème sombre */
     body.dark {
       background-color: black;
       color: purple;
@@ -67,19 +82,21 @@
 <body>
 
   <header>
-    <div class="logo">
+    <!-- Logo cliquable -->
+    <a href="index.html" class="logo">
       Zak<br>Hub
-    </div>
+    </a>
 
+    <!-- Navigation -->
     <nav>
-      <a href="#">Home</a>
-      <a href="#">News</a>
-      <a href="#">MineRuns</a>
-      <a href="#">Minecraft</a>
-      <a href="#">Map</a>
-      <a href="#">Music</a>
-      <a href="#">Chat</a>
-      <a href="#">About us</a>
+      <a href="home.html">Home</a>
+      <a href="news.html">News</a>
+      <a href="mineruns.html">MineRuns</a>
+      <a href="minecraft.html">Minecraft</a>
+      <a href="map.html">Map</a>
+      <a href="music.html">Music</a>
+      <a href="chat.html">Chat</a>
+      <a href="about.html">About us</a>
       <span class="theme-toggle" onclick="toggleTheme()">🌙</span>
     </nav>
   </header>
