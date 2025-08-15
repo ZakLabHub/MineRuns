@@ -3,9 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <title>ZakHub</title>
-
   <style>
-    /* Polices locales */
     @font-face {
       font-family: 'SK Cuber';
       src: url('fonts/sk-cuber.ttf') format('truetype');
@@ -15,7 +13,6 @@
       src: url('fonts/wedges.ttf') format('truetype');
     }
 
-    /* Styles généraux */
     body {
       margin: 0;
       font-family: 'Wedges', sans-serif;
@@ -31,13 +28,12 @@
       padding: 15px 30px;
     }
 
-    /* Logo cliquable */
     .logo {
       font-family: 'SK Cuber', sans-serif;
       font-size: 2.5rem;
       color: purple;
       line-height: 1.1;
-      text-decoration: none; /* enlève le soulignement */
+      text-decoration: none;
     }
 
     nav {
@@ -45,7 +41,6 @@
       gap: 20px;
       font-weight: bold;
       font-size: 1.1rem;
-      font-family: 'Wedges', sans-serif;
     }
 
     nav a {
@@ -54,7 +49,7 @@
     }
 
     nav a:hover {
-      color: violet; /* effet hover léger */
+      color: violet;
     }
 
     .theme-toggle {
@@ -64,7 +59,6 @@
       color: black;
     }
 
-    /* Thème sombre */
     body.dark {
       background-color: black;
       color: purple;
@@ -77,17 +71,18 @@
     body.dark .theme-toggle {
       color: purple;
     }
+
+    main {
+      padding: 50px;
+      text-align: center;
+      font-size: 2rem;
+    }
   </style>
 </head>
 <body>
 
   <header>
-    <!-- Logo cliquable -->
-    <a href="index.html" class="logo">
-      Zak<br>Hub
-    </a>
-
-    <!-- Navigation -->
+    <a href="index.html" class="logo">Zak<br>Hub</a>
     <nav>
       <a href="home.html">Home</a>
       <a href="news.html">News</a>
@@ -100,6 +95,11 @@
       <span class="theme-toggle" onclick="toggleTheme()">🌙</span>
     </nav>
   </header>
+
+  <main>
+    <h1>Accueil</h1>
+    <p>Bienvenue sur ZakHub ! Contenu de la page d'accueil pour l'instant.</p>
+  </main>
 
   <script>
     function toggleTheme() {
