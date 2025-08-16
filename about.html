@@ -453,7 +453,7 @@
       display: flex;
       justify-content: center;
       align-items: flex-start;
-      gap: 80px;
+      gap: 60px;
       flex-wrap: wrap;
       position: relative;
       left: 0; right: 0;
@@ -462,10 +462,11 @@
       font-size: 1.09em;
       transition: background 0.2s, color 0.2s;
       border-top: 3.5px solid #fff3;
+      min-height: 130px;
     }
     .zaklab-footer.hide { display: none !important;}
     .zaklab-footer-section {
-      min-width: 210px;
+      min-width: 150px;
       max-width: 99vw;
       margin-bottom: 18px;
     }
@@ -515,26 +516,29 @@
       border: none;
       border-radius: 16px 16px 0 0;
       width: 54px;
-      height: 34px;
+      height: 38px;
       font-size: 1.19em;
       margin: 0 auto;
-      margin-top: 30px;
-      margin-bottom: -44px;
+      margin-top: 0;
       box-shadow: 0 -2px 12px rgba(138,43,226,0.12);
       cursor: pointer;
       transition: background 0.15s;
       outline: none;
-      position: absolute;
+      position: fixed;
       left: 50%;
-      bottom: -44px;
+      bottom: 0;
       transform: translateX(-50%);
-      z-index: 2001;
+      z-index: 2002;
+      opacity: 1;
+      visibility: visible;
     }
-    .zaklab-footer.hide + .zaklab-footer-toggle { display: flex !important; }
+    .zaklab-footer:not(.hide) + .zaklab-footer-toggle { display: flex !important;}
+    .zaklab-footer.hide + .zaklab-footer-toggle { display: flex !important; opacity:1; visibility:visible;}
+    .zaklab-footer-toggle.hide { display: flex !important; opacity:1; visibility:visible;}
     .zaklab-footer-toggle:hover { background: #a278e9;}
     @media (max-width: 930px) {
-      .zaklab-footer-section { min-width: 150px; }
-      .zaklab-footer { gap: 18px; }
+      .zaklab-footer-section { min-width: 120px; }
+      .zaklab-footer { gap: 15px; }
     }
     @media (max-width: 620px) {
       .zaklab-footer, .zaklab-footer-section { flex-direction: column; min-width: 0; }
@@ -566,6 +570,7 @@
       <a class="zaklab-nav-link" data-section="map" href="map.html">Map</a>
       <a class="zaklab-nav-link" data-section="music" href="music.html">Music</a>
       <a class="zaklab-nav-link" data-section="chat" href="chat.html">Chat</a>
+      <a class="zaklab-nav-link" data-section="feedback" href="feedback.html">Feedback</a>
       <a class="zaklab-nav-link" data-section="about" href="about.html">About us</a>
     </nav>
     <div class="zaklab-header-controls">
@@ -647,13 +652,14 @@
         <li><a class="zaklab-footer-nav-link" data-section="map" href="map.html">Map</a></li>
         <li><a class="zaklab-footer-nav-link" data-section="music" href="music.html">Music</a></li>
         <li><a class="zaklab-footer-nav-link" data-section="chat" href="chat.html">Chat</a></li>
+        <li><a class="zaklab-footer-nav-link" data-section="feedback" href="feedback.html">Feedback</a></li>
         <li><a class="zaklab-footer-nav-link" data-section="about" href="about.html">About us</a></li>
       </ul>
     </section>
-    <button class="zaklab-footer-toggle" id="zaklabFooterToggle" aria-label="Hide footer">
-      <i class="fa-solid fa-chevron-down"></i>
-    </button>
   </footer>
+  <button class="zaklab-footer-toggle" id="zaklabFooterToggle" aria-label="Hide footer">
+    <i class="fa-solid fa-chevron-down"></i>
+  </button>
   <!-- JS -->
   <script>
     // Traductions
@@ -663,14 +669,14 @@
       { key: "cz", label: "Čeština" },{ key: "es", label: "Español" }
     ];
     const ZAKLAB_TRANSLATIONS = {
-      fr: {home:"Accueil",news:"Actualités",mineruns:"MineRuns",minecraft:"Minecraft",map:"Carte",music:"Musique",chat:"Chat",about:"À propos",links:"Liens",sections:"Sections",profile:"Profil",username:"Nom d'utilisateur",validate:"Valider",changephoto:"Changer la photo"},
-      en: {home:"Home",news:"News",mineruns:"MineRuns",minecraft:"Minecraft",map:"Map",music:"Music",chat:"Chat",about:"About us",links:"Links",sections:"Sections",profile:"Profile",username:"Username",validate:"Validate",changephoto:"Change photo"},
-      ru: {home:"Главная",news:"Новости",mineruns:"MineRuns",minecraft:"Майнкрафт",map:"Карта",music:"Музыка",chat:"Чат",about:"О нас",links:"Ссылки",sections:"Разделы",profile:"Профиль",username:"Имя пользователя",validate:"Сохранить",changephoto:"Сменить фото"},
-      ur: {home:"ہوم",news:"خبریں",mineruns:"MineRuns",minecraft:"مائنکرافٹ",map:"نقشہ",music:"موسیقی",chat:"چیٹ",about:"ہمارے بارے میں",links:"روابط",sections:"سیکشنز",profile:"پروفائل",username:"یوزرنیم",validate:"تصدیق کریں",changephoto:"تصویر بدلیں"},
-      in: {home:"होम",news:"समाचार",mineruns:"MineRuns",minecraft:"माइनक्राफ्ट",map:"मानचित्र",music:"संगीत",chat:"चैट",about:"हमारे बारे में",links:"लिंक",sections:"सेक्शन",profile:"प्रोफ़ाइल",username:"यूज़रनेम",validate:"सेव करें",changephoto:"फोटो बदलें"},
-      tr: {home:"Anasayfa",news:"Haberler",mineruns:"MineRuns",minecraft:"Minecraft",map:"Harita",music:"Müzik",chat:"Sohbet",about:"Hakkımızda",links:"Bağlantılar",sections:"Bölümler",profile:"Profil",username:"Kullanıcı adı",validate:"Kaydet",changephoto:"Fotoğraf değiştir"},
-      cz: {home:"Domů",news:"Novinky",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Hudba",chat:"Chat",about:"O nás",links:"Odkazy",sections:"Sekce",profile:"Profil",username:"Uživatelské jméno",validate:"Uložit",changephoto:"Změnit foto"},
-      es: {home:"Inicio",news:"Noticias",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Música",chat:"Chat",about:"Sobre nosotros",links:"Enlaces",sections:"Secciones",profile:"Perfil",username:"Usuario",validate:"Guardar",changephoto:"Cambiar foto"}
+      fr: {home:"Accueil",news:"Actualités",mineruns:"MineRuns",minecraft:"Minecraft",map:"Carte",music:"Musique",chat:"Chat",feedback:"Feedback",about:"À propos",links:"Liens",sections:"Sections",profile:"Profil",username:"Nom d'utilisateur",validate:"Valider",changephoto:"Changer la photo"},
+      en: {home:"Home",news:"News",mineruns:"MineRuns",minecraft:"Minecraft",map:"Map",music:"Music",chat:"Chat",feedback:"Feedback",about:"About us",links:"Links",sections:"Sections",profile:"Profile",username:"Username",validate:"Validate",changephoto:"Change photo"},
+      ru: {home:"Главная",news:"Новости",mineruns:"MineRuns",minecraft:"Майнкрафт",map:"Карта",music:"Музыка",chat:"Чат",feedback:"Обратная связь",about:"О нас",links:"Ссылки",sections:"Разделы",profile:"Профиль",username:"Имя пользователя",validate:"Сохранить",changephoto:"Сменить фото"},
+      ur: {home:"ہوم",news:"خبریں",mineruns:"MineRuns",minecraft:"مائنکرافٹ",map:"نقشہ",music:"موسیقی",chat:"چیٹ",feedback:"رائے",about:"ہمارے بارے میں",links:"روابط",sections:"سیکشنز",profile:"پروفائل",username:"یوزرنیم",validate:"تصدیق کریں",changephoto:"تصویر بدلیں"},
+      in: {home:"होम",news:"समाचार",mineruns:"MineRuns",minecraft:"माइनक्राफ्ट",map:"मानचित्र",music:"संगीत",chat:"चैट",feedback:"प्रतिक्रिया",about:"हमारे बारे में",links:"लिंक",sections:"सेक्शन",profile:"प्रोफ़ाइल",username:"यूज़रनेम",validate:"सेव करें",changephoto:"फोटो बदलें"},
+      tr: {home:"Anasayfa",news:"Haberler",mineruns:"MineRuns",minecraft:"Minecraft",map:"Harita",music:"Müzik",chat:"Sohbet",feedback:"Geri bildirim",about:"Hakkımızda",links:"Bağlantılar",sections:"Bölümler",profile:"Profil",username:"Kullanıcı adı",validate:"Kaydet",changephoto:"Fotoğraf değiştir"},
+      cz: {home:"Domů",news:"Novinky",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Hudba",chat:"Chat",feedback:"Zpětná vazba",about:"O nás",links:"Odkazy",sections:"Sekce",profile:"Profil",username:"Uživatelské jméno",validate:"Uložit",changephoto:"Změnit foto"},
+      es: {home:"Inicio",news:"Noticias",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Música",chat:"Chat",feedback:"Sugerencias",about:"Sobre nosotros",links:"Enlaces",sections:"Secciones",profile:"Perfil",username:"Usuario",validate:"Guardar",changephoto:"Cambiar foto"}
     };
     function getLang() {return localStorage.getItem('zaklab-lang') || 'fr';}
     function setLang(lang) {localStorage.setItem('zaklab-lang', lang);renderLang();}
@@ -744,17 +750,19 @@
       if(footerHidden){
         footerToggle.style.position = "fixed";
         footerToggle.style.left = "50%";
-        footerToggle.style.bottom = "40px";
+        footerToggle.style.bottom = "0";
         footerToggle.style.transform = "translateX(-50%)";
         footerToggle.style.zIndex = "2002";
-        footerToggle.style.marginBottom = "0";
+        footerToggle.style.opacity = "1";
+        footerToggle.style.visibility = "visible";
       } else {
-        footerToggle.style.position = "absolute";
+        footerToggle.style.position = "fixed";
         footerToggle.style.left = "50%";
-        footerToggle.style.bottom = "-44px";
+        footerToggle.style.bottom = "0";
         footerToggle.style.transform = "translateX(-50%)";
-        footerToggle.style.zIndex = "2001";
-        footerToggle.style.marginBottom = "-44px";
+        footerToggle.style.zIndex = "2002";
+        footerToggle.style.opacity = "1";
+        footerToggle.style.visibility = "visible";
       }
     }
     footerToggle.addEventListener('click',()=>setFooterHidden(!footerHidden));
