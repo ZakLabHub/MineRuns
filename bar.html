@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ZakLab Social Bar Demo</title>
+  <!-- Font Awesome CDN -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <style>
+    :root {
+      --zaklab-violet: #8a2be2;
+      --zaklab-bg-light: #fff;
+      --zaklab-bg-dark: #181924;
+      --zaklab-icon-light: var(--zaklab-violet);
+      --zaklab-icon-dark: #fff;
+      --zaklab-sidebar-width: 62px;
+      --zaklab-sidebar-gap: 18px;
+      --zaklab-sidebar-radius: 16px;
+      --zaklab-shadow: 0 4px 16px 0 rgba(138,43,226, 0.05);
+      --zaklab-hover-light: #f3e9ff;
+      --zaklab-hover-dark: #362c4a;
+    }
+    body {
+      background: var(--zaklab-bg-light);
+      margin: 0;
+      min-height: 100vh;
+      transition: background 0.2s;
+      font-family: system-ui, sans-serif;
+    }
+    body.dark {
+      background: var(--zaklab-bg-dark);
+    }
+    /* Social bar styles */
+    .zaklab-social-bar {
+      position: fixed;
+      top: 50%;
+      right: 0;
+      z-index: 999;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.8);
+      border-radius: var(--zaklab-sidebar-radius) 0 0 var(--zaklab-sidebar-radius);
+      box-shadow: var(--zaklab-shadow);
+      width: var(--zaklab-sidebar-width);
+      padding: 12px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: var(--zaklab-sidebar-gap);
+      transition: background 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(2px);
+    }
+    body.dark .zaklab-social-bar {
+      background: rgba(24,25,36,0.94);
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.18);
+    }
+    .zaklab-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      color: var(--zaklab-icon-light);
+      background: transparent;
+      font-size: 1.45rem;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      outline: none;
+      border: none;
+      cursor: pointer;
+    }
+    .zaklab-social-link:focus-visible {
+      box-shadow: 0 0 0 2px var(--zaklab-violet);
+    }
+    .zaklab-social-link:hover,
+    .zaklab-social-link:focus-visible {
+      background: var(--zaklab-hover-light);
+      color: var(--zaklab-violet);
+    }
+    body.dark .zaklab-social-link {
+      color: var(--zaklab-icon-dark);
+    }
+    body.dark .zaklab-social-link:hover,
+    body.dark .zaklab-social-link:focus-visible {
+      background: var(--zaklab-hover-dark);
+      color: var(--zaklab-icon-dark);
+    }
+    /* Responsive for mobile: hide bar if too small */
+    @media (max-width: 520px) {
+      .zaklab-social-bar {
+        display: none;
+      }
+    }
+    /* Simple demo header for context (not part of bar) */
+    .zaklab-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 58px;
+      background: #fff;
+      border-bottom: 1px solid #eee;
+      display: flex;
+      align-items: center;
+      z-index: 100;
+      padding: 0 28px;
+      font-weight: bold;
+      font-size: 1.3rem;
+      letter-spacing: 0.5px;
+    }
+    .zaklab-logo {
+      color: var(--zaklab-violet);
+      font-family: 'Montserrat', 'Arial Black', Arial, sans-serif;
+      margin-right: 24px;
+      font-size: 1.5em;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px rgba(138,43,226,0.08);
+    }
+    body.dark .zaklab-header {
+      background: #191a25;
+      border-bottom: 1px solid #26273a;
+      color: #fff;
+    }
+    /* Demo toggle for theme */
+    .zaklab-theme-toggle {
+      margin-left: auto;
+      background: none;
+      border: none;
+      font-size: 1.25em;
+      cursor: pointer;
+      color: var(--zaklab-violet);
+      padding: 8px 14px;
+      border-radius: 8px;
+      transition: background 0.18s;
+    }
+    .zaklab-theme-toggle:hover {
+      background: #f3e9ff;
+    }
+    body.dark .zaklab-theme-toggle {
+      color: #fff;
+    }
+    body.dark .zaklab-theme-toggle:hover {
+      background: #362c4a;
+    }
+    /* Demo content for visual context */
+    .zaklab-content {
+      margin-top: 70px;
+      padding: 36px;
+      max-width: 650px;
+      margin-left: auto;
+      margin-right: auto;
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+  <!-- Demo header (not part of the bar) -->
+  <div class="zaklab-header">
+    <span class="zaklab-logo">ZakLab</span>
+    <button class="zaklab-theme-toggle" id="themeToggle" title="Light/Dark mode toggle">
+      <i class="fa-solid fa-moon"></i>
+    </button>
+  </div>
+  <!-- Social Bar (the required part) -->
+  <nav class="zaklab-social-bar" aria-label="Réseaux sociaux ZakLab">
+    <a class="zaklab-social-link" href="https://twitter.com/" target="_blank" aria-label="Twitter">
+      <i class="fab fa-twitter"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://youtube.com/" target="_blank" aria-label="YouTube">
+      <i class="fab fa-youtube"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://twitch.tv/" target="_blank" aria-label="Twitch">
+      <i class="fab fa-twitch"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://github.com/" target="_blank" aria-label="GitHub">
+      <i class="fab fa-github"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://instagram.com/" target="_blank" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://facebook.com/" target="_blank" aria-label="Facebook">
+      <i class="fab fa-facebook-f"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://discord.com/" target="_blank" aria-label="Discord">
+      <i class="fab fa-discord"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://linkedin.com/" target="_blank" aria-label="LinkedIn">
+      <i class="fab fa-linkedin-in"></i>
+    </a>
+  </nav>
+  <!-- Demo content (not part of bar) -->
+  <div class="zaklab-content">
+    <h1>Bienvenue sur ZakLab !</h1>
+    <p>Testez la <strong>barre verticale de réseaux sociaux</strong> à droite.<br>
+       Utilisez le bouton <i class="fa-solid fa-moon"></i>/<i class="fa-solid fa-sun"></i> pour changer de thème.</p>
+    <p>La barre reste visible en scrollant et s'adapte au thème clair/sombre.<br>
+       <em>(Intégrez ce code dans votre projet principal, il fonctionne sans CSS externe.)</em></p>
+  </div>
+  <script>
+    // Theme toggle logic
+    const themeToggle = document.getElementById('themeToggle');
+    function setTheme(dark) {
+      document.body.classList.toggle('dark', dark);
+      themeToggle.innerHTML = dark
+        ? '<i class="fa-solid fa-sun"></i>'
+        : '<i class="fa-solid fa-moon"></i>';
+      localStorage.setItem('zaklab-theme', dark ? 'dark' : 'light');
+    }
+    // Initial theme
+    const saved = localStorage.getItem('zaklab-theme');
+    const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    setTheme(saved ? saved === 'dark' : prefersDark);
+
+    themeToggle.addEventListener('click', () => {
+      setTheme(!document.body.classList.contains('dark'));
+    });
+  </script>
+</body>
+</html>
