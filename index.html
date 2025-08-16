@@ -67,7 +67,7 @@
     }
     .zaklab-header-toggle {
       position: fixed;
-      top: 72px;
+      top: 85px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1002;
@@ -76,7 +76,7 @@
       border: none;
       border-radius: 0 0 18px 18px;
       width: 50px;
-      height: 30px;
+      height: 34px;
       font-size: 1.2em;
       display: flex;
       align-items: center;
@@ -145,8 +145,6 @@
       align-items: center;
       gap: 13px;
     }
-
-    /* THEME TOGGLE */
     .zaklab-theme-toggle {
       background: none;
       border: none;
@@ -165,7 +163,6 @@
     body.dark .zaklab-theme-toggle { color: #fff; }
     body.dark .zaklab-theme-toggle:hover { background: #362c4a; }
 
-    /* LANG SELECTOR */
     .zaklab-lang-group {
       position: relative;
       margin-left: 3px;
@@ -331,7 +328,7 @@
       margin-left: auto;
       margin-right: auto;
       text-align: center;
-      min-height: 2000px; /* Pour forcer la page longue et scrollable */
+      min-height: 1600px;
       background: none;
     }
 
@@ -346,16 +343,16 @@
       align-items: flex-start;
       gap: 80px;
       flex-wrap: wrap;
-      position: fixed;
-      left: 0; right: 0; bottom: 0;
+      position: relative;
+      left: 0; right: 0;
+      bottom: 0;
       z-index: 1000;
       font-size: 1.09em;
       transition: background 0.2s, color 0.2s;
       border-top: 3.5px solid #fff3;
     }
     .zaklab-footer.hide {
-      transform: translateY(110%);
-      transition: transform 0.45s cubic-bezier(.7,-0.35,0,1.09);
+      display: none !important;
     }
     .zaklab-footer-section {
       min-width: 260px;
@@ -399,19 +396,18 @@
       font-size: 1.18em;
       color: #fff;
     }
-    /* Footer toggle */
     .zaklab-footer-toggle {
       position: fixed;
       right: 50%;
-      bottom: 0;
-      transform: translateX(50%) translateY(60%);
+      bottom: 80px;
+      transform: translateX(50%);
       z-index: 1001;
       background: var(--zaklab-violet);
       color: #fff;
       border: none;
       border-radius: 16px 16px 0 0;
       width: 54px;
-      height: 32px;
+      height: 34px;
       font-size: 1.19em;
       display: flex;
       align-items: center;
@@ -647,7 +643,6 @@
         sections: "Secciones"
       }
     };
-    // Current language
     function getLang() {
       return localStorage.getItem('zaklab-lang') || 'fr';
     }
@@ -658,9 +653,7 @@
     function renderLang() {
       const lang = getLang();
       const langObj = ZAKLAB_LANGS.find(l => l.key === lang) || ZAKLAB_LANGS[0];
-      // Current lang button
       document.getElementById('currentLangLabel').textContent = langObj.label;
-      // Dropdown
       const dropdown = document.getElementById('zaklabLangDropdown');
       dropdown.innerHTML = '';
       ZAKLAB_LANGS.forEach((l) => {
@@ -676,32 +669,24 @@
         };
         dropdown.appendChild(opt);
       });
-
-      // Translate nav, footer, main
       const tr = ZAKLAB_TRANSLATIONS[lang] || ZAKLAB_TRANSLATIONS.fr;
-      // Nav
       Array.from(document.querySelectorAll('.zaklab-nav-link')).forEach(link => {
         const key = link.dataset.section;
         if (tr[key]) link.textContent = tr[key];
         if (key === 'about') link.href = 'about.html';
         else link.href = key + '.html';
       });
-      // Footer nav
       Array.from(document.querySelectorAll('.zaklab-footer-nav-link')).forEach(link => {
         const key = link.dataset.section;
         if (tr[key]) link.textContent = tr[key];
         if (key === 'about') link.href = 'about.html';
         else link.href = key + '.html';
       });
-      // Main
       if(document.getElementById('mainTitle')) document.getElementById('mainTitle').textContent = tr.welcome;
       if(document.getElementById('mainIntro')) document.getElementById('mainIntro').innerHTML = tr.intro;
-      // Footer titles
       if(document.getElementById('footerLinksTitle')) document.getElementById('footerLinksTitle').textContent = tr.links;
       if(document.getElementById('footerSectionsTitle')) document.getElementById('footerSectionsTitle').textContent = tr.sections;
     }
-
-    // Show/hide dropdown
     (() => {
       const btn = document.getElementById('zaklabLangBtn');
       const dropdown = document.getElementById('zaklabLangDropdown');
@@ -721,8 +706,6 @@
         }
       });
     })();
-
-    // Theme toggle logic
     const themeToggle = document.getElementById('themeToggle');
     function setTheme(dark) {
       document.body.classList.toggle('dark', dark);
@@ -731,7 +714,6 @@
         : '<i class="fa-solid fa-moon"></i>';
       localStorage.setItem('zaklab-theme', dark ? 'dark' : 'light');
     }
-    // Initial theme
     (() => {
       const saved = localStorage.getItem('zaklab-theme');
       const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
@@ -740,8 +722,6 @@
     themeToggle.addEventListener('click', () => {
       setTheme(!document.body.classList.contains('dark'));
     });
-
-    // Header toggle
     const header = document.getElementById('zaklabHeader');
     const headerToggle = document.getElementById('zaklabHeaderToggle');
     let headerHidden = false;
@@ -760,8 +740,6 @@
         localStorage.setItem('zaklab-header-hide', headerHidden ? 'true' : 'false');
       });
     })();
-
-    // Footer toggle
     const footer = document.getElementById('zaklabFooter');
     const footerToggle = document.getElementById('zaklabFooterToggle');
     let footerHidden = false;
@@ -780,20 +758,14 @@
         localStorage.setItem('zaklab-footer-hide', footerHidden ? 'true' : 'false');
       });
     })();
-
-    // Logo click -> home.html
     document.getElementById('zaklabLogo').onclick = () => { window.location.href = 'home.html'; };
     document.getElementById('zaklabLogo').onkeydown = (e) => { if(e.key === "Enter" || e.key === " "){ window.location.href = 'home.html'; } };
-
-    // Nav highlight
     (() => {
       const section = (location.pathname.split('/').pop() || 'home.html').replace('.html','');
       document.querySelectorAll('.zaklab-nav-link').forEach(link => {
         if(link.dataset.section === section) link.classList.add('active');
       });
     })();
-
-    // Initial language
     renderLang();
   </script>
 </body>
