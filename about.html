@@ -78,6 +78,25 @@
       z-index: 1002;
     }
     .zaklab-header-toggle:hover { background: #a278e9; }
+    /* PROFILE BTN (☰) + AVATAR in header left */
+    .zaklab-profile-header-btn {
+      margin-right: 18px;
+      margin-left: 0;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 7px 8px 7px 2px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6em;
+      transition: background 0.16s;
+      height: 38px; width: 38px;
+    }
+    .zaklab-profile-header-btn img {
+      width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--zaklab-violet); object-fit: cover; background: #fff; display: block;
+    }
+    .zaklab-profile-header-btn:hover { background: var(--zaklab-hover-light);}
+    body.dark .zaklab-profile-header-btn:hover {background: var(--zaklab-hover-dark);}
     .zaklab-logo {
       color: var(--zaklab-violet);
       font-family: 'Montserrat', 'Arial Black', Arial, sans-serif;
@@ -93,7 +112,7 @@
     }
     .zaklab-logo:hover { color: #a278e9; }
     .zaklab-nav {
-      display: flex; flex-direction: row; gap: 10px; align-items: center; margin-right: 14px;
+      display: flex; flex-direction: row; gap: 10px; align-items: center; margin-right: 10px;
       flex: 1 1 auto;
       overflow-x: auto;
       scrollbar-width: thin;
@@ -128,6 +147,7 @@
       align-items: center;
       gap: 10px;
       min-width: 0;
+      margin-left: auto;
     }
     .zaklab-theme-toggle {
       background: none;
@@ -227,30 +247,13 @@
     .zaklab-lang-option:hover, .zaklab-lang-option.active { background: var(--zaklab-hover-light); color: var(--zaklab-violet);}
     body.dark .zaklab-lang-option { color: #fff;}
     body.dark .zaklab-lang-option:hover, body.dark .zaklab-lang-option.active { background: var(--zaklab-hover-dark); color: var(--zaklab-violet);}
-    /* PROFILE BTN + BAR */
-    .zaklab-profile-hamburger, .zaklab-profile-avatar-btn {
-      margin-left: 13px;
-      background: none;
-      border: none;
-      cursor: pointer;
-      padding: 6px 7px 6px 7px;
-      border-radius: 8px;
-      display: flex; align-items: center; justify-content: center;
-      font-size: 1.6em;
-      transition: background 0.16s;
-    }
-    .zaklab-profile-hamburger:hover, .zaklab-profile-avatar-btn:hover { background: var(--zaklab-hover-light);}
-    body.dark .zaklab-profile-hamburger:hover, body.dark .zaklab-profile-avatar-btn:hover {background: var(--zaklab-hover-dark);}
-    .zaklab-profile-avatar-btn img {
-      width: 34px; height: 34px; border-radius: 50%; border: 2px solid var(--zaklab-violet); object-fit: cover;
-      background: #fff; display: block;
-    }
+    /* PROFILE BAR */
     .zaklab-profile-bar {
       position: fixed;
       top: 0;
       left: 0;
       width: var(--zaklab-profile-bar-width);
-      max-width: 98vw;
+      max-width: 97vw;
       height: 100vh;
       background: #fff;
       box-shadow: 3px 0 24px 0 rgba(138,43,226,0.13);
@@ -362,7 +365,7 @@
     .zaklab-profile-bar .zaklab-profile-avatar {margin-bottom: 0;}
     .zaklab-profile-bar .zaklab-profile-upload-label {margin-bottom: 20px;}
     @media (max-width: 520px) {
-      .zaklab-profile-bar { width: 97vw; min-width: 0;}
+      .zaklab-profile-bar { width: 97vw;}
       .zaklab-header { padding: 0 7px;}
       .zaklab-logo { font-size: 1.13em; margin-right: 9px;}
       .zaklab-nav { gap: 2px; margin-right: 5px;}
@@ -515,12 +518,19 @@
       height: 34px;
       font-size: 1.19em;
       margin: 0 auto;
-      margin-top: 22px;
+      margin-top: 30px;
+      margin-bottom: -44px;
       box-shadow: 0 -2px 12px rgba(138,43,226,0.12);
       cursor: pointer;
       transition: background 0.15s;
       outline: none;
+      position: absolute;
+      left: 50%;
+      bottom: -44px;
+      transform: translateX(-50%);
+      z-index: 2001;
     }
+    .zaklab-footer.hide + .zaklab-footer-toggle { display: flex !important; }
     .zaklab-footer-toggle:hover { background: #a278e9;}
     @media (max-width: 930px) {
       .zaklab-footer-section { min-width: 150px; }
@@ -541,25 +551,12 @@
   </style>
 </head>
 <body>
-  <!-- PROFILE BTN (☰) -->
-  <button class="zaklab-profile-hamburger" id="zaklabProfileMenuBtn" title="Profil" aria-label="Profil">
-    &#9776;
-  </button>
-  <!-- SIDEBAR PROFILE -->
-  <aside class="zaklab-profile-bar" id="zaklabProfileBar" aria-label="Profil">
-    <button class="zaklab-profile-bar-close" id="zaklabProfileBarClose" title="Fermer" aria-label="Fermer">&times;</button>
-    <div class="zaklab-profile-bar-title" id="zaklabProfileTitle">Profil</div>
-    <img src="" alt="Photo de profil" class="zaklab-profile-avatar" id="zaklabProfileAvatar">
-    <label class="zaklab-profile-upload-label" for="zaklabProfileUpload" id="zaklabProfileUploadLabel">Changer la photo</label>
-    <input type="file" id="zaklabProfileUpload" accept="image/png" style="display:none">
-    <form class="zaklab-profile-form" id="zaklabProfileForm" autocomplete="off">
-      <label for="zaklabProfileUsername" id="zaklabUsernameLabel">Nom d'utilisateur</label>
-      <input type="text" id="zaklabProfileUsername" maxlength="24" autocomplete="off" spellcheck="false">
-      <button type="submit" id="zaklabProfileValidateBtn">Valider</button>
-    </form>
-  </aside>
   <!-- HEADER -->
   <header class="zaklab-header" id="zaklabHeader">
+    <button class="zaklab-profile-header-btn" id="zaklabProfileMenuBtn" title="Profil" aria-label="Profil">
+      <span id="zaklabProfileMenuIcon">&#9776;</span>
+      <img src="" alt="Photo de profil" id="zaklabProfileAvatarBtnImg" style="display:none;">
+    </button>
     <span class="zaklab-logo" id="zaklabLogo" tabindex="0">ZakLab</span>
     <nav class="zaklab-nav" aria-label="Navigation principale">
       <a class="zaklab-nav-link" data-section="home" href="home.html">Home</a>
@@ -583,14 +580,24 @@
         </button>
         <div class="zaklab-lang-dropdown" id="zaklabLangDropdown" role="listbox" tabindex="-1"></div>
       </div>
-      <button class="zaklab-profile-avatar-btn" id="zaklabProfileAvatarBtn" style="display:none" title="Profil" aria-label="Profil">
-        <img src="" alt="Photo de profil" id="zaklabProfileAvatarBtnImg">
-      </button>
     </div>
     <button class="zaklab-header-toggle" id="zaklabHeaderToggle" aria-label="Hide header">
       <i class="fa-solid fa-chevron-up"></i>
     </button>
   </header>
+  <!-- SIDEBAR PROFILE -->
+  <aside class="zaklab-profile-bar" id="zaklabProfileBar" aria-label="Profil">
+    <button class="zaklab-profile-bar-close" id="zaklabProfileBarClose" title="Fermer" aria-label="Fermer">&times;</button>
+    <div class="zaklab-profile-bar-title" id="zaklabProfileTitle">Profil</div>
+    <img src="" alt="Photo de profil" class="zaklab-profile-avatar" id="zaklabProfileAvatar">
+    <label class="zaklab-profile-upload-label" for="zaklabProfileUpload" id="zaklabProfileUploadLabel">Changer la photo</label>
+    <input type="file" id="zaklabProfileUpload" accept="image/png" style="display:none">
+    <form class="zaklab-profile-form" id="zaklabProfileForm" autocomplete="off">
+      <label for="zaklabProfileUsername" id="zaklabUsernameLabel">Nom d'utilisateur</label>
+      <input type="text" id="zaklabProfileUsername" maxlength="24" autocomplete="off" spellcheck="false">
+      <button type="submit" id="zaklabProfileValidateBtn">Valider</button>
+    </form>
+  </aside>
   <!-- SOCIAL BAR (droite) -->
   <nav class="zaklab-social-bar" aria-label="Réseaux sociaux ZakLab">
     <a class="zaklab-social-link" href="https://www.instagram.com/zakmc1_/" target="_blank" aria-label="Instagram">
@@ -729,25 +736,41 @@
     const footer=document.getElementById('zaklabFooter');
     const footerToggle=document.getElementById('zaklabFooterToggle');
     let footerHidden=false;
-    function setFooterHidden(hide){footerHidden=hide;footer.classList.toggle('hide',footerHidden);footerToggle.innerHTML=hide?'<i class="fa-solid fa-chevron-up"></i>':'<i class="fa-solid fa-chevron-down"></i>';footerToggle.setAttribute('aria-label',hide?'Show footer':'Hide footer');}
+    function setFooterHidden(hide){
+      footerHidden=hide;
+      footer.classList.toggle('hide',footerHidden);
+      footerToggle.innerHTML=hide?'<i class="fa-solid fa-chevron-up"></i>':'<i class="fa-solid fa-chevron-down"></i>';
+      footerToggle.setAttribute('aria-label',hide?'Show footer':'Hide footer');
+      if(footerHidden){
+        footerToggle.style.position = "fixed";
+        footerToggle.style.left = "50%";
+        footerToggle.style.bottom = "40px";
+        footerToggle.style.transform = "translateX(-50%)";
+        footerToggle.style.zIndex = "2002";
+        footerToggle.style.marginBottom = "0";
+      } else {
+        footerToggle.style.position = "absolute";
+        footerToggle.style.left = "50%";
+        footerToggle.style.bottom = "-44px";
+        footerToggle.style.transform = "translateX(-50%)";
+        footerToggle.style.zIndex = "2001";
+        footerToggle.style.marginBottom = "-44px";
+      }
+    }
     footerToggle.addEventListener('click',()=>setFooterHidden(!footerHidden));
     (()=>{if(localStorage.getItem('zaklab-footer-hide')==='true')setFooterHidden(true);footerToggle.addEventListener('click',()=>{localStorage.setItem('zaklab-footer-hide',footerHidden?'true':'false');});})();
     // -- PROFILE BAR LOGIC --
     const profileMenuBtn = document.getElementById('zaklabProfileMenuBtn');
+    const profileMenuIcon = document.getElementById('zaklabProfileMenuIcon');
+    const profileAvatarBtnImg = document.getElementById('zaklabProfileAvatarBtnImg');
     const profileBar = document.getElementById('zaklabProfileBar');
     const profileClose = document.getElementById('zaklabProfileBarClose');
     const profileForm = document.getElementById('zaklabProfileForm');
     const profileUsernameInput = document.getElementById('zaklabProfileUsername');
     const profileAvatar = document.getElementById('zaklabProfileAvatar');
     const profileUpload = document.getElementById('zaklabProfileUpload');
-    const profileAvatarBtn = document.getElementById('zaklabProfileAvatarBtn');
-    const profileAvatarBtnImg = document.getElementById('zaklabProfileAvatarBtnImg');
     // State
-    let zaklabProfile = {
-      username: "",
-      avatar: ""
-    };
-    // Load from storage
+    let zaklabProfile = { username: "", avatar: "" };
     function loadProfile(){
       try {
         const s = localStorage.getItem('zaklab-user-profile');
@@ -757,26 +780,25 @@
           if(zaklabProfile.avatar) {
             profileAvatar.src = zaklabProfile.avatar;
             profileAvatarBtnImg.src = zaklabProfile.avatar;
-            profileAvatarBtn.style.display = "inline-flex";
-            profileMenuBtn.style.display = "none";
+            profileMenuIcon.style.display = "none";
+            profileAvatarBtnImg.style.display = "inline-block";
           } else {
             profileAvatar.src = "https://ui-avatars.com/api/?name=ZL&background=8a2be2&color=fff&rounded=true&size=96";
-            profileAvatarBtnImg.src = "https://ui-avatars.com/api/?name=ZL&background=8a2be2&color=fff&rounded=true&size=96";
-            profileAvatarBtn.style.display = "none";
-            profileMenuBtn.style.display = "inline-flex";
+            profileAvatarBtnImg.src = "";
+            profileMenuIcon.style.display = "inline-block";
+            profileAvatarBtnImg.style.display = "none";
           }
         } else {
           profileAvatar.src = "https://ui-avatars.com/api/?name=ZL&background=8a2be2&color=fff&rounded=true&size=96";
-          profileAvatarBtnImg.src = "https://ui-avatars.com/api/?name=ZL&background=8a2be2&color=fff&rounded=true&size=96";
-          profileAvatarBtn.style.display = "none";
-          profileMenuBtn.style.display = "inline-flex";
+          profileAvatarBtnImg.src = "";
+          profileMenuIcon.style.display = "inline-block";
+          profileAvatarBtnImg.style.display = "none";
         }
       } catch(e){}
     }
     function openProfileBar(){ profileBar.classList.add('open'); }
     function closeProfileBar(){ profileBar.classList.remove('open'); }
     profileMenuBtn.onclick = openProfileBar;
-    profileAvatarBtn.onclick = openProfileBar;
     profileClose.onclick = closeProfileBar;
     document.getElementById('zaklabProfileUploadLabel').onclick = ()=>profileUpload.click();
     profileUpload.onchange = function(e){
@@ -786,10 +808,10 @@
           if(evt.target.result){
             profileAvatar.src = evt.target.result;
             profileAvatarBtnImg.src = evt.target.result;
+            profileMenuIcon.style.display = "none";
+            profileAvatarBtnImg.style.display = "inline-block";
             zaklabProfile.avatar = evt.target.result;
             localStorage.setItem('zaklab-user-profile', JSON.stringify(zaklabProfile));
-            profileAvatarBtn.style.display = "inline-flex";
-            profileMenuBtn.style.display = "none";
           }
         };
         reader.readAsDataURL(this.files[0]);
