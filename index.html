@@ -1,263 +1,108 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
-  <title>ZakHub</title>
-  <!-- Police de secours proche de SK Cuber -->
-  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZakCorp</title>
   <style>
-    /* === POLICES === */
-    @font-face {
-      font-family: 'SK Cuber';
-      src: url('fonts/sk-cuber.ttf') format('truetype');
-    }
-    @font-face {
-      font-family: 'Wedges';
-      src: url('fonts/wedges.ttf') format('truetype');
-    }
-
-    /* === STYLES GLOBAUX === */
     body {
       margin: 0;
-      font-family: 'Wedges', sans-serif;
-      background-color: white;
-      color: purple;
-      transition: background-color 0.3s, color 0.3s;
-      padding-top: 100px; /* espace pour header fixe */
-      padding-bottom: 60px; /* espace pour footer fixe */
-    }
-
-    body.dark {
-      background-color: #1a1a1a; /* noir doux */
+      font-family: Arial, sans-serif;
+      background-color: #1a1a1a;
       color: white;
     }
-
-    /* === HEADER === */
     header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      background: white;
-      border-bottom: 2px solid #ddd;
       display: flex;
-      justify-content: space-between;
       align-items: center;
-      padding: 15px 30px;
-      z-index: 1000;
-      transition: transform 0.3s ease;
+      justify-content: space-between;
+      padding: 10px 20px;
+      background-color: #2a2a2a;
     }
-    body.dark header {
-      background: #222;
-      border-bottom: 2px solid #444;
+    header img {
+      height: 40px;
     }
-
-    .logo {
-      font-family: 'SK Cuber','Orbitron', sans-serif;
-      font-weight: bold;
-      font-size: 2.5rem;
-      color: purple;
-      line-height: 1.1;
-      text-decoration: none;
-    }
-
     nav {
       display: flex;
       gap: 20px;
-      font-weight: bold;
-      font-size: 1.1rem;
     }
     nav a {
       text-decoration: none;
-      color: purple;
-    }
-    body.dark nav a {
       color: white;
+      font-weight: bold;
     }
-    nav a:hover {
-      color: violet;
-    }
-
-    /* === TOGGLE THEME & LANG === */
-    .controls {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-    .theme-toggle {
-      cursor: pointer;
-      font-size: 1.5rem;
-    }
-
     .lang-select {
-      position: relative;
-      cursor: pointer;
-    }
-    .lang-current {
-      font-size: 1.2rem;
-    }
-    .lang-options {
-      display: none;
-      position: absolute;
-      background: white;
-      border: 1px solid #ddd;
+      margin-left: 20px;
       padding: 5px;
-      top: 30px;
-      right: 0;
-      z-index: 1001;
-    }
-    body.dark .lang-options {
-      background: #222;
-      border: 1px solid #444;
-    }
-    .lang-options div {
-      padding: 5px;
-      cursor: pointer;
-    }
-    .lang-options div:hover {
-      background: violet;
+      background-color: #333;
       color: white;
-    }
-
-    /* === TOGGLE HEADER (flèche) === */
-    .toggle-bar {
-      position: fixed;
-      top: 70px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1001;
-      cursor: pointer;
-      font-size: 1.2rem;
-      background: violet;
-      color: white;
-      border-radius: 10px;
-      padding: 2px 8px;
-    }
-
-    /* === MAIN === */
-    main {
-      padding: 40px;
-      text-align: center;
-    }
-    main h1 {
-      font-family: 'Wedges', sans-serif;
-      font-size: 2.5rem;
-      color: purple;
-    }
-    body.dark main h1 {
-      color: white;
-    }
-
-    /* === SOCIALS (milieu page) === */
-    .socials-middle {
-      margin: 30px 0;
-      display: flex;
-      justify-content: center;
-      gap: 20px;
-    }
-    .socials-middle a {
-      font-size: 2rem;
-      text-decoration: none;
-    }
-
-    /* === FOOTER === */
-    footer {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      background: purple;
-      color: white;
-      text-align: center;
-      padding: 10px 0;
+      border: none;
+      border-radius: 5px;
     }
   </style>
-  <!-- Icônes via Font Awesome CDN -->
-  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
-
-  <!-- HEADER -->
-  <header id="header">
-    <a href="index.html" class="logo">Zak<br>Hub</a>
+  <header>
+    <img src="zakcorp_logo.png" alt="ZakCorp Logo">
     <nav>
-      <a href="home.html">Home</a>
-      <a href="news.html">News</a>
-      <a href="mineruns.html">MineRuns</a>
-      <a href="minecraft.html">Minecraft</a>
-      <a href="map.html">Map</a>
-      <a href="music.html">Music</a>
-      <a href="chat.html">Chat</a>
-      <a href="about.html">About us</a>
+      <a href="#" data-key="mineruns">MineRuns</a>
+      <a href="#" data-key="map">Map</a>
+      <a href="#" data-key="music">Music</a>
+      <a href="#" data-key="news">News</a>
+      <a href="#" data-key="about">About</a>
+      <a href="#" data-key="feedback">Feedback</a>
+      <a href="#" data-key="chat">Chat</a>
     </nav>
-    <div class="controls">
-      <span class="theme-toggle" onclick="toggleTheme()">🌙</span>
-      <div class="lang-select" onclick="toggleLangMenu(event)">
-        <span class="lang-current">🇫🇷</span>
-        <div class="lang-options">
-          <div onclick="setLang('🇫🇷')">Français</div>
-          <div onclick="setLang('🇬🇧')">English</div>
-          <div onclick="setLang('🇮🇳')">India</div>
-          <div onclick="setLang('🇵🇰')">Urdu</div>
-          <div onclick="setLang('🇷🇺')">Russia</div>
-          <div onclick="setLang('🇹🇷')">Turkish</div>
-          <div onclick="setLang('🇪🇸')">Español</div>
-        </div>
-      </div>
-    </div>
+    <!-- Sélecteur de langue -->
+    <select id="languageSelect" class="lang-select">
+      <option value="en">English</option>
+      <option value="fr">Français</option>
+    </select>
   </header>
 
-  <!-- TOGGLE BAR -->
-  <div class="toggle-bar" onclick="toggleHeader()">⬆</div>
-
-  <!-- MAIN -->
-  <main>
-    <h1>Welcome to the Zak's projects hub !</h1>
-
-    <!-- Réseaux sociaux milieu de page -->
-    <div class="socials-middle">
-      <a href="#"><i class="fab fa-twitter" style="color:#1DA1F2"></i></a>
-      <a href="#"><i class="fab fa-youtube" style="color:#FF0000"></i></a>
-      <a href="#"><i class="fab fa-twitch" style="color:#9146FF"></i></a>
-      <a href="#"><i class="fab fa-github" style="color:#333"></i></a>
-      <a href="#"><i class="fab fa-instagram" style="color:#E4405F"></i></a>
-      <a href="#"><i class="fab fa-facebook" style="color:#1877F2"></i></a>
-      <a href="#"><i class="fab fa-discord" style="color:#5865F2"></i></a>
-    </div>
-  </main>
-
-  <!-- FOOTER -->
-  <footer>
-    <div>© ZakHub - 2025</div>
-  </footer>
-
-  <!-- SCRIPT -->
   <script>
-    function toggleTheme() {
-      document.body.classList.toggle('dark');
-      const icon = document.querySelector('.theme-toggle');
-      icon.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
-    }
-
-    function toggleHeader() {
-      const header = document.getElementById('header');
-      if (header.style.transform === 'translateY(-100%)') {
-        header.style.transform = 'translateY(0)';
-      } else {
-        header.style.transform = 'translateY(-100%)';
+    // Traductions
+    const translations = {
+      en: {
+        mineruns: "MineRuns",
+        map: "Map",
+        music: "Music",
+        news: "News",
+        about: "About",
+        feedback: "Feedback",
+        chat: "Chat"
+      },
+      fr: {
+        mineruns: "MineRuns",
+        map: "Carte",
+        music: "Musique",
+        news: "Actualités",
+        about: "À propos",
+        feedback: "Retour",
+        chat: "Discussion"
       }
+    };
+
+    const langSelect = document.getElementById("languageSelect");
+
+    // Fonction pour appliquer la langue
+    function applyLanguage(lang) {
+      document.querySelectorAll("[data-key]").forEach(el => {
+        const key = el.getAttribute("data-key");
+        el.textContent = translations[lang][key];
+      });
+      // Sauvegarde dans localStorage
+      localStorage.setItem("lang", lang);
     }
 
-    function toggleLangMenu(event) {
-      const menu = event.currentTarget.querySelector('.lang-options');
-      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
-    }
+    // Au changement de sélection
+    langSelect.addEventListener("change", (e) => {
+      applyLanguage(e.target.value);
+    });
 
-    function setLang(flag) {
-      document.querySelector('.lang-current').textContent = flag;
-      document.querySelector('.lang-options').style.display = 'none';
-    }
+    // Charger la langue sauvegardée ou défaut EN
+    const savedLang = localStorage.getItem("lang") || "en";
+    langSelect.value = savedLang;
+    applyLanguage(savedLang);
   </script>
-
 </body>
 </html>
