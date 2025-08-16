@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>ZakLab - Discord</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Font Awesome & Wedges Font -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Wedges:wght@700&display=swap" rel="stylesheet">
+  <!-- Styles (copié du header-footer global) -->
+  <style>
+    :root {
+      --zaklab-violet: #8a2be2;
+      --zaklab-bg-light: #fff;
+      --zaklab-bg-dark: #181924;
+      --zaklab-icon-light: var(--zaklab-violet);
+      --zaklab-icon-dark: #fff;
+      --zaklab-hover-light: #f3e9ff;
+      --zaklab-hover-dark: #362c4a;
+      --zaklab-footer-bg: var(--zaklab-violet);
+      --zaklab-footer-text: #fff;
+      --zaklab-footer-link: #e2d5fa;
+      --zaklab-footer-hover: #fff;
+    }
+    html, body { height: 100%; margin: 0; padding: 0; }
+    body {
+      background: var(--zaklab-bg-light);
+      color: #181924;
+      font-family: system-ui, sans-serif;
+      min-height: 100vh;
+      transition: background 0.2s, color 0.2s;
+      box-sizing: border-box;
+      padding: 0;
+    }
+    body.dark { background: var(--zaklab-bg-dark); color: #fff;}
+    .zaklab-header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      height: 70px;
+      background: #fff;
+      border-bottom: 1.5px solid #eee;
+      display: flex;
+      align-items: center;
+      z-index: 1001;
+      padding: 0 24px;
+      transition: background 0.2s, border-bottom 0.2s, box-shadow 0.18s;
+      box-shadow: 0 2px 12px 0 rgba(138,43,226,0.07);
+    }
+    body.dark .zaklab-header {
+      background: #191a25;
+      border-bottom: 1.5px solid #26273a;
+      color: #fff;
+      box-shadow: 0 2px 20px 0 rgba(24,25,36,0.13);
+    }
+    .zaklab-header.hide { transform: translateY(-120%); transition: transform 0.35s cubic-bezier(.7,-0.35,0,1.09);}
+    .zaklab-header-toggle {
+      position: fixed;
+      top: 85px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1002;
+      background: var(--zaklab-violet);
+      color: #fff;
+      border: none;
+      border-radius: 0 0 18px 18px;
+      width: 50px;
+      height: 34px;
+      font-size: 1.2em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s;
+      box-shadow: 0 3px 10px rgba(138,43,226,0.09);
+      outline: none;
+    }
+    .zaklab-header-toggle:hover { background: #a278e9; }
+    .zaklab-header-toggle.hide { top: 0; }
+    .zaklab-logo {
+      color: var(--zaklab-violet);
+      font-family: 'Montserrat', 'Arial Black', Arial, sans-serif;
+      margin-right: 38px;
+      font-size: 2em;
+      font-weight: 900;
+      letter-spacing: 2px;
+      text-shadow: 0 2px 8px rgba(138,43,226,0.08);
+      cursor: pointer;
+      user-select: none;
+      transition: color 0.2s;
+    }
+    .zaklab-logo:hover { color: #a278e9; }
+    .zaklab-nav {
+      display: flex;
+      flex-direction: row;
+      gap: 16px;
+      align-items: center;
+      margin-right: 24px;
+    }
+    .zaklab-nav-link {
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      text-decoration: none;
+      color: var(--zaklab-violet);
+      font-size: 1.09em;
+      padding: 7px 13px;
+      border-radius: 10px;
+      font-weight: 700;
+      letter-spacing: .07em;
+      transition: background 0.13s, color 0.18s;
+      outline: none;
+      border: none;
+      cursor: pointer;
+      background: none;
+      box-shadow: none;
+    }
+    .zaklab-nav-link.active, .zaklab-nav-link:hover, .zaklab-nav-link:focus-visible {
+      background: var(--zaklab-hover-light);
+      color: #43206e;
+    }
+    body.dark .zaklab-nav-link { color: #fff; }
+    body.dark .zaklab-nav-link.active, body.dark .zaklab-nav-link:hover, body.dark .zaklab-nav-link:focus-visible {
+      background: var(--zaklab-hover-dark);
+      color: var(--zaklab-violet);
+    }
+    .zaklab-header-controls {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 13px;
+    }
+    .zaklab-theme-toggle {
+      background: none;
+      border: none;
+      font-size: 1.25em;
+      cursor: pointer;
+      color: var(--zaklab-violet);
+      padding: 7px 12px;
+      border-radius: 8px;
+      transition: background 0.18s;
+      display: flex; align-items: center; justify-content: center;
+      min-width: 38px;
+    }
+    .zaklab-theme-toggle:hover { background: #f3e9ff;}
+    body.dark .zaklab-theme-toggle { color: #fff;}
+    body.dark .zaklab-theme-toggle:hover { background: #362c4a;}
+    .zaklab-lang-group { position: relative; margin-left: 3px;}
+    .zaklab-lang-btn {
+      display: flex;
+      align-items: center;
+      background: none;
+      border: none;
+      cursor: pointer;
+      font-size: 1.12em;
+      border-radius: 100px;
+      min-width: 44px;
+      min-height: 41px;
+      padding: 0 10px 0 0;
+      transition: background 0.16s, color 0.16s;
+      color: var(--zaklab-violet);
+      outline: none;
+      position: relative;
+      font-weight: bold;
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      gap: 7px;
+    }
+    .zaklab-lang-btn .lang-globe {
+      width: 32px; height: 32px; margin-right: 4px;
+      background: var(--zaklab-violet);
+      color: #fff;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1em;
+      font-weight: bold;
+      box-shadow: 0 2px 9px 0 rgba(138,43,226,0.13);
+    }
+    .zaklab-lang-btn .lang-label {
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-weight: bold;
+      font-size: 1em;
+      color: var(--zaklab-violet);
+      letter-spacing: .02em;
+    }
+    .zaklab-lang-btn .fa-chevron-down {
+      color: #bdbada;
+      font-size: 1em;
+      margin-left: 2px;
+    }
+    .zaklab-lang-btn:hover, .zaklab-lang-btn.active { background: var(--zaklab-hover-light);}
+    body.dark .zaklab-lang-btn { color: #fff;}
+    body.dark .zaklab-lang-btn .lang-label { color: #fff;}
+    body.dark .zaklab-lang-btn:hover, body.dark .zaklab-lang-btn.active { background: var(--zaklab-hover-dark);}
+    .zaklab-lang-dropdown {
+      position: absolute;
+      top: 108%;
+      right: 0;
+      background: #fff;
+      border-radius: 18px;
+      box-shadow: 0 2px 20px rgba(138,43,226,0.17);
+      min-width: 180px;
+      padding: 7px 0;
+      display: none;
+      flex-direction: column;
+      z-index: 9999;
+      border: 1.7px solid #e7d8f8;
+      transition: background 0.2s;
+      overflow: hidden;
+    }
+    body.dark .zaklab-lang-dropdown {
+      background: #24173a;
+      border: 1.7px solid #46305b;
+      color: #fff;
+    }
+    .zaklab-lang-dropdown.open { display: flex;}
+    .zaklab-lang-option {
+      display: flex;
+      align-items: center;
+      background: none;
+      border: none;
+      width: 100%;
+      padding: 10px 18px;
+      font-size: 1.08em;
+      color: #43206e;
+      cursor: pointer;
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-weight: bold;
+      gap: 8px;
+      transition: background 0.13s, color 0.15s;
+      justify-content: flex-start;
+    }
+    .zaklab-lang-option:hover, .zaklab-lang-option.active { background: var(--zaklab-hover-light); color: var(--zaklab-violet);}
+    body.dark .zaklab-lang-option { color: #fff;}
+    body.dark .zaklab-lang-option:hover, body.dark .zaklab-lang-option.active { background: var(--zaklab-hover-dark); color: var(--zaklab-violet);}
+    /* SOCIAL BAR */
+    .zaklab-social-bar {
+      position: fixed;
+      top: 50%;
+      right: 0;
+      z-index: 999;
+      transform: translateY(-50%);
+      background: rgba(255,255,255,0.8);
+      border-radius: 16px 0 0 16px;
+      box-shadow: 0 4px 16px 0 rgba(138,43,226, 0.05);
+      width: 62px;
+      padding: 12px 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 18px;
+      transition: background 0.2s, box-shadow 0.2s;
+      backdrop-filter: blur(2px);
+    }
+    body.dark .zaklab-social-bar {
+      background: rgba(24,25,36,0.94);
+      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.18);
+    }
+    .zaklab-social-link {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 38px;
+      height: 38px;
+      border-radius: 50%;
+      color: var(--zaklab-icon-light);
+      background: transparent;
+      font-size: 1.45rem;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
+      outline: none;
+      border: none;
+      cursor: pointer;
+    }
+    .zaklab-social-link:focus-visible { box-shadow: 0 0 0 2px var(--zaklab-violet);}
+    .zaklab-social-link:hover,
+    .zaklab-social-link:focus-visible { background: var(--zaklab-hover-light); color: var(--zaklab-violet);}
+    body.dark .zaklab-social-link { color: var(--zaklab-icon-dark);}
+    body.dark .zaklab-social-link:hover,
+    body.dark .zaklab-social-link:focus-visible { background: var(--zaklab-hover-dark); color: var(--zaklab-icon-dark);}
+    @media (max-width: 520px) { .zaklab-social-bar { display: none; } }
+    .zaklab-discord-fixed {
+      position: fixed;
+      left: 22px;
+      bottom: 34px;
+      z-index: 1003;
+      width: 52px;
+      height: 52px;
+      background: var(--zaklab-violet);
+      border-radius: 50%;
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2em;
+      box-shadow: 0 2px 18px 0 rgba(138,43,226,0.13);
+      transition: background 0.18s, color 0.18s, transform 0.14s;
+      text-decoration: none;
+    }
+    .zaklab-discord-fixed:hover {
+      background: #fff;
+      color: var(--zaklab-violet);
+      border: 2.5px solid var(--zaklab-violet);
+      transform: scale(1.07);
+    }
+    @media (max-width: 520px) {
+      .zaklab-discord-fixed { width:39px; height:39px; font-size:1.4em; left:8px; bottom:18px;}
+    }
+    .zaklab-footer {
+      width: 100vw;
+      background: var(--zaklab-footer-bg);
+      color: var(--zaklab-footer-text);
+      padding: 48px 0 24px 0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      gap: 80px;
+      flex-wrap: wrap;
+      position: relative;
+      left: 0; right: 0;
+      bottom: 0;
+      z-index: 1000;
+      font-size: 1.09em;
+      transition: background 0.2s, color 0.2s;
+      border-top: 3.5px solid #fff3;
+    }
+    .zaklab-footer.hide { display: none !important;}
+    .zaklab-footer-section {
+      min-width: 260px;
+      max-width: 99vw;
+      margin-bottom: 18px;
+    }
+    .zaklab-footer-section h3 {
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-size: 1.25em;
+      color: #fff;
+      margin-bottom: 10px;
+      margin-top: 0;
+      letter-spacing: .09em;
+    }
+    .zaklab-footer-links, .zaklab-footer-nav {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+    .zaklab-footer-link, .zaklab-footer-nav-link {
+      color: var(--zaklab-footer-link);
+      text-decoration: none;
+      font-weight: 700;
+      font-size: 1.07em;
+      transition: color 0.16s;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+    }
+    .zaklab-footer-link:hover, .zaklab-footer-nav-link:hover {
+      color: var(--zaklab-footer-hover);
+      text-decoration: underline;
+    }
+    .zaklab-footer-icon {
+      width: 22px;
+      text-align: center;
+      font-size: 1.18em;
+      color: #fff;
+    }
+    .zaklab-footer-toggle {
+      position: fixed;
+      right: 50%;
+      bottom: 80px;
+      transform: translateX(50%);
+      z-index: 1001;
+      background: var(--zaklab-violet);
+      color: #fff;
+      border: none;
+      border-radius: 16px 16px 0 0;
+      width: 54px;
+      height: 34px;
+      font-size: 1.19em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      transition: background 0.15s;
+      box-shadow: 0 -2px 12px rgba(138,43,226,0.12);
+      outline: none;
+    }
+    .zaklab-footer-toggle:hover { background: #a278e9;}
+    .zaklab-footer-toggle.hide { bottom: 0; }
+    @media (max-width: 930px) {
+      .zaklab-footer-section { min-width: 190px; }
+      .zaklab-footer { gap: 30px; }
+    }
+    @media (max-width: 620px) {
+      .zaklab-footer, .zaklab-footer-section { flex-direction: column; min-width: 0; }
+      .zaklab-footer { gap: 10px; padding: 30px 0 22px 0;}
+    }
+    @media (max-width: 768px) {
+      .zaklab-footer { font-size: 1em; }
+    }
+    @media (max-width: 480px) {
+      .zaklab-header { font-size: 1em; padding: 0 9px; }
+      .zaklab-logo { font-size: 1.13em; margin-right: 14px; }
+      .zaklab-nav { gap: 5px; margin-right: 10px; }
+    }
+    /* Discord widget + bouton */
+    .zaklab-discord-container {
+      margin: 140px auto 0 auto;
+      max-width: 420px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      background: rgba(138,43,226,0.07);
+      border-radius: 16px;
+      box-shadow: 0 2px 18px #8a2be218;
+      padding: 28px 12px 32px 12px;
+      min-height: 620px;
+    }
+    .zaklab-discord-title {
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-size: 2em;
+      color: var(--zaklab-violet);
+      margin-bottom: 18px;
+      margin-top: 0;
+    }
+    .zaklab-discord-desc {
+      font-size: 1.12em;
+      margin-bottom: 22px;
+      color: #333;
+      font-weight: 500;
+    }
+    body.dark .zaklab-discord-container { background: #24173a; }
+    body.dark .zaklab-discord-desc { color: #eee;}
+    .zaklab-discord-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 11px;
+      margin: 28px auto 0 auto;
+      padding: 13px 32px;
+      background: var(--zaklab-violet);
+      color: #fff;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.18em;
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-weight: bold;
+      text-decoration: none;
+      transition: background 0.18s, color 0.18s, box-shadow 0.16s, transform 0.13s;
+      box-shadow: 0 4px 14px 0 rgba(138,43,226,0.12);
+      cursor: pointer;
+    }
+    .zaklab-discord-btn:hover, .zaklab-discord-btn:focus-visible {
+      background: #fff;
+      color: var(--zaklab-violet);
+      box-shadow: 0 2px 24px 0 #8a2be233;
+      text-decoration: underline;
+      transform: scale(1.05);
+    }
+    .zaklab-discord-btn i { font-size:1.32em; }
+  </style>
+</head>
+<body>
+  <!-- HEADER ET BARRES FIXES -->
+  <header class="zaklab-header" id="zaklabHeader">
+    <span class="zaklab-logo" id="zaklabLogo" tabindex="0">ZakLab</span>
+    <nav class="zaklab-nav" aria-label="Navigation principale">
+      <a class="zaklab-nav-link" data-section="home" href="home.html">Home</a>
+      <a class="zaklab-nav-link" data-section="news" href="news.html">News</a>
+      <a class="zaklab-nav-link" data-section="mineruns" href="mineruns.html">MineRuns</a>
+      <a class="zaklab-nav-link" data-section="minecraft" href="minecraft.html">Minecraft</a>
+      <a class="zaklab-nav-link" data-section="map" href="map.html">Map</a>
+      <a class="zaklab-nav-link" data-section="music" href="music.html">Music</a>
+      <a class="zaklab-nav-link" data-section="chat" href="chat.html">Chat</a>
+      <a class="zaklab-nav-link" data-section="about" href="about.html">About us</a>
+    </nav>
+    <div class="zaklab-header-controls">
+      <button class="zaklab-theme-toggle" id="themeToggle" title="Light/Dark mode toggle">
+        <i class="fa-solid fa-moon"></i>
+      </button>
+      <div class="zaklab-lang-group" id="langSelectorGroup">
+        <button class="zaklab-lang-btn" id="zaklabLangBtn" aria-haspopup="listbox" aria-expanded="false">
+          <span class="lang-globe" aria-label="Langue"><span style="font-size:1.2em">🌐</span></span>
+          <span class="lang-label" id="currentLangLabel"></span>
+          <i class="fa-solid fa-chevron-down"></i>
+        </button>
+        <div class="zaklab-lang-dropdown" id="zaklabLangDropdown" role="listbox" tabindex="-1"></div>
+      </div>
+    </div>
+  </header>
+  <button class="zaklab-header-toggle" id="zaklabHeaderToggle" aria-label="Hide header">
+    <i class="fa-solid fa-chevron-up"></i>
+  </button>
+  <nav class="zaklab-social-bar" aria-label="Réseaux sociaux ZakLab">
+    <a class="zaklab-social-link" href="https://www.instagram.com/zakmc1_/" target="_blank" aria-label="Instagram">
+      <i class="fab fa-instagram"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://www.youtube.com/channel/UCopzZUDoIjLqJ9ziw5yCQ8w" target="_blank" aria-label="YouTube">
+      <i class="fab fa-youtube"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://zaklmc.github.io/ZakHub/" target="_blank" aria-label="Website">
+      <i class="fa-solid fa-globe"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://www.twitch.tv/zakmc_" target="_blank" aria-label="Twitch">
+      <i class="fab fa-twitch"></i>
+    </a>
+    <a class="zaklab-social-link" href="https://fr.pinterest.com/Minecraft_and_Chill/" target="_blank" aria-label="Pinterest">
+      <i class="fab fa-pinterest"></i>
+    </a>
+  </nav>
+  <a class="zaklab-discord-fixed" href="discord.html" aria-label="Discord">
+    <i class="fab fa-discord"></i>
+  </a>
+
+  <!-- CONTENU DE LA PAGE DISCORD -->
+  <main>
+    <div class="zaklab-discord-container">
+      <h1 class="zaklab-discord-title" id="discordTitle">Serveur Discord ZakLab</h1>
+      <div class="zaklab-discord-desc" id="discordDesc">
+        Voici le serveur Discord officiel de ZakLab !<br>
+        Rejoignez-nous pour discuter, échanger, et partager autour de Minecraft et de la communauté ZakLab.<br>
+        Aperçu du serveur&nbsp;:
+      </div>
+      <!-- Iframe widget Discord -->
+      <div style="margin:0 auto 18px auto;">
+        <iframe src="https://discord.com/widget?id=1393203631284817950&theme=dark" width="350" height="500" allowtransparency="true" frameborder="0" sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts"></iframe>
+      </div>
+      <a class="zaklab-discord-btn" id="discordJoinBtn" href="https://discord.gg/dJsaPjCg" target="_blank">
+        <i class="fab fa-discord"></i>
+        <span id="discordJoinLabel">Rejoindre le serveur</span>
+      </a>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="zaklab-footer" id="zaklabFooter">
+    <section class="zaklab-footer-section">
+      <h3 id="footerLinksTitle">Links</h3>
+      <ul class="zaklab-footer-links">
+        <li><a class="zaklab-footer-link" href="https://www.instagram.com/zakmc1_/" target="_blank"><span class="zaklab-footer-icon"><i class="fab fa-instagram"></i></span>Instagram</a></li>
+        <li><a class="zaklab-footer-link" href="https://www.youtube.com/channel/UCopzZUDoIjLqJ9ziw5yCQ8w" target="_blank"><span class="zaklab-footer-icon"><i class="fab fa-youtube"></i></span>YouTube</a></li>
+        <li><a class="zaklab-footer-link" href="https://zaklmc.github.io/ZakHub/" target="_blank"><span class="zaklab-footer-icon"><i class="fa-solid fa-globe"></i></span>Website</a></li>
+        <li><a class="zaklab-footer-link" href="https://www.twitch.tv/zakmc_" target="_blank"><span class="zaklab-footer-icon"><i class="fab fa-twitch"></i></span>Twitch</a></li>
+        <li><a class="zaklab-footer-link" href="https://fr.pinterest.com/Minecraft_and_Chill/" target="_blank"><span class="zaklab-footer-icon"><i class="fab fa-pinterest"></i></span>Pinterest</a></li>
+        <li><a class="zaklab-footer-link" href="discord.html"><span class="zaklab-footer-icon"><i class="fab fa-discord"></i></span>Discord</a></li>
+      </ul>
+    </section>
+    <section class="zaklab-footer-section">
+      <h3 id="footerSectionsTitle">Sections</h3>
+      <ul class="zaklab-footer-nav">
+        <li><a class="zaklab-footer-nav-link" data-section="home" href="home.html">Home</a></li>
+        <li><a class="zaklab-footer-nav-link" data-section="news" href="news.html">News</a></li>
+        <li><a class="zaklab-footer-nav-link" data-section="mineruns" href="mineruns.html">MineRuns</a></li>
+        <li><a class="zaklab-footer-nav-link" data-section="minecraft" href="minecraft.html">Minecraft</a></li>
+        <li><a class="zaklab-footer-nav-link" data-section="map" href="map.html">Map</a></li>
+        <li><a class="zaklab-footer-nav-link" data-section="music" href="music.html">Music</a></li>
+        <li><a class="zaklab-footer-nav-link" data-section="chat" href="chat.html">Chat</a></li>
+        <li><a class="zaklab-footer-nav-link" data-section="about" href="about.html">About us</a></li>
+      </ul>
+    </section>
+  </footer>
+  <button class="zaklab-footer-toggle" id="zaklabFooterToggle" aria-label="Hide footer">
+    <i class="fa-solid fa-chevron-down"></i>
+  </button>
+  <!-- JS TRAD & INTERACTIONS -->
+  <script>
+    const ZAKLAB_LANGS = [
+      { key: "fr", label: "Français" },{ key: "en", label: "English" },{ key: "ru", label: "Русский" },
+      { key: "ur", label: "اردو" },{ key: "in", label: "Hindi" },{ key: "tr", label: "Türkçe" },
+      { key: "cz", label: "Čeština" },{ key: "es", label: "Español" }
+    ];
+    const ZAKLAB_TRANSLATIONS = {
+      fr: {
+        home:"Accueil",news:"Actualités",mineruns:"MineRuns",minecraft:"Minecraft",map:"Carte",music:"Musique",chat:"Chat",about:"À propos",
+        links:"Liens",sections:"Sections",
+        discord_title:"Serveur Discord ZakLab",
+        discord_desc:"Voici le serveur Discord officiel de ZakLab !<br>Rejoignez-nous pour discuter, échanger, et partager autour de Minecraft et de la communauté ZakLab.<br>Aperçu du serveur&nbsp;:",
+        discord_btn:"Rejoindre le serveur"
+      },
+      en: {
+        home:"Home",news:"News",mineruns:"MineRuns",minecraft:"Minecraft",map:"Map",music:"Music",chat:"Chat",about:"About us",
+        links:"Links",sections:"Sections",
+        discord_title:"ZakLab Discord Server",
+        discord_desc:"This is ZakLab's official Discord server!<br>Join us to chat, share and connect around Minecraft and the ZakLab community.<br>Server preview:",
+        discord_btn:"Join the server"
+      },
+      ru: {
+        home:"Главная",news:"Новости",mineruns:"MineRuns",minecraft:"Майнкрафт",map:"Карта",music:"Музыка",chat:"Чат",about:"О нас",
+        links:"Ссылки",sections:"Разделы",
+        discord_title:"Дискорд сервер ZakLab",
+        discord_desc:"Это официальный Discord-сервер ZakLab!<br>Присоединяйтесь к нам, чтобы общаться и делиться о Minecraft и сообществе ZakLab.<br>Просмотр сервера:",
+        discord_btn:"Присоединиться к серверу"
+      },
+      ur: {
+        home:"ہوم",news:"خبریں",mineruns:"MineRuns",minecraft:"مائنکرافٹ",map:"نقشہ",music:"موسیقی",chat:"چیٹ",about:"ہمارے بارے میں",
+        links:"روابط",sections:"سیکشنز",
+        discord_title:"ZakLab ڈسکارڈ سرور",
+        discord_desc:"یہ ZakLab کا آفیشل ڈسکارڈ سرور ہے!<br>ہمارے ساتھ چیٹ کریں، شیئر کریں اور Minecraft و ZakLab کمیونٹی کے ساتھ جڑیں۔<br>سرور کا پیش منظر:",
+        discord_btn:"سرور جوائن کریں"
+      },
+      in: {
+        home:"होम",news:"समाचार",mineruns:"MineRuns",minecraft:"माइनक्राफ्ट",map:"मानचित्र",music:"संगीत",chat:"चैट",about:"हमारे बारे में",
+        links:"लिंक",sections:"सेक्शन",
+        discord_title:"ZakLab Discord सर्वर",
+        discord_desc:"यह ZakLab का आधिकारिक Discord सर्वर है!<br>हमसे जुड़ें, चैट करें, शेयर करें, और Minecraft और ZakLab कम्युनिटी के साथ जुड़ें।<br>सर्वर पूर्वावलोकन:",
+        discord_btn:"सर्वर से जुड़ें"
+      },
+      tr: {
+        home:"Anasayfa",news:"Haberler",mineruns:"MineRuns",minecraft:"Minecraft",map:"Harita",music:"Müzik",chat:"Sohbet",about:"Hakkımızda",
+        links:"Bağlantılar",sections:"Bölümler",
+        discord_title:"ZakLab Discord Sunucusu",
+        discord_desc:"Bu, ZakLab'ın resmi Discord sunucusudur!<br>Bizimle sohbete katılın, paylaşın ve Minecraft & ZakLab topluluğu ile bağlantıda kalın.<br>Sunucu önizlemesi:",
+        discord_btn:"Sunucuya Katıl"
+      },
+      cz: {
+        home:"Domů",news:"Novinky",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Hudba",chat:"Chat",about:"O nás",
+        links:"Odkazy",sections:"Sekce",
+        discord_title:"ZakLab Discord Server",
+        discord_desc:"Toto je oficiální Discord server ZakLab!<br>Přidejte se k nám, chatujte, sdílejte a spojte se kolem Minecraftu a komunity ZakLab.<br>Náhled serveru:",
+        discord_btn:"Připojit se k serveru"
+      },
+      es: {
+        home:"Inicio",news:"Noticias",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Música",chat:"Chat",about:"Sobre nosotros",
+        links:"Enlaces",sections:"Secciones",
+        discord_title:"Servidor de Discord de ZakLab",
+        discord_desc:"¡Este es el servidor oficial de Discord de ZakLab!<br>Únete para charlar, compartir y conectar sobre Minecraft y la comunidad de ZakLab.<br>Vista previa del servidor:",
+        discord_btn:"Unirse al servidor"
+      }
+    };
+    function getLang() {return localStorage.getItem('zaklab-lang') || 'fr';}
+    function setLang(lang) {localStorage.setItem('zaklab-lang', lang);renderLang();}
+    function renderLang() {
+      const lang = getLang();
+      const tr = ZAKLAB_TRANSLATIONS[lang] || ZAKLAB_TRANSLATIONS.fr;
+      // Header/links
+      Array.from(document.querySelectorAll('.zaklab-nav-link')).forEach(link => {
+        const key = link.dataset.section;
+        if (tr[key]) link.textContent = tr[key];
+        if (key === 'about') link.href = 'about.html';
+        else link.href = key + '.html';
+      });
+      Array.from(document.querySelectorAll('.zaklab-footer-nav-link')).forEach(link => {
+        const key = link.dataset.section;
+        if (tr[key]) link.textContent = tr[key];
+        if (key === 'about') link.href = 'about.html';
+        else link.href = key + '.html';
+      });
+      // Footer
+      if(document.getElementById('footerLinksTitle')) document.getElementById('footerLinksTitle').textContent = tr.links;
+      if(document.getElementById('footerSectionsTitle')) document.getElementById('footerSectionsTitle').textContent = tr.sections;
+      // Discord page
+      if(document.getElementById('discordTitle')) document.getElementById('discordTitle').textContent = tr.discord_title;
+      if(document.getElementById('discordDesc')) document.getElementById('discordDesc').innerHTML = tr.discord_desc;
+      if(document.getElementById('discordJoinLabel')) document.getElementById('discordJoinLabel').textContent = tr.discord_btn;
+      // Lang select
+      const langObj = ZAKLAB_LANGS.find(l => l.key === lang) || ZAKLAB_LANGS[0];
+      document.getElementById('currentLangLabel').textContent = langObj.label;
+      // Dropdown
+      const dropdown = document.getElementById('zaklabLangDropdown');
+      dropdown.innerHTML = '';
+      ZAKLAB_LANGS.forEach((l) => {
+        const opt = document.createElement('button');
+        opt.className = 'zaklab-lang-option' + (l.key === lang ? ' active' : '');
+        opt.type = 'button';
+        opt.tabIndex = 0;
+        opt.innerHTML = `<span>${l.label}</span>`;
+        opt.onclick = () => {
+          setLang(l.key);
+          dropdown.classList.remove('open');
+          document.getElementById('zaklabLangBtn').setAttribute('aria-expanded', 'false');
+        };
+        dropdown.appendChild(opt);
+      });
+    }
+    (() => {
+      const btn=document.getElementById('zaklabLangBtn');const dropdown=document.getElementById('zaklabLangDropdown');
+      btn.onclick=function(){if(dropdown.classList.contains('open')){dropdown.classList.remove('open');btn.setAttribute('aria-expanded','false');}else{dropdown.classList.add('open');btn.setAttribute('aria-expanded','true');}};
+      document.addEventListener('click',e=>{if(!btn.contains(e.target)&&!dropdown.contains(e.target)){dropdown.classList.remove('open');btn.setAttribute('aria-expanded','false');}});
+    })();
+    const themeToggle=document.getElementById('themeToggle');
+    function setTheme(dark) {
+      document.body.classList.toggle('dark',dark);
+      themeToggle.innerHTML=dark?'<i class="fa-solid fa-sun"></i>':'<i class="fa-solid fa-moon"></i>';
+      localStorage.setItem('zaklab-theme',dark?'dark':'light');
+    }
+    (() => {
+      const saved=localStorage.getItem('zaklab-theme');
+      const prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;
+      setTheme(saved?saved==='dark':prefersDark);
+    })();
+    themeToggle.addEventListener('click',()=>{setTheme(!document.body.classList.contains('dark'));});
+    const header=document.getElementById('zaklabHeader');
+    const headerToggle=document.getElementById('zaklabHeaderToggle');
+    let headerHidden=false;
+    function setHeaderHidden(hide){headerHidden=hide;header.classList.toggle('hide',headerHidden);headerToggle.innerHTML=hide?'<i class="fa-solid fa-chevron-down"></i>':'<i class="fa-solid fa-chevron-up"></i>';headerToggle.setAttribute('aria-label',hide?'Show header':'Hide header');}
+    headerToggle.addEventListener('click',()=>setHeaderHidden(!headerHidden));
+    (()=>{if(localStorage.getItem('zaklab-header-hide')==='true')setHeaderHidden(true);headerToggle.addEventListener('click',()=>{localStorage.setItem('zaklab-header-hide',headerHidden?'true':'false');});})();
+    const footer=document.getElementById('zaklabFooter');
+    const footerToggle=document.getElementById('zaklabFooterToggle');
+    let footerHidden=false;
+    function setFooterHidden(hide){footerHidden=hide;footer.classList.toggle('hide',footerHidden);footerToggle.innerHTML=hide?'<i class="fa-solid fa-chevron-up"></i>':'<i class="fa-solid fa-chevron-down"></i>';footerToggle.setAttribute('aria-label',hide?'Show footer':'Hide footer');}
+    footerToggle.addEventListener('click',()=>setFooterHidden(!footerHidden));
+    (()=>{if(localStorage.getItem('zaklab-footer-hide')==='true')setFooterHidden(true);footerToggle.addEventListener('click',()=>{localStorage.setItem('zaklab-footer-hide',footerHidden?'true':'false');});})();
+    document.getElementById('zaklabLogo').onclick=()=>{window.location.href='home.html';};
+    document.getElementById('zaklabLogo').onkeydown=(e)=>{if(e.key==="Enter"||e.key===" "){window.location.href='home.html';}};
+    (()=>{const section=(location.pathname.split('/').pop()||'home.html').replace('.html','');document.querySelectorAll('.zaklab-nav-link').forEach(link=>{if(link.dataset.section===section)link.classList.add('active');});})();
+    renderLang();
+  </script>
+</body>
+</html>
