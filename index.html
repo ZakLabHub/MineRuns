@@ -3,6 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <title>ZakHub</title>
+  <!-- Police de secours proche de SK Cuber -->
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@700&display=swap" rel="stylesheet">
   <style>
     /* === POLICES === */
     @font-face {
@@ -51,7 +53,8 @@
     }
 
     .logo {
-      font-family: 'SK Cuber', sans-serif;
+      font-family: 'SK Cuber','Orbitron', sans-serif;
+      font-weight: bold;
       font-size: 2.5rem;
       color: purple;
       line-height: 1.1;
@@ -84,10 +87,6 @@
     .theme-toggle {
       cursor: pointer;
       font-size: 1.5rem;
-      color: black;
-    }
-    body.dark .theme-toggle {
-      color: white;
     }
 
     .lang-select {
@@ -149,6 +148,18 @@
       color: white;
     }
 
+    /* === SOCIALS (milieu page) === */
+    .socials-middle {
+      margin: 30px 0;
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+    }
+    .socials-middle a {
+      font-size: 2rem;
+      text-decoration: none;
+    }
+
     /* === FOOTER === */
     footer {
       position: fixed;
@@ -159,21 +170,6 @@
       color: white;
       text-align: center;
       padding: 10px 0;
-      display: flex;
-      flex-direction: column;
-      gap: 5px;
-    }
-
-    /* === SOCIALS === */
-    .socials {
-      display: flex;
-      justify-content: center;
-      gap: 15px;
-    }
-    .socials a {
-      font-size: 1.5rem;
-      color: inherit;
-      text-decoration: none;
     }
   </style>
   <!-- Icônes via Font Awesome CDN -->
@@ -195,7 +191,7 @@
       <a href="about.html">About us</a>
     </nav>
     <div class="controls">
-      <span id="themeIcon" class="theme-toggle" onclick="toggleTheme()">🌙</span>
+      <span class="theme-toggle" onclick="toggleTheme()">🌙</span>
       <div class="lang-select" onclick="toggleLangMenu(event)">
         <span class="lang-current">🇫🇷</span>
         <div class="lang-options">
@@ -205,6 +201,7 @@
           <div onclick="setLang('🇵🇰')">Urdu</div>
           <div onclick="setLang('🇷🇺')">Russia</div>
           <div onclick="setLang('🇹🇷')">Turkish</div>
+          <div onclick="setLang('🇪🇸')">Español</div>
         </div>
       </div>
     </div>
@@ -216,32 +213,30 @@
   <!-- MAIN -->
   <main>
     <h1>Welcome to the Zak's projects hub !</h1>
+
+    <!-- Réseaux sociaux milieu de page -->
+    <div class="socials-middle">
+      <a href="#"><i class="fab fa-twitter" style="color:#1DA1F2"></i></a>
+      <a href="#"><i class="fab fa-youtube" style="color:#FF0000"></i></a>
+      <a href="#"><i class="fab fa-twitch" style="color:#9146FF"></i></a>
+      <a href="#"><i class="fab fa-github" style="color:#333"></i></a>
+      <a href="#"><i class="fab fa-instagram" style="color:#E4405F"></i></a>
+      <a href="#"><i class="fab fa-facebook" style="color:#1877F2"></i></a>
+      <a href="#"><i class="fab fa-discord" style="color:#5865F2"></i></a>
+    </div>
   </main>
 
   <!-- FOOTER -->
   <footer>
     <div>© ZakHub - 2025</div>
-    <div class="socials">
-      <a href="#"><i class="fab fa-twitter"></i></a>
-      <a href="#"><i class="fab fa-youtube"></i></a>
-      <a href="#"><i class="fab fa-twitch"></i></a>
-      <a href="#"><i class="fab fa-github"></i></a>
-      <a href="#"><i class="fab fa-instagram"></i></a>
-      <a href="#"><i class="fab fa-facebook"></i></a>
-      <a href="#"><i class="fab fa-discord"></i></a>
-    </div>
   </footer>
 
   <!-- SCRIPT -->
   <script>
     function toggleTheme() {
       document.body.classList.toggle('dark');
-      const themeIcon = document.getElementById("themeIcon");
-      if (document.body.classList.contains('dark')) {
-        themeIcon.textContent = "☀️"; // mode sombre → bouton soleil
-      } else {
-        themeIcon.textContent = "🌙"; // mode clair → bouton lune
-      }
+      const icon = document.querySelector('.theme-toggle');
+      icon.textContent = document.body.classList.contains('dark') ? '☀️' : '🌙';
     }
 
     function toggleHeader() {
