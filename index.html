@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <title>ZakHub</title>
   <style>
+    /* === POLICES === */
     @font-face {
       font-family: 'SK Cuber';
       src: url('fonts/sk-cuber.ttf') format('truetype');
@@ -13,19 +14,40 @@
       src: url('fonts/wedges.ttf') format('truetype');
     }
 
+    /* === STYLES GLOBAUX === */
     body {
       margin: 0;
       font-family: 'Wedges', sans-serif;
       background-color: white;
       color: purple;
       transition: background-color 0.3s, color 0.3s;
+      padding-top: 100px; /* espace pour header fixe */
+      padding-bottom: 60px; /* espace pour footer fixe */
     }
 
+    body.dark {
+      background-color: #1a1a1a; /* noir doux, épais */
+      color: white;
+    }
+
+    /* === HEADER === */
     header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      background: white;
+      border-bottom: 2px solid #ddd;
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 15px 30px;
+      z-index: 1000;
+      transition: transform 0.3s ease;
+    }
+    body.dark header {
+      background: #222;
+      border-bottom: 2px solid #444;
     }
 
     .logo {
@@ -42,46 +64,125 @@
       font-weight: bold;
       font-size: 1.1rem;
     }
-
     nav a {
       text-decoration: none;
       color: purple;
     }
-
+    body.dark nav a {
+      color: white;
+    }
     nav a:hover {
       color: violet;
     }
 
+    /* === TOGGLE THEME & LANG === */
+    .controls {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
     .theme-toggle {
       cursor: pointer;
       font-size: 1.5rem;
-      margin-left: 20px;
       color: black;
     }
-
-    body.dark {
-      background-color: black;
-      color: purple;
-    }
-
-    body.dark nav a {
-      color: purple;
-    }
-
     body.dark .theme-toggle {
-      color: purple;
+      color: white;
     }
 
+    .lang-select {
+      position: relative;
+      cursor: pointer;
+    }
+    .lang-current {
+      font-size: 1.2rem;
+    }
+    .lang-options {
+      display: none;
+      position: absolute;
+      background: white;
+      border: 1px solid #ddd;
+      padding: 5px;
+      top: 30px;
+      right: 0;
+      z-index: 1001;
+    }
+    body.dark .lang-options {
+      background: #222;
+      border: 1px solid #444;
+    }
+    .lang-options div {
+      padding: 5px;
+      cursor: pointer;
+    }
+    .lang-options div:hover {
+      background: violet;
+      color: white;
+    }
+
+    /* === TOGGLE HEADER (flèche) === */
+    .toggle-bar {
+      position: fixed;
+      top: 70px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1001;
+      cursor: pointer;
+      font-size: 1.2rem;
+      background: violet;
+      color: white;
+      border-radius: 10px;
+      padding: 2px 8px;
+    }
+
+    /* === MAIN === */
     main {
-      padding: 50px;
+      padding: 40px;
       text-align: center;
-      font-size: 2rem;
+    }
+    main h1 {
+      font-family: 'Wedges', sans-serif;
+      font-size: 2.5rem;
+      color: purple;
+    }
+    body.dark main h1 {
+      color: white;
+    }
+
+    /* === FOOTER === */
+    footer {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      background: purple;
+      color: white;
+      text-align: center;
+      padding: 10px 0;
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+
+    /* === SOCIALS === */
+    .socials {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+    }
+    .socials a {
+      font-size: 1.5rem;
+      color: inherit;
+      text-decoration: none;
     }
   </style>
+  <!-- Icônes via Font Awesome CDN -->
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
 </head>
 <body>
 
-  <header>
+  <!-- HEADER -->
+  <header id="header">
     <a href="index.html" class="logo">Zak<br>Hub</a>
     <nav>
       <a href="home.html">Home</a>
@@ -92,18 +193,67 @@
       <a href="music.html">Music</a>
       <a href="chat.html">Chat</a>
       <a href="about.html">About us</a>
-      <span class="theme-toggle" onclick="toggleTheme()">🌙</span>
     </nav>
+    <div class="controls">
+      <span class="theme-toggle" onclick="toggleTheme()">🌙</span>
+      <div class="lang-select" onclick="toggleLangMenu(event)">
+        <span class="lang-current">🇫🇷</span>
+        <div class="lang-options">
+          <div onclick="setLang('🇫🇷')">Français</div>
+          <div onclick="setLang('🇬🇧')">English</div>
+          <div onclick="setLang('🇮🇳')">India</div>
+          <div onclick="setLang('🇵🇰')">Urdu</div>
+          <div onclick="setLang('🇷🇺')">Russia</div>
+        </div>
+      </div>
+    </div>
   </header>
 
+  <!-- TOGGLE BAR -->
+  <div class="toggle-bar" onclick="toggleHeader()">⬆</div>
+
+  <!-- MAIN -->
   <main>
-    <h1>Accueil</h1>
-    <p>Bienvenue sur ZakHub ! Contenu de la page d'accueil pour l'instant.</p>
+    <h1>Welcome to the Zak's projects hub !</h1>
   </main>
 
+  <!-- FOOTER -->
+  <footer>
+    <div>© ZakHub - 2025</div>
+    <div class="socials">
+      <a href="#"><i class="fab fa-twitter"></i></a>
+      <a href="#"><i class="fab fa-youtube"></i></a>
+      <a href="#"><i class="fab fa-twitch"></i></a>
+      <a href="#"><i class="fab fa-github"></i></a>
+      <a href="#"><i class="fab fa-instagram"></i></a>
+      <a href="#"><i class="fab fa-facebook"></i></a>
+      <a href="#"><i class="fab fa-discord"></i></a>
+    </div>
+  </footer>
+
+  <!-- SCRIPT -->
   <script>
     function toggleTheme() {
       document.body.classList.toggle('dark');
+    }
+
+    function toggleHeader() {
+      const header = document.getElementById('header');
+      if (header.style.transform === 'translateY(-100%)') {
+        header.style.transform = 'translateY(0)';
+      } else {
+        header.style.transform = 'translateY(-100%)';
+      }
+    }
+
+    function toggleLangMenu(event) {
+      const menu = event.currentTarget.querySelector('.lang-options');
+      menu.style.display = menu.style.display === 'block' ? 'none' : 'block';
+    }
+
+    function setLang(flag) {
+      document.querySelector('.lang-current').textContent = flag;
+      document.querySelector('.lang-options').style.display = 'none';
     }
   </script>
 
