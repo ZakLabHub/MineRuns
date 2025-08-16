@@ -20,6 +20,7 @@
       --zaklab-footer-text: #fff;
       --zaklab-footer-link: #e2d5fa;
       --zaklab-footer-hover: #fff;
+      --zaklab-profile-bar-width: 310px;
     }
     html, body { height: 100%; margin: 0; padding: 0;}
     body {
@@ -201,6 +202,143 @@
     .zaklab-lang-option:hover, .zaklab-lang-option.active { background: var(--zaklab-hover-light); color: var(--zaklab-violet);}
     body.dark .zaklab-lang-option { color: #fff;}
     body.dark .zaklab-lang-option:hover, body.dark .zaklab-lang-option.active { background: var(--zaklab-hover-dark); color: var(--zaklab-violet);}
+    /* PROFILE BAR */
+    .zaklab-profile-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: var(--zaklab-profile-bar-width);
+      height: 100vh;
+      background: #fff;
+      box-shadow: 3px 0 24px 0 rgba(138,43,226,0.08);
+      z-index: 2000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 34px 18px 24px 18px;
+      transition: transform 0.28s cubic-bezier(.7,-0.35,0,1.09), background 0.2s;
+      transform: translateX(-110%);
+    }
+    .zaklab-profile-bar.open { transform: translateX(0);}
+    body.dark .zaklab-profile-bar { background: #181924; }
+    .zaklab-profile-bar-close {
+      position: absolute;
+      right: 15px; top: 18px;
+      background: none;
+      border: none;
+      color: var(--zaklab-violet);
+      font-size: 2em;
+      cursor: pointer;
+      padding: 3px;
+      border-radius: 50%;
+      transition: background 0.16s;
+    }
+    .zaklab-profile-bar-close:hover { background: var(--zaklab-hover-light);}
+    body.dark .zaklab-profile-bar-close:hover { background: var(--zaklab-hover-dark);}
+    .zaklab-profile-bar-title {
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-size: 1.35em;
+      font-weight: bold;
+      color: var(--zaklab-violet);
+      margin: 25px 0 16px 0;
+    }
+    .zaklab-profile-avatar {
+      width: 82px;
+      height: 82px;
+      border-radius: 50%;
+      background: #e2d5fa;
+      object-fit: cover;
+      margin-bottom: 14px;
+      border: 2.5px solid var(--zaklab-violet);
+      display: block;
+    }
+    .zaklab-profile-upload-label {
+      color: var(--zaklab-violet);
+      font-size: 0.95em;
+      font-weight: 700;
+      border-radius: 8px;
+      cursor: pointer;
+      padding: 5px 8px;
+      background: var(--zaklab-hover-light);
+      margin-bottom: 18px;
+      display: inline-block;
+      margin-top: 2px;
+      transition: background 0.13s;
+    }
+    .zaklab-profile-upload-label:hover { background: #d7bfff;}
+    .zaklab-profile-form {
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: stretch;
+      gap: 15px;
+      margin-top: 10px;
+    }
+    .zaklab-profile-form label {
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-size: 1.04em;
+      color: var(--zaklab-violet);
+      font-weight: bold;
+      margin-bottom: 2px;
+    }
+    .zaklab-profile-form input[type="text"] {
+      font-size: 1.15em;
+      border-radius: 9px;
+      border: 1.5px solid #d6c2f2;
+      padding: 7px 12px;
+      outline: none;
+      margin-bottom: 7px;
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      background: #fff;
+      color: #43206e;
+      font-weight: bold;
+      transition: border 0.14s;
+    }
+    .zaklab-profile-form input[type="text"]:focus {
+      border: 1.5px solid var(--zaklab-violet);
+    }
+    body.dark .zaklab-profile-form input[type="text"] {
+      background: #221b3d;
+      color: #fff;
+      border: 1.5px solid #705bb6;
+    }
+    .zaklab-profile-form button {
+      padding: 10px 0;
+      border-radius: 9px;
+      border: none;
+      background: var(--zaklab-violet);
+      color: #fff;
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-size: 1.08em;
+      font-weight: bold;
+      cursor: pointer;
+      margin-top: 5px;
+      transition: background 0.18s;
+    }
+    .zaklab-profile-form button:hover { background: #a278e9;}
+    .zaklab-profile-bar .zaklab-profile-avatar {margin-bottom: 0;}
+    .zaklab-profile-bar .zaklab-profile-upload-label {margin-bottom: 20px;}
+    /* HAMBURGER BTN / AVATAR BTN */
+    .zaklab-profile-hamburger, .zaklab-profile-avatar-btn {
+      margin-left: 20px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      padding: 5px 7px 5px 7px;
+      border-radius: 8px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6em;
+      transition: background 0.16s;
+    }
+    .zaklab-profile-hamburger:hover, .zaklab-profile-avatar-btn:hover { background: var(--zaklab-hover-light);}
+    body.dark .zaklab-profile-hamburger:hover, body.dark .zaklab-profile-avatar-btn:hover {background: var(--zaklab-hover-dark);}
+    .zaklab-profile-avatar-btn img {
+      width: 36px; height: 36px; border-radius: 50%; border: 2px solid var(--zaklab-violet); object-fit: cover;
+      background: #fff; display: block;
+    }
+    @media (max-width: 520px) {
+      .zaklab-profile-bar { width: 94vw; min-width: 0;}
+    }
     /* SOCIAL BAR */
     .zaklab-social-bar {
       position: fixed;
@@ -374,6 +512,23 @@
   </style>
 </head>
 <body>
+  <!-- PROFILE HAMBURGER/AVATAR BTN -->
+  <button class="zaklab-profile-hamburger" id="zaklabProfileMenuBtn" title="Profil" aria-label="Profil">
+    <i class="fa-solid fa-bars"></i>
+  </button>
+  <!-- SIDEBAR PROFILE -->
+  <aside class="zaklab-profile-bar" id="zaklabProfileBar" aria-label="Profil">
+    <button class="zaklab-profile-bar-close" id="zaklabProfileBarClose" title="Fermer" aria-label="Fermer">&times;</button>
+    <div class="zaklab-profile-bar-title" id="zaklabProfileTitle">Profil</div>
+    <img src="" alt="Photo de profil" class="zaklab-profile-avatar" id="zaklabProfileAvatar">
+    <label class="zaklab-profile-upload-label" for="zaklabProfileUpload" id="zaklabProfileUploadLabel">Changer la photo</label>
+    <input type="file" id="zaklabProfileUpload" accept="image/png" style="display:none">
+    <form class="zaklab-profile-form" id="zaklabProfileForm" autocomplete="off">
+      <label for="zaklabProfileUsername" id="zaklabUsernameLabel">Nom d'utilisateur</label>
+      <input type="text" id="zaklabProfileUsername" maxlength="24" autocomplete="off" spellcheck="false">
+      <button type="submit" id="zaklabProfileValidateBtn">Valider</button>
+    </form>
+  </aside>
   <!-- HEADER -->
   <header class="zaklab-header" id="zaklabHeader">
     <span class="zaklab-logo" id="zaklabLogo" tabindex="0">ZakLab</span>
@@ -399,7 +554,13 @@
         </button>
         <div class="zaklab-lang-dropdown" id="zaklabLangDropdown" role="listbox" tabindex="-1"></div>
       </div>
+      <button class="zaklab-profile-avatar-btn" id="zaklabProfileAvatarBtn" style="display:none" title="Profil" aria-label="Profil">
+        <img src="" alt="Photo de profil" id="zaklabProfileAvatarBtnImg">
+      </button>
     </div>
+    <button class="zaklab-header-toggle" id="zaklabHeaderToggle" aria-label="Hide header" style="margin-left:16px;">
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
   </header>
   <!-- SOCIAL BAR (droite) -->
   <nav class="zaklab-social-bar" aria-label="Réseaux sociaux ZakLab">
@@ -423,12 +584,10 @@
   <a class="zaklab-discord-fixed" href="discord.html" aria-label="Discord">
     <i class="fab fa-discord"></i>
   </a>
-  
-  <!-- GRAND ESPACE POUR LE CONTENU -->
+  <!-- CONTENU -->
   <main id="zaklabContent" style="margin-top:100px; margin-bottom:180px; min-height:500px;">
     <!-- Ton contenu ici -->
   </main>
-  
   <!-- FOOTER -->
   <footer class="zaklab-footer" id="zaklabFooter">
     <section class="zaklab-footer-section">
@@ -459,23 +618,23 @@
       <i class="fa-solid fa-chevron-down"></i>
     </button>
   </footer>
-
-  <!-- JS (Interactions, traduction, theme, etc.) -->
+  <!-- JS -->
   <script>
+    // Traductions
     const ZAKLAB_LANGS = [
       { key: "fr", label: "Français" },{ key: "en", label: "English" },{ key: "ru", label: "Русский" },
       { key: "ur", label: "اردو" },{ key: "in", label: "Hindi" },{ key: "tr", label: "Türkçe" },
       { key: "cz", label: "Čeština" },{ key: "es", label: "Español" }
     ];
     const ZAKLAB_TRANSLATIONS = {
-      fr: {home:"Accueil",news:"Actualités",mineruns:"MineRuns",minecraft:"Minecraft",map:"Carte",music:"Musique",chat:"Chat",about:"À propos",links:"Liens",sections:"Sections"},
-      en: {home:"Home",news:"News",mineruns:"MineRuns",minecraft:"Minecraft",map:"Map",music:"Music",chat:"Chat",about:"About us",links:"Links",sections:"Sections"},
-      ru: {home:"Главная",news:"Новости",mineruns:"MineRuns",minecraft:"Майнкрафт",map:"Карта",music:"Музыка",chat:"Чат",about:"О нас",links:"Ссылки",sections:"Разделы"},
-      ur: {home:"ہوم",news:"خبریں",mineruns:"MineRuns",minecraft:"مائنکرافٹ",map:"نقشہ",music:"موسیقی",chat:"چیٹ",about:"ہمارے بارے میں",links:"روابط",sections:"سیکشنز"},
-      in: {home:"होम",news:"समाचार",mineruns:"MineRuns",minecraft:"माइनक्राफ्ट",map:"मानचित्र",music:"संगीत",chat:"चैट",about:"हमारे बारे में",links:"लिंक",sections:"सेक्शन"},
-      tr: {home:"Anasayfa",news:"Haberler",mineruns:"MineRuns",minecraft:"Minecraft",map:"Harita",music:"Müzik",chat:"Sohbet",about:"Hakkımızda",links:"Bağlantılar",sections:"Bölümler"},
-      cz: {home:"Domů",news:"Novinky",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Hudba",chat:"Chat",about:"O nás",links:"Odkazy",sections:"Sekce"},
-      es: {home:"Inicio",news:"Noticias",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Música",chat:"Chat",about:"Sobre nosotros",links:"Enlaces",sections:"Secciones"}
+      fr: {home:"Accueil",news:"Actualités",mineruns:"MineRuns",minecraft:"Minecraft",map:"Carte",music:"Musique",chat:"Chat",about:"À propos",links:"Liens",sections:"Sections",profile:"Profil",username:"Nom d'utilisateur",validate:"Valider",changephoto:"Changer la photo"},
+      en: {home:"Home",news:"News",mineruns:"MineRuns",minecraft:"Minecraft",map:"Map",music:"Music",chat:"Chat",about:"About us",links:"Links",sections:"Sections",profile:"Profile",username:"Username",validate:"Validate",changephoto:"Change photo"},
+      ru: {home:"Главная",news:"Новости",mineruns:"MineRuns",minecraft:"Майнкрафт",map:"Карта",music:"Музыка",chat:"Чат",about:"О нас",links:"Ссылки",sections:"Разделы",profile:"Профиль",username:"Имя пользователя",validate:"Сохранить",changephoto:"Сменить фото"},
+      ur: {home:"ہوم",news:"خبریں",mineruns:"MineRuns",minecraft:"مائنکرافٹ",map:"نقشہ",music:"موسیقی",chat:"چیٹ",about:"ہمارے بارے میں",links:"روابط",sections:"سیکشنز",profile:"پروفائل",username:"یوزرنیم",validate:"تصدیق کریں",changephoto:"تصویر بدلیں"},
+      in: {home:"होम",news:"समाचार",mineruns:"MineRuns",minecraft:"माइनक्राफ्ट",map:"मानचित्र",music:"संगीत",chat:"चैट",about:"हमारे बारे में",links:"लिंक",sections:"सेक्शन",profile:"प्रोफ़ाइल",username:"यूज़रनेम",validate:"सेव करें",changephoto:"फोटो बदलें"},
+      tr: {home:"Anasayfa",news:"Haberler",mineruns:"MineRuns",minecraft:"Minecraft",map:"Harita",music:"Müzik",chat:"Sohbet",about:"Hakkımızda",links:"Bağlantılar",sections:"Bölümler",profile:"Profil",username:"Kullanıcı adı",validate:"Kaydet",changephoto:"Fotoğraf değiştir"},
+      cz: {home:"Domů",news:"Novinky",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Hudba",chat:"Chat",about:"O nás",links:"Odkazy",sections:"Sekce",profile:"Profil",username:"Uživatelské jméno",validate:"Uložit",changephoto:"Změnit foto"},
+      es: {home:"Inicio",news:"Noticias",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Música",chat:"Chat",about:"Sobre nosotros",links:"Enlaces",sections:"Secciones",profile:"Perfil",username:"Usuario",validate:"Guardar",changephoto:"Cambiar foto"}
     };
     function getLang() {return localStorage.getItem('zaklab-lang') || 'fr';}
     function setLang(lang) {localStorage.setItem('zaklab-lang', lang);renderLang();}
@@ -496,6 +655,12 @@
       });
       if(document.getElementById('footerLinksTitle')) document.getElementById('footerLinksTitle').textContent = tr.links;
       if(document.getElementById('footerSectionsTitle')) document.getElementById('footerSectionsTitle').textContent = tr.sections;
+      // Profil bar trad
+      if(document.getElementById('zaklabProfileTitle')) document.getElementById('zaklabProfileTitle').textContent = tr.profile;
+      if(document.getElementById('zaklabUsernameLabel')) document.getElementById('zaklabUsernameLabel').textContent = tr.username;
+      if(document.getElementById('zaklabProfileValidateBtn')) document.getElementById('zaklabProfileValidateBtn').textContent = tr.validate;
+      if(document.getElementById('zaklabProfileUploadLabel')) document.getElementById('zaklabProfileUploadLabel').textContent = tr.changephoto;
+      // Lang select
       const langObj = ZAKLAB_LANGS.find(l => l.key === lang) || ZAKLAB_LANGS[0];
       document.getElementById('currentLangLabel').textContent = langObj.label;
       const dropdown = document.getElementById('zaklabLangDropdown');
@@ -519,6 +684,7 @@
       btn.onclick=function(){if(dropdown.classList.contains('open')){dropdown.classList.remove('open');btn.setAttribute('aria-expanded','false');}else{dropdown.classList.add('open');btn.setAttribute('aria-expanded','true');}};
       document.addEventListener('click',e=>{if(!btn.contains(e.target)&&!dropdown.contains(e.target)){dropdown.classList.remove('open');btn.setAttribute('aria-expanded','false');}});
     })();
+    // Thème
     const themeToggle=document.getElementById('themeToggle');
     function setTheme(dark) {
       document.body.classList.toggle('dark',dark);
@@ -527,17 +693,106 @@
     }
     (() => {const saved=localStorage.getItem('zaklab-theme');const prefersDark=window.matchMedia('(prefers-color-scheme: dark)').matches;setTheme(saved?saved==='dark':prefersDark);})();
     themeToggle.addEventListener('click',()=>{setTheme(!document.body.classList.contains('dark'));});
+    // Logo
     document.getElementById('zaklabLogo').onclick=()=>{window.location.href='home.html';};
     document.getElementById('zaklabLogo').onkeydown=(e)=>{if(e.key==="Enter"||e.key===" "){window.location.href='home.html';}};
+    // Active nav
     (()=>{const section=(location.pathname.split('/').pop()||'home.html').replace('.html','');document.querySelectorAll('.zaklab-nav-link').forEach(link=>{if(link.dataset.section===section)link.classList.add('active');});})();
-    // Footer toggle logic
+    // Footer toggle
     const footer=document.getElementById('zaklabFooter');
     const footerToggle=document.getElementById('zaklabFooterToggle');
     let footerHidden=false;
     function setFooterHidden(hide){footerHidden=hide;footer.classList.toggle('hide',footerHidden);footerToggle.innerHTML=hide?'<i class="fa-solid fa-chevron-up"></i>':'<i class="fa-solid fa-chevron-down"></i>';footerToggle.setAttribute('aria-label',hide?'Show footer':'Hide footer');}
     footerToggle.addEventListener('click',()=>setFooterHidden(!footerHidden));
     (()=>{if(localStorage.getItem('zaklab-footer-hide')==='true')setFooterHidden(true);footerToggle.addEventListener('click',()=>{localStorage.setItem('zaklab-footer-hide',footerHidden?'true':'false');});})();
+    // -- PROFILE BAR LOGIC --
+    const profileMenuBtn = document.getElementById('zaklabProfileMenuBtn');
+    const profileBar = document.getElementById('zaklabProfileBar');
+    const profileClose = document.getElementById('zaklabProfileBarClose');
+    const profileForm = document.getElementById('zaklabProfileForm');
+    const profileUsernameInput = document.getElementById('zaklabProfileUsername');
+    const profileAvatar = document.getElementById('zaklabProfileAvatar');
+    const profileUpload = document.getElementById('zaklabProfileUpload');
+    const profileAvatarBtn = document.getElementById('zaklabProfileAvatarBtn');
+    const profileAvatarBtnImg = document.getElementById('zaklabProfileAvatarBtnImg');
+    // State
+    let zaklabProfile = {
+      username: "",
+      avatar: ""
+    };
+    // Load from storage
+    function loadProfile(){
+      try {
+        const s = localStorage.getItem('zaklab-user-profile');
+        if(s) {
+          zaklabProfile = JSON.parse(s);
+          if(zaklabProfile.username) profileUsernameInput.value = zaklabProfile.username;
+          if(zaklabProfile.avatar) {
+            profileAvatar.src = zaklabProfile.avatar;
+            profileAvatarBtnImg.src = zaklabProfile.avatar;
+            profileAvatarBtn.style.display = "inline-flex";
+            profileMenuBtn.style.display = "none";
+          } else {
+            profileAvatar.src = "https://ui-avatars.com/api/?name=ZL&background=8a2be2&color=fff&rounded=true&size=96";
+            profileAvatarBtnImg.src = "https://ui-avatars.com/api/?name=ZL&background=8a2be2&color=fff&rounded=true&size=96";
+            profileAvatarBtn.style.display = "none";
+            profileMenuBtn.style.display = "inline-flex";
+          }
+        } else {
+          profileAvatar.src = "https://ui-avatars.com/api/?name=ZL&background=8a2be2&color=fff&rounded=true&size=96";
+          profileAvatarBtnImg.src = "https://ui-avatars.com/api/?name=ZL&background=8a2be2&color=fff&rounded=true&size=96";
+          profileAvatarBtn.style.display = "none";
+          profileMenuBtn.style.display = "inline-flex";
+        }
+      } catch(e){}
+    }
+    // Show/hide
+    function openProfileBar(){ profileBar.classList.add('open'); }
+    function closeProfileBar(){ profileBar.classList.remove('open'); }
+    profileMenuBtn.onclick = openProfileBar;
+    profileAvatarBtn.onclick = openProfileBar;
+    profileClose.onclick = closeProfileBar;
+    // Avatar upload
+    document.getElementById('zaklabProfileUploadLabel').onclick = ()=>profileUpload.click();
+    profileUpload.onchange = function(e){
+      if(this.files && this.files[0] && this.files[0].type === "image/png") {
+        const reader = new FileReader();
+        reader.onload = function(evt) {
+          if(evt.target.result){
+            profileAvatar.src = evt.target.result;
+            profileAvatarBtnImg.src = evt.target.result;
+            zaklabProfile.avatar = evt.target.result;
+            localStorage.setItem('zaklab-user-profile', JSON.stringify(zaklabProfile));
+            profileAvatarBtn.style.display = "inline-flex";
+            profileMenuBtn.style.display = "none";
+          }
+        };
+        reader.readAsDataURL(this.files[0]);
+      }
+    };
+    // Form
+    profileForm.onsubmit = function(e){
+      e.preventDefault();
+      zaklabProfile.username = profileUsernameInput.value.trim();
+      localStorage.setItem('zaklab-user-profile', JSON.stringify(zaklabProfile));
+      closeProfileBar();
+    };
+    // Trad validate button on form submit
+    function updateProfileBtnLang(){
+      const lang = getLang();
+      const tr = ZAKLAB_TRANSLATIONS[lang] || ZAKLAB_TRANSLATIONS.fr;
+      document.getElementById('zaklabProfileValidateBtn').textContent = tr.validate;
+      document.getElementById('zaklabProfileTitle').textContent = tr.profile;
+      document.getElementById('zaklabUsernameLabel').textContent = tr.username;
+      document.getElementById('zaklabProfileUploadLabel').textContent = tr.changephoto;
+    }
+    // Hide hamburger if avatar
+    loadProfile();
+    updateProfileBtnLang();
     renderLang();
+    // Lang update on switch
+    const observerLang = new MutationObserver(updateProfileBtnLang);
+    observerLang.observe(document.getElementById('currentLangLabel'), {childList:true});
   </script>
 </body>
 </html>
