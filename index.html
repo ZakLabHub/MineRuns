@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <title>ZakLab</title>
-  <!-- Font Awesome CDN -->
+  <!-- Font Awesome -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-  <!-- Wedges font via Google Fonts (display=swap for best effect) -->
+  <!-- Wedges font -->
   <link href="https://fonts.googleapis.com/css2?family=Wedges:wght@700&display=swap" rel="stylesheet">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <style>
@@ -15,63 +15,59 @@
       --zaklab-bg-dark: #181924;
       --zaklab-icon-light: var(--zaklab-violet);
       --zaklab-icon-dark: #fff;
-      --zaklab-sidebar-width: 62px;
-      --zaklab-sidebar-gap: 18px;
-      --zaklab-sidebar-radius: 16px;
-      --zaklab-shadow: 0 4px 16px 0 rgba(138,43,226, 0.05);
       --zaklab-hover-light: #f3e9ff;
       --zaklab-hover-dark: #362c4a;
       --zaklab-footer-bg: var(--zaklab-violet);
       --zaklab-footer-text: #fff;
       --zaklab-footer-link: #e2d5fa;
       --zaklab-footer-hover: #fff;
-      --zaklab-footer-section-width: 350px;
+    }
+    html, body {
+      height: 100%;
+      margin: 0;
+      padding: 0;
     }
     body {
       background: var(--zaklab-bg-light);
-      margin: 0;
-      min-height: 100vh;
-      transition: background 0.2s;
-      font-family: system-ui, sans-serif;
       color: #181924;
-      padding-bottom: 0; /* for footer */
+      font-family: system-ui, sans-serif;
+      min-height: 100vh;
+      transition: background 0.2s, color 0.2s;
+      box-sizing: border-box;
+      padding: 0;
     }
     body.dark {
       background: var(--zaklab-bg-dark);
       color: #fff;
     }
 
-    /* ZakLab Header */
+    /* HEADER */
     .zaklab-header {
       position: fixed;
       top: 0; left: 0; right: 0;
-      height: 66px;
+      height: 70px;
       background: #fff;
-      border-bottom: 1px solid #eee;
+      border-bottom: 1.5px solid #eee;
       display: flex;
       align-items: center;
       z-index: 1001;
       padding: 0 24px;
       transition: background 0.2s, border-bottom 0.2s, box-shadow 0.18s;
-      font-weight: bold;
-      font-size: 1.2rem;
-      letter-spacing: 0.5px;
       box-shadow: 0 2px 12px 0 rgba(138,43,226,0.07);
     }
     body.dark .zaklab-header {
       background: #191a25;
-      border-bottom: 1px solid #26273a;
+      border-bottom: 1.5px solid #26273a;
       color: #fff;
       box-shadow: 0 2px 20px 0 rgba(24,25,36,0.13);
     }
-    /* Hide/show header */
     .zaklab-header.hide {
       transform: translateY(-120%);
       transition: transform 0.35s cubic-bezier(.7,-0.35,0,1.09);
     }
     .zaklab-header-toggle {
       position: fixed;
-      top: 74px;
+      top: 72px;
       left: 50%;
       transform: translateX(-50%);
       z-index: 1002;
@@ -81,7 +77,7 @@
       border-radius: 0 0 18px 18px;
       width: 50px;
       height: 30px;
-      font-size: 1.15em;
+      font-size: 1.2em;
       display: flex;
       align-items: center;
       justify-content: center;
@@ -91,16 +87,12 @@
       outline: none;
     }
     .zaklab-header-toggle:hover { background: #a278e9; }
-    .zaklab-header-toggle.hide {
-      top: 0;
-      border-radius: 0 0 18px 18px;
-    }
+    .zaklab-header-toggle.hide { top: 0; }
 
-    /* Logo + Nav */
     .zaklab-logo {
       color: var(--zaklab-violet);
       font-family: 'Montserrat', 'Arial Black', Arial, sans-serif;
-      margin-right: 32px;
+      margin-right: 38px;
       font-size: 2em;
       font-weight: 900;
       letter-spacing: 2px;
@@ -114,7 +106,7 @@
     .zaklab-nav {
       display: flex;
       flex-direction: row;
-      gap: 18px;
+      gap: 16px;
       align-items: center;
       margin-right: 24px;
     }
@@ -122,18 +114,16 @@
       font-family: 'Wedges', Arial Black, Arial, sans-serif;
       text-decoration: none;
       color: var(--zaklab-violet);
-      background: none;
       font-size: 1.09em;
-      padding: 6px 13px;
+      padding: 7px 13px;
       border-radius: 10px;
       font-weight: 700;
       letter-spacing: .07em;
       transition: background 0.13s, color 0.18s;
-      position: relative;
       outline: none;
       border: none;
       cursor: pointer;
-      text-transform: none;
+      background: none;
       box-shadow: none;
     }
     .zaklab-nav-link.active, .zaklab-nav-link:hover, .zaklab-nav-link:focus-visible {
@@ -143,27 +133,27 @@
     body.dark .zaklab-nav-link {
       color: #fff;
     }
-    body.dark .zaklab-nav-link.active, body.dark .zaklab-nav-link:hover, body.dark .zaklab-nav-link:focus-visible {
+    body.dark .zaklab-nav-link.active, 
+    body.dark .zaklab-nav-link:hover, 
+    body.dark .zaklab-nav-link:focus-visible {
       background: var(--zaklab-hover-dark);
       color: var(--zaklab-violet);
     }
-
-    /* Controls on right */
     .zaklab-header-controls {
       margin-left: auto;
       display: flex;
       align-items: center;
-      gap: 12px;
+      gap: 13px;
     }
 
-    /* Theme toggle */
+    /* THEME TOGGLE */
     .zaklab-theme-toggle {
       background: none;
       border: none;
       font-size: 1.25em;
       cursor: pointer;
       color: var(--zaklab-violet);
-      padding: 8px 12px;
+      padding: 7px 12px;
       border-radius: 8px;
       transition: background 0.18s;
       display: flex; align-items: center; justify-content: center;
@@ -172,15 +162,11 @@
     .zaklab-theme-toggle:hover {
       background: #f3e9ff;
     }
-    body.dark .zaklab-theme-toggle {
-      color: #fff;
-    }
-    body.dark .zaklab-theme-toggle:hover {
-      background: #362c4a;
-    }
+    body.dark .zaklab-theme-toggle { color: #fff; }
+    body.dark .zaklab-theme-toggle:hover { background: #362c4a; }
 
-    /* Language selector */
-    .zaklab-lang-select-group {
+    /* LANG SELECTOR */
+    .zaklab-lang-group {
       position: relative;
       margin-left: 3px;
     }
@@ -190,48 +176,53 @@
       background: none;
       border: none;
       cursor: pointer;
-      font-size: 1em;
+      font-size: 1.12em;
       border-radius: 100px;
-      min-width: 41px;
+      min-width: 44px;
       min-height: 41px;
-      padding: 0 7px 0 0;
+      padding: 0 10px 0 0;
       transition: background 0.16s, color 0.16s;
       color: var(--zaklab-violet);
       outline: none;
       position: relative;
+      font-weight: bold;
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      gap: 7px;
     }
-    .zaklab-lang-btn .lang-flag {
-      width: 28px;
-      height: 28px;
+    .zaklab-lang-btn .lang-globe {
+      width: 32px; height: 32px; margin-right: 4px;
+      background: var(--zaklab-violet);
+      color: #fff;
       border-radius: 50%;
-      background: #f5f5f5;
-      object-fit: cover;
-      border: 2.8px solid var(--zaklab-violet);
-      margin-right: 6px;
-      transition: border 0.18s;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.1em;
+      font-weight: bold;
+      box-shadow: 0 2px 9px 0 rgba(138,43,226,0.13);
+    }
+    .zaklab-lang-btn .lang-label {
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-weight: bold;
+      font-size: 1em;
+      color: var(--zaklab-violet);
+      letter-spacing: .02em;
     }
     .zaklab-lang-btn .fa-chevron-down {
       color: #bdbada;
       font-size: 1em;
       margin-left: 2px;
     }
-    .zaklab-lang-btn:hover, .zaklab-lang-btn.active {
-      background: var(--zaklab-hover-light);
-    }
-    body.dark .zaklab-lang-btn {
-      color: #fff;
-    }
-    body.dark .zaklab-lang-btn:hover, body.dark .zaklab-lang-btn.active {
-      background: var(--zaklab-hover-dark);
-    }
+    .zaklab-lang-btn:hover, .zaklab-lang-btn.active { background: var(--zaklab-hover-light); }
+    body.dark .zaklab-lang-btn { color: #fff; }
+    body.dark .zaklab-lang-btn .lang-label { color: #fff; }
+    body.dark .zaklab-lang-btn:hover, body.dark .zaklab-lang-btn.active { background: var(--zaklab-hover-dark); }
     .zaklab-lang-dropdown {
       position: absolute;
-      top: 110%;
+      top: 108%;
       right: 0;
       background: #fff;
       border-radius: 18px;
       box-shadow: 0 2px 20px rgba(138,43,226,0.17);
-      min-width: 160px;
+      min-width: 180px;
       padding: 7px 0;
       display: none;
       flex-direction: column;
@@ -245,35 +236,35 @@
       border: 1.7px solid #46305b;
       color: #fff;
     }
-    .zaklab-lang-dropdown.open {
-      display: flex;
-    }
+    .zaklab-lang-dropdown.open { display: flex; }
     .zaklab-lang-option {
       display: flex;
       align-items: center;
       background: none;
       border: none;
       width: 100%;
-      padding: 7px 16px;
-      font-size: 1.09em;
+      padding: 10px 18px;
+      font-size: 1.08em;
       color: #43206e;
       cursor: pointer;
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-weight: bold;
       gap: 8px;
       transition: background 0.13s, color 0.15s;
+      justify-content: flex-start;
     }
     .zaklab-lang-option:hover, .zaklab-lang-option.active {
       background: var(--zaklab-hover-light);
       color: var(--zaklab-violet);
     }
-    body.dark .zaklab-lang-option {
-      color: #fff;
-    }
-    body.dark .zaklab-lang-option:hover, body.dark .zaklab-lang-option.active {
+    body.dark .zaklab-lang-option { color: #fff; }
+    body.dark .zaklab-lang-option:hover, 
+    body.dark .zaklab-lang-option.active {
       background: var(--zaklab-hover-dark);
       color: var(--zaklab-violet);
     }
 
-    /* Social bar styles (as before) */
+    /* SOCIAL BAR */
     .zaklab-social-bar {
       position: fixed;
       top: 50%;
@@ -281,14 +272,14 @@
       z-index: 999;
       transform: translateY(-50%);
       background: rgba(255,255,255,0.8);
-      border-radius: var(--zaklab-sidebar-radius) 0 0 var(--zaklab-sidebar-radius);
-      box-shadow: var(--zaklab-shadow);
-      width: var(--zaklab-sidebar-width);
+      border-radius: 16px 0 0 16px;
+      box-shadow: 0 4px 16px 0 rgba(138,43,226, 0.05);
+      width: 62px;
       padding: 12px 0;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: var(--zaklab-sidebar-gap);
+      gap: 18px;
       transition: background 0.2s, box-shadow 0.2s;
       backdrop-filter: blur(2px);
     }
@@ -332,18 +323,19 @@
       .zaklab-social-bar { display: none; }
     }
 
-    /* Content */
+    /* MAIN CONTENT */
     .zaklab-content {
-      margin-top: 85px;
+      margin-top: 88px;
       padding: 36px 12px 32px 12px;
       max-width: 820px;
       margin-left: auto;
       margin-right: auto;
       text-align: center;
-      min-height: 300px;
+      min-height: 2000px; /* Pour forcer la page longue et scrollable */
+      background: none;
     }
 
-    /* Footer */
+    /* FOOTER */
     .zaklab-footer {
       width: 100vw;
       background: var(--zaklab-footer-bg);
@@ -366,7 +358,7 @@
       transition: transform 0.45s cubic-bezier(.7,-0.35,0,1.09);
     }
     .zaklab-footer-section {
-      min-width: var(--zaklab-footer-section-width);
+      min-width: 260px;
       max-width: 99vw;
       margin-bottom: 18px;
     }
@@ -430,13 +422,10 @@
       outline: none;
     }
     .zaklab-footer-toggle:hover { background: #a278e9; }
-    .zaklab-footer-toggle.hide {
-      bottom: 0;
-      border-radius: 16px 16px 0 0;
-    }
+    .zaklab-footer-toggle.hide { bottom: 0; }
 
     @media (max-width: 930px) {
-      .zaklab-footer-section { min-width: 220px; }
+      .zaklab-footer-section { min-width: 190px; }
       .zaklab-footer { gap: 30px; }
     }
     @media (max-width: 620px) {
@@ -459,7 +448,7 @@
   <!-- HEADER -->
   <header class="zaklab-header" id="zaklabHeader">
     <span class="zaklab-logo" id="zaklabLogo" tabindex="0">ZakLab</span>
-    <nav class="zaklab-nav" aria-label="Main navigation">
+    <nav class="zaklab-nav" aria-label="Navigation principale">
       <a class="zaklab-nav-link" data-section="home" href="home.html">Home</a>
       <a class="zaklab-nav-link" data-section="news" href="news.html">News</a>
       <a class="zaklab-nav-link" data-section="mineruns" href="mineruns.html">MineRuns</a>
@@ -473,10 +462,10 @@
       <button class="zaklab-theme-toggle" id="themeToggle" title="Light/Dark mode toggle">
         <i class="fa-solid fa-moon"></i>
       </button>
-      <div class="zaklab-lang-select-group" id="langSelectorGroup">
+      <div class="zaklab-lang-group" id="langSelectorGroup">
         <button class="zaklab-lang-btn" id="zaklabLangBtn" aria-haspopup="listbox" aria-expanded="false">
-          <img class="lang-flag" id="currentFlag" src="" alt="Flag" />
-          <span id="currentLangLabel"></span>
+          <span class="lang-globe" aria-label="Langue"><span style="font-size:1.2em">🌐</span></span>
+          <span class="lang-label" id="currentLangLabel"></span>
           <i class="fa-solid fa-chevron-down"></i>
         </button>
         <div class="zaklab-lang-dropdown" id="zaklabLangDropdown" role="listbox" tabindex="-1"></div>
@@ -521,12 +510,38 @@
     <p id="mainIntro">
       Testez la <strong>barre verticale de réseaux sociaux</strong> à droite.<br>
       Utilisez le bouton <i class="fa-solid fa-moon"></i>/<i class="fa-solid fa-sun"></i> pour changer de thème.<br>
-      Le site est multilingue et adaptatif !
+      Le site est multilingue et adaptatif !<br><br>
+      <span style="font-size:1.5em; color: var(--zaklab-violet);">⬇️ Faites défiler la page ⬇️</span>
     </p>
-    <p id="mainFooter">
-      La barre reste visible en scrollant et s'adapte au thème clair/sombre.<br>
-      <em>(Intégrez ce code dans votre projet principal, il fonctionne sans CSS externe.)</em>
-    </p>
+    <section style="margin: 60px auto; max-width: 650px; background:rgba(138,43,226,0.10); padding: 30px 18px; border-radius: 14px;">
+      <h2 style="font-family:'Wedges',Arial Black,Arial,sans-serif;font-weight:bold;color:var(--zaklab-violet);">Section test longue</h2>
+      <p>
+        Cette section simule du contenu long pour tester le scroll.<br>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse facilisis, enim sed pulvinar hendrerit, ex nisi pretium orci, nec cursus risus lorem nec quam.<br>
+        <br>
+        Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas.<br>
+        Nam nec turpis dictum, rhoncus erat a, sodales enim. Nullam dictum euismod facilisis. 
+        Etiam varius, tortor id ultricies ultricies, purus nulla eleifend augue, sed condimentum sem elit eu mauris.
+      </p>
+      <p>
+        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed nec est nec sapien gravida fermentum.<br>
+        (Répétez ce genre de contenu pour avoir une vraie page longue.)
+      </p>
+    </section>
+    <section style="margin: 70px auto; max-width:650px;">
+      <h2 style="font-family:'Wedges',Arial Black,Arial,sans-serif;font-weight:bold;color:#43206e;">Encore du contenu…</h2>
+      <p>
+        Scroll encore vers le bas !<br>
+        <em>(Le footer violet doit toujours rester tout en bas de la page, même avec beaucoup de contenu.)</em>
+      </p>
+    </section>
+    <section style="margin: 70px auto; max-width:650px;">
+      <h2 style="font-family:'Wedges',Arial Black,Arial,sans-serif;font-weight:bold;color:#43206e;">Fin de la page</h2>
+      <p>
+        Bravo, tu as atteint le bas !<br>
+        Tu peux cacher/montrer le footer avec la flèche en bas à l'écran.
+      </p>
+    </section>
   </main>
   <!-- FOOTER -->
   <footer class="zaklab-footer" id="zaklabFooter">
@@ -562,101 +577,76 @@
   </button>
 
   <script>
-    // Language definitions
+    // LANG SUPPORT
     const ZAKLAB_LANGS = [
-      {
-        key: "fr", label: "Français", icon: "https://upload.wikimedia.org/wikipedia/commons/c/c3/Flag_of_France.svg"
-      },
-      {
-        key: "en", label: "English", icon: "https://upload.wikimedia.org/wikipedia/commons/a/a4/Flag_of_the_United_Kingdom.svg"
-      },
-      {
-        key: "ru", label: "Русский", icon: "https://upload.wikimedia.org/wikipedia/commons/f/f3/Flag_of_Russia.svg"
-      },
-      {
-        key: "ur", label: "اردو", icon: "https://upload.wikimedia.org/wikipedia/commons/3/32/Flag_of_Pakistan.svg"
-      },
-      {
-        key: "in", label: "Hindi", icon: "https://upload.wikimedia.org/wikipedia/en/4/41/Flag_of_India.svg"
-      },
-      {
-        key: "tr", label: "Türkçe", icon: "https://upload.wikimedia.org/wikipedia/commons/b/b4/Flag_of_Turkey.svg"
-      },
-      {
-        key: "cz", label: "Čeština", icon: "https://upload.wikimedia.org/wikipedia/commons/c/cb/Flag_of_the_Czech_Republic.svg"
-      },
-      {
-        key: "es", label: "Español", icon: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Flag_of_Spain.svg"
-      }
+      { key: "fr", label: "Français" },
+      { key: "en", label: "English" },
+      { key: "ru", label: "Русский" },
+      { key: "ur", label: "اردو" },
+      { key: "in", label: "Hindi" },
+      { key: "tr", label: "Türkçe" },
+      { key: "cz", label: "Čeština" },
+      { key: "es", label: "Español" }
     ];
     // Translations for main UI (not proper names)
     const ZAKLAB_TRANSLATIONS = {
       fr: {
         home: "Accueil", news: "Actualités", mineruns: "MineRuns", minecraft: "Minecraft", map: "Carte", music: "Musique", chat: "Chat", about: "À propos",
         welcome: "Bienvenue sur ZakLab !",
-        intro: "Testez la <strong>barre verticale de réseaux sociaux</strong> à droite.<br>Utilisez le bouton <i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> pour changer de thème.<br>Le site est multilingue et adaptatif !",
-        mainFooter: "La barre reste visible en scrollant et s'adapte au thème clair/sombre.<br><em>(Intégrez ce code dans votre projet principal, il fonctionne sans CSS externe.)</em>",
+        intro: "Testez la <strong>barre verticale de réseaux sociaux</strong> à droite.<br>Utilisez le bouton <i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> pour changer de thème.<br>Le site est multilingue et adaptatif !<br><br><span style=\"font-size:1.5em; color: var(--zaklab-violet);\">⬇️ Faites défiler la page ⬇️</span>",
         links: "Liens",
         sections: "Sections"
       },
       en: {
         home: "Home", news: "News", mineruns: "MineRuns", minecraft: "Minecraft", map: "Map", music: "Music", chat: "Chat", about: "About us",
         welcome: "Welcome to ZakLab!",
-        intro: "Try out the <strong>vertical social bar</strong> on the right.<br>Use the <i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> button to change theme.<br>The site is multilingual and adaptive!",
-        mainFooter: "The bar remains visible while scrolling and adapts to light/dark theme.<br><em>(Integrate this code into your main project, it works without external CSS.)</em>",
+        intro: "Try out the <strong>vertical social bar</strong> on the right.<br>Use the <i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> button to change theme.<br>The site is multilingual and adaptive!<br><br><span style=\"font-size:1.5em; color: var(--zaklab-violet);\">⬇️ Scroll down the page ⬇️</span>",
         links: "Links",
         sections: "Sections"
       },
       ru: {
         home: "Главная", news: "Новости", mineruns: "MineRuns", minecraft: "Майнкрафт", map: "Карта", music: "Музыка", chat: "Чат", about: "О нас",
         welcome: "Добро пожаловать на ZakLab!",
-        intro: "Попробуйте <strong>вертикальную панель соцсетей</strong> справа.<br>Используйте кнопку <i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> для смены темы.<br>Сайт многоязычный и адаптивный!",
-        mainFooter: "Панель всегда видна при прокрутке и поддерживает светлую/тёмную тему.<br><em>(Встраивайте этот код в свой проект, он работает без внешнего CSS.)</em>",
+        intro: "Попробуйте <strong>вертикальную панель соцсетей</strong> справа.<br>Используйте кнопку <i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> для смены темы.<br>Сайт многоязычный и адаптивный!<br><br><span style=\"font-size:1.5em; color: var(--zaklab-violet);\">⬇️ Прокрутите страницу ⬇️</span>",
         links: "Ссылки",
         sections: "Разделы"
       },
       ur: {
         home: "ہوم", news: "خبریں", mineruns: "MineRuns", minecraft: "مائنکرافٹ", map: "نقشہ", music: "موسیقی", chat: "چیٹ", about: "ہمارے بارے میں",
         welcome: "ZakLab میں خوش آمدید!",
-        intro: "دائیں طرف <strong>عمودی سوشل بار</strong> آزمائیں۔<br><i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> بٹن سے تھیم تبدیل کریں۔<br>ویب سائٹ کثیر لسانی اور متحرک ہے!",
-        mainFooter: "بار اسکرول کے ساتھ نظر آتی ہے اور تھیم کے مطابق ہے۔<br><em>(اس کوڈ کو اپنے پروجیکٹ میں شامل کریں، یہ بغیر بیرونی CSS کے کام کرتا ہے۔)</em>",
+        intro: "دائیں طرف <strong>عمودی سوشل بار</strong> آزمائیں۔<br><i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> بٹن سے تھیم تبدیل کریں۔<br>ویب سائٹ کثیر لسانی اور متحرک ہے!<br><br><span style=\"font-size:1.5em; color: var(--zaklab-violet);\">⬇️ صفحہ نیچے سکرول کریں ⬇️</span>",
         links: "روابط",
         sections: "سیکشنز"
       },
       in: {
         home: "होम", news: "समाचार", mineruns: "MineRuns", minecraft: "माइनक्राफ्ट", map: "मानचित्र", music: "संगीत", chat: "चैट", about: "हमारे बारे में",
         welcome: "ZakLab में आपका स्वागत है!",
-        intro: "दाईं ओर <strong>वर्टिकल सोशल बार</strong> आज़माएं।<br><i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> से थीम बदलें।<br>यह साइट बहुभाषी और अनुकूल है!",
-        mainFooter: "बार स्क्रॉल पर भी दिखती है और थीम के अनुसार बदलती है।<br><em>(इस कोड को अपने प्रोजेक्ट में जोड़ें, यह बाहरी CSS के बिना चलता है।)</em>",
+        intro: "दाईं ओर <strong>वर्टिकल सोशल बार</strong> आज़माएं।<br><i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> से थीम बदलें।<br>यह साइट बहुभाषी और अनुकूल है!<br><br><span style=\"font-size:1.5em; color: var(--zaklab-violet);\">⬇️ नीचे स्क्रॉल करें ⬇️</span>",
         links: "लिंक",
         sections: "सेक्शन"
       },
       tr: {
         home: "Anasayfa", news: "Haberler", mineruns: "MineRuns", minecraft: "Minecraft", map: "Harita", music: "Müzik", chat: "Sohbet", about: "Hakkımızda",
         welcome: "ZakLab'a hoş geldiniz!",
-        intro: "Sağdaki <strong>dikey sosyal barı</strong> deneyin.<br><i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> ile temayı değiştirin.<br>Site çok dilli ve uyumludur!",
-        mainFooter: "Bar, kaydırırken görünür durumda kalır ve temaya uyum sağlar.<br><em>(Bu kodu ana projenize entegre edin, harici CSS gerekmez.)</em>",
+        intro: "Sağdaki <strong>dikey sosyal barı</strong> deneyin.<br><i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> ile temayı değiştirin.<br>Site çok dilli ve uyumludur!<br><br><span style=\"font-size:1.5em; color: var(--zaklab-violet);\">⬇️ Sayfayı kaydırın ⬇️</span>",
         links: "Bağlantılar",
         sections: "Bölümler"
       },
       cz: {
         home: "Domů", news: "Novinky", mineruns: "MineRuns", minecraft: "Minecraft", map: "Mapa", music: "Hudba", chat: "Chat", about: "O nás",
         welcome: "Vítejte na ZakLab!",
-        intro: "Vyzkoušejte <strong>svislý sociální panel</strong> vpravo.<br>Použijte <i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> pro změnu motivu.<br>Stránka je vícejazyčná a adaptivní!",
-        mainFooter: "Panel zůstává viditelný při posouvání a přizpůsobuje se motivu.<br><em>(Vložte tento kód do svého projektu, funguje bez externího CSS.)</em>",
+        intro: "Vyzkoušejte <strong>svislý sociální panel</strong> vpravo.<br>Použijte <i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> pro změnu motivu.<br>Stránka je vícejazyčná a adaptivní!<br><br><span style=\"font-size:1.5em; color: var(--zaklab-violet);\">⬇️ Posuňte stránku dolů ⬇️</span>",
         links: "Odkazy",
         sections: "Sekce"
       },
       es: {
         home: "Inicio", news: "Noticias", mineruns: "MineRuns", minecraft: "Minecraft", map: "Mapa", music: "Música", chat: "Chat", about: "Sobre nosotros",
         welcome: "¡Bienvenido a ZakLab!",
-        intro: "Prueba la <strong>barra vertical de redes sociales</strong> a la derecha.<br>Utiliza el botón <i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> para cambiar el tema.<br>¡El sitio es multilingüe y adaptativo!",
-        mainFooter: "La barra permanece visible al desplazarse y se adapta al tema.<br><em>(Integra este código en tu proyecto principal, funciona sin CSS externo.)</em>",
+        intro: "Prueba la <strong>barra vertical de redes sociales</strong> a la derecha.<br>Utiliza el botón <i class=\"fa-solid fa-moon\"></i>/<i class=\"fa-solid fa-sun\"></i> para cambiar el tema.<br>¡El sitio es multilingüe y adaptativo!<br><br><span style=\"font-size:1.5em; color: var(--zaklab-violet);\">⬇️ Desplaza la página ⬇️</span>",
         links: "Enlaces",
         sections: "Secciones"
       }
     };
-
     // Current language
     function getLang() {
       return localStorage.getItem('zaklab-lang') || 'fr';
@@ -669,7 +659,6 @@
       const lang = getLang();
       const langObj = ZAKLAB_LANGS.find(l => l.key === lang) || ZAKLAB_LANGS[0];
       // Current lang button
-      document.getElementById('currentFlag').src = langObj.icon;
       document.getElementById('currentLangLabel').textContent = langObj.label;
       // Dropdown
       const dropdown = document.getElementById('zaklabLangDropdown');
@@ -679,7 +668,7 @@
         opt.className = 'zaklab-lang-option' + (l.key === lang ? ' active' : '');
         opt.type = 'button';
         opt.tabIndex = 0;
-        opt.innerHTML = `<img class="lang-flag" src="${l.icon}" alt="${l.label}"/>${l.label}`;
+        opt.innerHTML = `<span>${l.label}</span>`;
         opt.onclick = () => {
           setLang(l.key);
           dropdown.classList.remove('open');
@@ -694,7 +683,6 @@
       Array.from(document.querySelectorAll('.zaklab-nav-link')).forEach(link => {
         const key = link.dataset.section;
         if (tr[key]) link.textContent = tr[key];
-        // Fix About us to about.html
         if (key === 'about') link.href = 'about.html';
         else link.href = key + '.html';
       });
@@ -702,18 +690,17 @@
       Array.from(document.querySelectorAll('.zaklab-footer-nav-link')).forEach(link => {
         const key = link.dataset.section;
         if (tr[key]) link.textContent = tr[key];
-        // Fix About us to about.html
         if (key === 'about') link.href = 'about.html';
         else link.href = key + '.html';
       });
       // Main
       if(document.getElementById('mainTitle')) document.getElementById('mainTitle').textContent = tr.welcome;
       if(document.getElementById('mainIntro')) document.getElementById('mainIntro').innerHTML = tr.intro;
-      if(document.getElementById('mainFooter')) document.getElementById('mainFooter').innerHTML = tr.mainFooter;
       // Footer titles
       if(document.getElementById('footerLinksTitle')) document.getElementById('footerLinksTitle').textContent = tr.links;
       if(document.getElementById('footerSectionsTitle')) document.getElementById('footerSectionsTitle').textContent = tr.sections;
     }
+
     // Show/hide dropdown
     (() => {
       const btn = document.getElementById('zaklabLangBtn');
@@ -767,7 +754,6 @@
       headerToggle.setAttribute('aria-label', hide ? 'Show header' : 'Hide header');
     }
     headerToggle.addEventListener('click', () => setHeaderHidden(!headerHidden));
-    // Hide header if chosen previously
     (() => {
       if(localStorage.getItem('zaklab-header-hide') === 'true') setHeaderHidden(true);
       headerToggle.addEventListener('click', () => {
@@ -788,7 +774,6 @@
       footerToggle.setAttribute('aria-label', hide ? 'Show footer' : 'Hide footer');
     }
     footerToggle.addEventListener('click', () => setFooterHidden(!footerHidden));
-    // Hide footer if chosen previously
     (() => {
       if(localStorage.getItem('zaklab-footer-hide') === 'true') setFooterHidden(true);
       footerToggle.addEventListener('click', () => {
