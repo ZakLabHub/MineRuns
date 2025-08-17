@@ -22,7 +22,7 @@
       --zaklab-footer-link: #e2d5fa;
       --zaklab-footer-hover: #fff;
       --zaklab-profile-bar-width: 330px;
-      --zaklab-header-height: 70px;
+      --zaklab-header-height: 46px;
     }
     html, body { height: 100%; margin: 0; padding: 0;}
     body {
@@ -45,10 +45,12 @@
       display: flex;
       align-items: center;
       z-index: 1001;
-      padding: 0 20px;
+      padding: 0 10px;
       transition: background 0.2s, border-bottom 0.2s, box-shadow 0.18s;
-      box-shadow: 0 2px 12px 0 rgba(138,43,226,0.07);
+      box-shadow: 0 1px 8px 0 rgba(138,43,226,0.07);
       width: 100%;
+      min-height: 0;
+      font-size: 0.99em;
     }
     body.dark .zaklab-header {
       background: #191a25;
@@ -57,49 +59,47 @@
       box-shadow: 0 2px 20px 0 rgba(24,25,36,0.13);
     }
     .zaklab-header.hide { transform: translateY(-120%); transition: transform 0.35s cubic-bezier(.7,-0.35,0,1.09);}
-    /* HEADER TOGGLE (petite, fixe en haut à gauche, juste sous le header) */
+    /* HEADER TOGGLE (statique, collé bas gauche du header) */
     .zaklab-header-toggle {
-      position: fixed;
-      top: 7px;
-      left: 7px;
+      position: absolute;
+      left: 0;
+      bottom: 0;
       width: 32px;
-      height: 28px;
-      z-index: 1200;
+      height: 24px;
       background: var(--zaklab-violet);
       color: #fff;
       border: none;
-      border-radius: 9px;
-      font-size: 1.1em;
+      border-radius: 0 8px 0 0;
+      font-size: 1em;
       display: flex;
       align-items: center;
       justify-content: center;
       cursor: pointer;
-      transition: background 0.15s, box-shadow 0.13s, opacity 0.18s;
-      box-shadow: 0 2px 9px 0 rgba(138,43,226,0.09);
+      transition: background 0.15s;
+      box-shadow: 0 2px 6px 0 rgba(138,43,226,0.09);
       outline: none;
-      opacity: 0.94;
+      opacity: 1;
+      z-index: 1100;
+      margin: 0;
+      padding: 0;
     }
     .zaklab-header-toggle:hover { background: #a278e9; }
-    .zaklab-header.hide + .zaklab-header-toggle {
-      opacity: 1;
-    }
-    /* PROFILE BTN (☰) + AVATAR in header left */
     .zaklab-profile-header-btn {
-      margin-right: 18px;
+      margin-right: 8px;
       margin-left: 0;
       background: none;
       border: none;
       cursor: pointer;
-      padding: 7px 8px 7px 2px;
-      border-radius: 8px;
+      padding: 3px 3px 3px 1px;
+      border-radius: 7px;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.6em;
+      font-size: 1.14em;
       transition: background 0.16s;
-      height: 38px; width: 38px;
+      height: 28px; width: 28px;
     }
     .zaklab-profile-header-btn img {
-      width: 34px; height: 34px; border-radius: 50%; border: 3px solid var(--zaklab-violet); object-fit: cover; background: #fff; display: block;
-      box-shadow: 0 0 0 2px #fff;
+      width: 22px; height: 22px; border-radius: 50%; border: 2px solid var(--zaklab-violet); object-fit: cover; background: #fff; display: block;
+      box-shadow: 0 0 0 1.5px #fff;
       transition: border 0.18s;
     }
     .zaklab-profile-header-btn:hover { background: var(--zaklab-hover-light);}
@@ -107,11 +107,11 @@
     .zaklab-logo {
       color: var(--zaklab-violet);
       font-family: 'Montserrat', 'Arial Black', Arial, sans-serif;
-      margin-right: 20px;
-      font-size: 2em;
+      margin-right: 14px;
+      font-size: 1.18em;
       font-weight: 900;
-      letter-spacing: 2px;
-      text-shadow: 0 2px 8px rgba(138,43,226,0.08);
+      letter-spacing: 1.5px;
+      text-shadow: 0 1px 4px rgba(138,43,226,0.08);
       cursor: pointer;
       user-select: none;
       transition: color 0.2s;
@@ -119,7 +119,7 @@
     }
     .zaklab-logo:hover { color: #a278e9; }
     .zaklab-nav {
-      display: flex; flex-direction: row; gap: 10px; align-items: center; margin-right: 10px;
+      display: flex; flex-direction: row; gap: 4px; align-items: center; margin-right: 4px;
       flex: 1 1 auto;
       overflow-x: auto;
       scrollbar-width: thin;
@@ -128,11 +128,11 @@
       font-family: 'Wedges', Arial Black, Arial, sans-serif;
       text-decoration: none;
       color: var(--zaklab-violet);
-      font-size: 1.01em;
-      padding: 6px 8px;
-      border-radius: 10px;
+      font-size: 0.93em;
+      padding: 3px 6px;
+      border-radius: 8px;
       font-weight: 700;
-      letter-spacing: .07em;
+      letter-spacing: .05em;
       transition: background 0.13s, color 0.18s;
       outline: none;
       border: none;
@@ -152,21 +152,22 @@
     .zaklab-header-controls {
       display: flex;
       align-items: center;
-      gap: 10px;
+      gap: 6px;
       min-width: 0;
       margin-left: auto;
     }
     .zaklab-theme-toggle {
       background: none;
       border: none;
-      font-size: 1.15em;
+      font-size: 1em;
       cursor: pointer;
       color: var(--zaklab-violet);
-      padding: 7px 12px;
-      border-radius: 8px;
+      padding: 4px 7px;
+      border-radius: 7px;
       transition: background 0.18s;
       display: flex; align-items: center; justify-content: center;
-      min-width: 36px;
+      min-width: 22px;
+      height: 22px;
     }
     .zaklab-theme-toggle:hover { background: #f3e9ff;}
     body.dark .zaklab-theme-toggle { color: #fff;}
@@ -178,39 +179,39 @@
       background: none;
       border: none;
       cursor: pointer;
-      font-size: 1.08em;
+      font-size: 0.97em;
       border-radius: 100px;
-      min-width: 40px;
-      min-height: 35px;
-      padding: 0 8px 0 0;
+      min-width: 26px;
+      min-height: 22px;
+      padding: 0 6px 0 0;
       transition: background 0.16s, color 0.16s;
       color: var(--zaklab-violet);
       outline: none;
       position: relative;
       font-weight: bold;
       font-family: 'Wedges', Arial Black, Arial, sans-serif;
-      gap: 6px;
+      gap: 3px;
     }
     .zaklab-lang-btn .lang-globe {
-      width: 25px; height: 25px; margin-right: 3px;
+      width: 18px; height: 18px; margin-right: 2px;
       background: var(--zaklab-violet);
       color: #fff;
       border-radius: 50%;
       display: flex; align-items: center; justify-content: center;
-      font-size: 1.1em;
+      font-size: 0.9em;
       font-weight: bold;
-      box-shadow: 0 2px 9px 0 rgba(138,43,226,0.13);
+      box-shadow: 0 2px 5px 0 rgba(138,43,226,0.13);
     }
     .zaklab-lang-btn .lang-label {
       font-family: 'Wedges', Arial Black, Arial, sans-serif;
       font-weight: bold;
-      font-size: 0.99em;
+      font-size: 0.83em;
       color: var(--zaklab-violet);
       letter-spacing: .02em;
     }
     .zaklab-lang-btn .fa-chevron-down {
       color: #bdbada;
-      font-size: 0.93em;
+      font-size: 0.79em;
       margin-left: 2px;
     }
     .zaklab-lang-btn:hover, .zaklab-lang-btn.active { background: var(--zaklab-hover-light);}
@@ -222,18 +223,18 @@
       top: 108%;
       right: 0;
       background: #fff;
-      border-radius: 18px;
-      box-shadow: 0 2px 20px rgba(138,43,226,0.17);
-      min-width: 150px;
-      padding: 7px 0;
+      border-radius: 11px;
+      box-shadow: 0 1px 7px rgba(138,43,226,0.17);
+      min-width: 90px;
+      padding: 5px 0;
       display: none;
       flex-direction: column;
       z-index: 9999;
-      border: 1.7px solid #e7d8f8;
+      border: 1.2px solid #e7d8f8;
       transition: background 0.2s;
       overflow: hidden;
     }
-    body.dark .zaklab-lang-dropdown { background: #24173a; border: 1.7px solid #46305b; color: #fff;}
+    body.dark .zaklab-lang-dropdown { background: #24173a; border: 1.2px solid #46305b; color: #fff;}
     .zaklab-lang-dropdown.open { display: flex;}
     .zaklab-lang-option {
       display: flex;
@@ -241,13 +242,13 @@
       background: none;
       border: none;
       width: 100%;
-      padding: 8px 14px;
-      font-size: 1em;
+      padding: 5px 8px;
+      font-size: 0.91em;
       color: #43206e;
       cursor: pointer;
       font-family: 'Wedges', Arial Black, Arial, sans-serif;
       font-weight: bold;
-      gap: 8px;
+      gap: 6px;
       transition: background 0.13s, color 0.15s;
       justify-content: flex-start;
     }
@@ -365,88 +366,36 @@
       margin: 22px 0 7px 0;
       text-align: center;
     }
-    @media (max-width: 520px) {
-      .zaklab-profile-bar { width: 97vw;}
-      .zaklab-header { padding: 0 7px;}
-      .zaklab-logo { font-size: 1.13em; margin-right: 9px;}
-      .zaklab-nav { gap: 2px; margin-right: 5px;}
-      .zaklab-header-controls { gap: 4px;}
-      .zaklab-header-toggle { top: 5px; left: 5px;}
-    }
-    /* SOCIAL BAR */
-    .zaklab-social-bar {
-      position: fixed;
-      top: 50%;
-      right: 0;
-      z-index: 999;
-      transform: translateY(-50%);
-      background: rgba(255,255,255,0.8);
-      border-radius: 16px 0 0 16px;
-      box-shadow: 0 4px 16px 0 rgba(138,43,226, 0.05);
-      width: 54px;
-      padding: 12px 0;
+    /* Connexion / inscription boutons */
+    .zaklab-auth-buttons {
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 14px;
-      transition: background 0.2s, box-shadow 0.2s;
-      backdrop-filter: blur(2px);
-    }
-    body.dark .zaklab-social-bar {
-      background: rgba(24,25,36,0.94);
-      box-shadow: 0 4px 24px 0 rgba(0,0,0,0.18);
-    }
-    .zaklab-social-link {
-      display: flex;
-      align-items: center;
       justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 50%;
-      color: var(--zaklab-icon-light);
-      background: transparent;
-      font-size: 1.35rem;
-      text-decoration: none;
-      transition: background 0.18s, color 0.18s, box-shadow 0.18s;
-      outline: none;
-      border: none;
-      cursor: pointer;
+      gap: 18px;
+      margin: 20px 0 12px 0;
     }
-    .zaklab-social-link:focus-visible { box-shadow: 0 0 0 2px var(--zaklab-violet);}
-    .zaklab-social-link:hover,
-    .zaklab-social-link:focus-visible { background: var(--zaklab-hover-light); color: var(--zaklab-violet);}
-    body.dark .zaklab-social-link { color: var(--zaklab-icon-dark);}
-    body.dark .zaklab-social-link:hover,
-    body.dark .zaklab-social-link:focus-visible { background: var(--zaklab-hover-dark); color: var(--zaklab-icon-dark);}
-    @media (max-width: 520px) { .zaklab-social-bar { display: none; } }
-    .zaklab-discord-fixed {
-      position: fixed;
-      left: 22px;
-      bottom: 34px;
-      z-index: 1003;
-      width: 52px;
-      height: 52px;
+    .zaklab-auth-btn {
       background: var(--zaklab-violet);
-      border-radius: 50%;
       color: #fff;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 2em;
-      box-shadow: 0 2px 18px 0 rgba(138,43,226,0.13);
-      transition: background 0.18s, color 0.18s, transform 0.14s;
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      font-weight: bold;
+      font-size: 1.08em;
+      border: none;
+      border-radius: 12px;
+      padding: 8px 22px;
+      cursor: pointer;
+      transition: background 0.18s, color 0.17s;
+      box-shadow: 0 2px 6px rgba(138,43,226,0.10);
+      outline: none;
       text-decoration: none;
+      display: inline-block;
+      letter-spacing: .04em;
     }
-    .zaklab-discord-fixed:hover {
-      background: #fff;
-      color: var(--zaklab-violet);
-      border: 2.5px solid var(--zaklab-violet);
-      transform: scale(1.07);
+    .zaklab-auth-btn:hover, .zaklab-auth-btn:focus-visible {
+      background: #a278e9;
+      color: #fff;
+      text-decoration: underline;
     }
-    @media (max-width: 520px) {
-      .zaklab-discord-fixed { width:39px; height:39px; font-size:1.4em; left:8px; bottom:18px;}
-    }
-    /* FOOTER */
+    /* SOCIAL BAR, FOOTER, etc. restent inchangés */
     .zaklab-footer {
       width: 100vw;
       background: var(--zaklab-footer-bg);
@@ -509,41 +458,56 @@
       font-size: 1.18em;
       color: #fff;
     }
-    /* Footer toggle (petite, juste au dessus du footer, non fixe) */
+    /* Footer toggle (statique, collé au haut du footer à droite) */
     .zaklab-footer-toggle {
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: absolute;
+      top: 0;
+      right: 0;
       background: var(--zaklab-violet);
       color: #fff;
       border: none;
-      border-radius: 16px 16px 0 0;
+      border-radius: 0 0 0 16px;
       width: 38px;
       height: 28px;
       font-size: 1.13em;
-      margin: 0 auto;
-      margin-bottom: -10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       box-shadow: 0 -2px 12px rgba(138,43,226,0.12);
       cursor: pointer;
       transition: background 0.15s;
       outline: none;
-      position: relative;
       z-index: 1201;
       opacity: 1;
       visibility: visible;
-      top: -16px;
+      margin: 0;
     }
     .zaklab-footer-toggle:hover { background: #a278e9;}
+    .zaklab-footer-zaklab {
+      font-family: 'Wedges', Arial Black, Arial, sans-serif;
+      color: #fff;
+      font-weight: bold;
+      font-size: 2em;
+      letter-spacing: .08em;
+      text-shadow: 0 2px 10px rgba(0,0,0,0.13);
+      margin: 0 0 0 60px;
+      position: absolute;
+      left: 0;
+      bottom: 18px;
+      user-select: none;
+      white-space: nowrap;
+      z-index: 2;
+      text-align: left;
+    }
     @media (max-width: 930px) {
       .zaklab-footer-section { min-width: 120px; }
       .zaklab-footer { gap: 15px; }
+      .zaklab-footer-zaklab { font-size: 1.4em; margin-left: 10px;}
     }
     @media (max-width: 620px) {
       .zaklab-footer, .zaklab-footer-section { flex-direction: column; min-width: 0; }
       .zaklab-footer { gap: 8px; padding: 30px 0 22px 0;}
-    }
-    @media (max-width: 768px) {
-      .zaklab-footer { font-size: 1em; }
+      .zaklab-footer-zaklab { position: static; margin: 0 0 18px 0; text-align: center;}
     }
     @media (max-width: 480px) {
       .zaklab-header { font-size: 1em; padding: 0 7px; }
@@ -584,10 +548,10 @@
         <div class="zaklab-lang-dropdown" id="zaklabLangDropdown" role="listbox" tabindex="-1"></div>
       </div>
     </div>
+    <button class="zaklab-header-toggle" id="zaklabHeaderToggle" aria-label="Hide header">
+      <i class="fa-solid fa-chevron-up"></i>
+    </button>
   </header>
-  <button class="zaklab-header-toggle" id="zaklabHeaderToggle" aria-label="Hide header">
-    <i class="fa-solid fa-chevron-up"></i>
-  </button>
   <!-- SIDEBAR PROFILE -->
   <aside class="zaklab-profile-bar" id="zaklabProfileBar" aria-label="Profil">
     <button class="zaklab-profile-bar-close" id="zaklabProfileBarClose" title="Fermer" aria-label="Fermer">&times;</button>
@@ -602,6 +566,11 @@
     </form>
     <div class="zaklab-profile-color-title" id="zaklabProfileColorTitle">Couleur/cadre du profil</div>
     <div class="zaklab-profile-colors" id="zaklabProfileColors"></div>
+    <!-- Boutons Connexion/Inscription -->
+    <div class="zaklab-auth-buttons" id="zaklabAuthButtons">
+      <a class="zaklab-auth-btn" href="login1.html" id="zaklabLoginBtn">Se connecter</a>
+      <a class="zaklab-auth-btn" href="login2.html" id="zaklabRegisterBtn">S'inscrire</a>
+    </div>
   </aside>
   <!-- SOCIAL BAR -->
   <nav class="zaklab-social-bar" aria-label="Réseaux sociaux ZakLab">
@@ -626,11 +595,12 @@
     <i class="fab fa-discord"></i>
   </a>
   <!-- CONTENU -->
-  <main id="zaklabContent" style="margin-top:80px; margin-bottom:180px; min-height:500px;">
+  <main id="zaklabContent" style="margin-top:54px; margin-bottom:180px; min-height:500px;">
     <!-- Ton contenu ici -->
   </main>
   <!-- FOOTER -->
   <footer class="zaklab-footer" id="zaklabFooter">
+    <span class="zaklab-footer-zaklab">ZakLab</span>
     <section class="zaklab-footer-section">
       <h3 id="footerLinksTitle">Links</h3>
       <ul class="zaklab-footer-links">
@@ -656,11 +626,22 @@
         <li><a class="zaklab-footer-nav-link" data-section="about" href="about.html">About us</a></li>
       </ul>
     </section>
+    <button class="zaklab-footer-toggle" id="zaklabFooterToggle" aria-label="Hide footer">
+      <i class="fa-solid fa-chevron-down"></i>
+    </button>
   </footer>
-  <button class="zaklab-footer-toggle" id="zaklabFooterToggle" aria-label="Hide footer">
-    <i class="fa-solid fa-chevron-down"></i>
-  </button>
   <script>
+    // Traductions boutons login/register
+    const ZAKLAB_AUTH_TRANSLATIONS = {
+      fr: {login: "Se connecter", register: "S'inscrire"},
+      en: {login: "Login", register: "Register"},
+      ru: {login: "Войти", register: "Регистрация"},
+      ur: {login: "لاگ ان", register: "رجسٹر"},
+      in: {login: "लॉगिन", register: "पंजीकरण"},
+      tr: {login: "Giriş Yap", register: "Kayıt Ol"},
+      cz: {login: "Přihlásit se", register: "Registrovat"},
+      es: {login: "Iniciar sesión", register: "Registrarse"}
+    };
     // Couleurs et dégradés pour le cadre
     const ZAKLAB_COLORS = [
       "#8a2be2","#e43c3c","#e89e3c","#ffe352","#4ca74c","#3cbce8","#3e4ce8","#ad3ce8","#e83cae","#3c858a",
@@ -691,7 +672,7 @@
       ur: {home:"ہوم",news:"خبریں",mineruns:"MineRuns",minecraft:"مائنکرافٹ",map:"نقشہ",music:"موسیقی",chat:"چیٹ",feedback:"رائے",about:"ہمارے بارے میں",links:"روابط",sections:"سیکشنز",profile:"پروفائل",username:"یوزرنیم",validate:"تصدیق کریں",changephoto:"تصویر بدلیں",color:"پروفائل بارڈر رنگ"},
       in: {home:"होम",news:"समाचार",mineruns:"MineRuns",minecraft:"माइनक्राफ्ट",map:"मानचित्र",music:"संगीत",chat:"चैट",feedback:"प्रतिक्रिया",about:"हमारे बारे में",links:"लिंक",sections:"सेक्शन",profile:"प्रोफ़ाइल",username:"यूज़रनेम",validate:"सेव करें",changephoto:"फोटो बदलें",color:"प्रोफ़ाइल बॉर्डर रंग"},
       tr: {home:"Anasayfa",news:"Haberler",mineruns:"MineRuns",minecraft:"Minecraft",map:"Harita",music:"Müzik",chat:"Sohbet",feedback:"Geri bildirim",about:"Hakkımızda",links:"Bağlantılar",sections:"Bölümler",profile:"Profil",username:"Kullanıcı adı",validate:"Kaydet",changephoto:"Fotoğraf değiştir",color:"Profil kenarlık rengi"},
-      cz: {home:"Domů",news:"Novinky",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Hudba",chat:"Chat",feedback:"Zpětná vazba",about:"O nás",links:"Odkazy",sections:"Sekce",profile:"Profil",username:"Uživatelské jméno",validate:"Uložit",changephoto:"Změnit фото",color:"Barva rámečku profilu"},
+      cz: {home:"Domů",news:"Novinky",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Hudba",chat:"Chat",feedback:"Zpětná vazba",about:"O nás",links:"Odkazy",sections:"Sekce",profile:"Profil",username:"Uživatelské jméno",validate:"Uložit",changephoto:"Změnit foto",color:"Barva rámečku profilu"},
       es: {home:"Inicio",news:"Noticias",mineruns:"MineRuns",minecraft:"Minecraft",map:"Mapa",music:"Música",chat:"Chat",feedback:"Sugerencias",about:"Sobre nosotros",links:"Enlaces",sections:"Secciones",profile:"Perfil",username:"Usuario",validate:"Guardar",changephoto:"Cambiar foto",color:"Color del borde de perfil"}
     };
     function getLang() {return localStorage.getItem('zaklab-lang') || 'fr';}
@@ -718,6 +699,12 @@
       if(document.getElementById('zaklabProfileValidateBtn')) document.getElementById('zaklabProfileValidateBtn').textContent = tr.validate;
       if(document.getElementById('zaklabProfileUploadLabel')) document.getElementById('zaklabProfileUploadLabel').textContent = tr.changephoto;
       if(document.getElementById('zaklabProfileColorTitle')) document.getElementById('zaklabProfileColorTitle').textContent = tr.color;
+      // Auth buttons
+      const trAuth = ZAKLAB_AUTH_TRANSLATIONS[lang] || ZAKLAB_AUTH_TRANSLATIONS.fr;
+      let loginBtn = document.getElementById('zaklabLoginBtn');
+      let registerBtn = document.getElementById('zaklabRegisterBtn');
+      if(loginBtn) loginBtn.textContent = trAuth.login;
+      if(registerBtn) registerBtn.textContent = trAuth.register;
       // Lang select
       const langObj = ZAKLAB_LANGS.find(l => l.key === lang) || ZAKLAB_LANGS[0];
       document.getElementById('currentLangLabel').textContent = langObj.label;
@@ -754,7 +741,7 @@
     document.getElementById('zaklabLogo').onclick=()=>{window.location.href='home.html';};
     document.getElementById('zaklabLogo').onkeydown=(e)=>{if(e.key==="Enter"||e.key===" "){window.location.href='home.html';}};
     (()=>{const section=(location.pathname.split('/').pop()||'home.html').replace('.html','');document.querySelectorAll('.zaklab-nav-link').forEach(link=>{if(link.dataset.section===section)link.classList.add('active');});})();
-    // Footer toggle (non fixe)
+    // Footer toggle (statique)
     const footer=document.getElementById('zaklabFooter');
     const footerToggle=document.getElementById('zaklabFooterToggle');
     let footerHidden=false;
@@ -764,21 +751,7 @@
       footerToggle.innerHTML=hide?'<i class="fa-solid fa-chevron-up"></i>':'<i class="fa-solid fa-chevron-down"></i>';
       footerToggle.setAttribute('aria-label',hide?'Show footer':'Hide footer');
     }
-    // Place le bouton juste avant le footer dynamiquement (toujours visible au scroll, mais pas fixe)
-    function updateFooterTogglePosition() {
-      const rect = footer.getBoundingClientRect();
-      footerToggle.style.position = "absolute";
-      footerToggle.style.left = "50%";
-      footerToggle.style.bottom = (footer.offsetHeight + 12) + "px";
-      footerToggle.style.transform = "translateX(-50%)";
-      footerToggle.style.opacity = "1";
-      footerToggle.style.visibility = "visible";
-      footer.parentElement.appendChild(footerToggle);
-    }
     footerToggle.addEventListener('click',()=>setFooterHidden(!footerHidden));
-    window.addEventListener('resize',updateFooterTogglePosition);
-    window.addEventListener('DOMContentLoaded',updateFooterTogglePosition);
-    setTimeout(updateFooterTogglePosition, 100);
     (()=>{if(localStorage.getItem('zaklab-footer-hide')==='true')setFooterHidden(true);footerToggle.addEventListener('click',()=>{localStorage.setItem('zaklab-footer-hide',footerHidden?'true':'false');});})();
     // -- PROFILE BAR LOGIC --
     const profileMenuBtn = document.getElementById('zaklabProfileMenuBtn');
@@ -794,7 +767,6 @@
     let zaklabProfile = { username: "", avatar: "", border: "color:0" };
     function renderProfileColors() {
       profileColorsDiv.innerHTML = "";
-      // 20 couleurs
       for(let i=0;i<ZAKLAB_COLORS.length;i++) {
         let dot = document.createElement('button');
         dot.type = "button";
@@ -806,7 +778,6 @@
         if(zaklabProfile.border==="color:"+i) dot.innerHTML = '<i class="fa-solid fa-check"></i>';
         profileColorsDiv.appendChild(dot);
       }
-      // 10 dégradés
       for(let i=0;i<ZAKLAB_GRADIENTS.length;i++) {
         let dot = document.createElement('button');
         dot.type = "button";
@@ -905,6 +876,12 @@
       document.getElementById('zaklabUsernameLabel').textContent = tr.username;
       document.getElementById('zaklabProfileUploadLabel').textContent = tr.changephoto;
       document.getElementById('zaklabProfileColorTitle').textContent = tr.color;
+      // Traductions boutons connexion/inscription
+      const trAuth = ZAKLAB_AUTH_TRANSLATIONS[lang] || ZAKLAB_AUTH_TRANSLATIONS.fr;
+      let loginBtn = document.getElementById('zaklabLoginBtn');
+      let registerBtn = document.getElementById('zaklabRegisterBtn');
+      if(loginBtn) loginBtn.textContent = trAuth.login;
+      if(registerBtn) registerBtn.textContent = trAuth.register;
     }
     loadProfile();
     updateProfileBtnLang();
