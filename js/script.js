@@ -1,15 +1,28 @@
-<!DOCTYPE html>
-<html lang="fr">
-<head>
-  <meta charset="UTF-8">
-  <title>ZakCorp</title>
-  <link rel="stylesheet" href="css/style.css">
-</head>
-<body>
+// Sidebar principale
+const toggleBtn = document.getElementById("toggleSidebar");
+const sidebar = document.querySelector(".sidebar");
 
-  <!-- Ton contenu ici -->
+toggleBtn.addEventListener("click", () => {
+  sidebar.classList.toggle("collapsed");
+});
 
-  <!-- Inclusion du JS juste avant la fermeture du body -->
-  <script src="js/script.js"></script>
-</body>
-</html>
+// Sidebar secondaire
+const sidebar2 = document.getElementById("sidebar2");
+const openBtn = document.getElementById("openSidebar2");
+const closeBtn = document.getElementById("closeSidebar2");
+const overlay = document.getElementById("overlay");
+
+openBtn.addEventListener("click", () => {
+  sidebar2.classList.add("active");
+  overlay.style.display = "block";
+});
+
+closeBtn.addEventListener("click", () => {
+  sidebar2.classList.remove("active");
+  overlay.style.display = "none";
+});
+
+overlay.addEventListener("click", () => {
+  sidebar2.classList.remove("active");
+  overlay.style.display = "none";
+});
