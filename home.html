@@ -1,84 +1,128 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MineRuns</title>
-  <link rel="stylesheet" href="css/style.css">
-  <!-- Police SKCuber -->
+  <title>Sidebar + Mini Header</title>
   <style>
-    @font-face {
-      font-family: 'SKCuber';
-      src: url('SKCuber-Expanded.woff2') format('woff2');
-      font-weight: normal;
-      font-style: normal;
+    /* Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      min-height: 100vh;
+      background: #f3f3f3;
+    }
+
+    /* Sidebar */
+    .sidebar {
+      width: 220px;
+      background: #1e1e2f;
+      color: #fff;
+      padding: 20px 0;
+      flex-shrink: 0;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .sidebar h2 {
+      margin-bottom: 30px;
+      font-size: 22px;
+    }
+
+    .sidebar a {
+      display: block;
+      width: 100%;
+      padding: 12px 20px;
+      color: #ccc;
+      text-decoration: none;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      background: #33334d;
+      color: #fff;
+    }
+
+    /* Content area */
+    .main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+
+    /* Mini header */
+    .mini-header {
+      background: #fff;
+      border-bottom: 1px solid #ddd;
+      padding: 10px 20px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .mini-header h1 {
+      font-size: 20px;
+      color: #333;
+    }
+
+    .mini-header .profile {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .mini-header img {
+      width: 35px;
+      height: 35px;
+      border-radius: 50%;
+    }
+
+    /* Content body */
+    .content {
+      padding: 20px;
     }
   </style>
 </head>
 <body>
+
   <!-- Sidebar -->
-  <aside class="sidebar" id="sidebar">
-    <div class="logo-row">
-      <a href="home.html" class="logo">--M--</a>
-      <span class="toggle" onclick="toggleSidebar()">&#8250;</span>
+  <div class="sidebar">
+    <h2>ZakCorp</h2>
+    <a href="#">🏠 Accueil</a>
+    <a href="#">🗺️ Map</a>
+    <a href="#">🎵 Music</a>
+    <a href="#">📰 News</a>
+    <a href="#">ℹ️ About</a>
+    <a href="#">💬 Feedback</a>
+    <a href="#">💻 Chat</a>
+  </div>
+
+  <!-- Main content -->
+  <div class="main">
+
+    <!-- Mini header -->
+    <div class="mini-header">
+      <h1>Dashboard</h1>
+      <div class="profile">
+        <span>ZakMC</span>
+        <img src="https://i.pravatar.cc/35" alt="Profil">
+      </div>
     </div>
-    <nav class="menu">
-      <a href="server.html">Server</a>
-      <a href="news.html">News</a>
-      <a href="jeux.html">Jeux</a>
-      <a href="stats.html">Stats</a>
-      <a href="explorer.html">Explorer</a>
-      <a href="histoire.html">Histoire</a>
-    </nav>
-    <div class="bottom-row">
-      <div class="profile" id="profile"></div>
-      <span class="extra" onclick="openSidebar2()">▣</span>
+
+    <!-- Content -->
+    <div class="content">
+      <h2>Bienvenue 👋</h2>
+      <p>Voici ton espace avec une sidebar et un mini-header intégrés 100% dans ce fichier HTML.</p>
     </div>
-  </aside>
 
-  <!-- Mini-header -->
-  <header class="mini-header">
-    <a href="search.html" class="search">&#128269;</a>
-    <a href="login.html" class="login" id="loginBtn">Se connecter</a>
-  </header>
+  </div>
 
-  <!-- Sidebar 2 -->
-  <div class="overlay" id="overlay" onclick="closeSidebar2()"></div>
-  <aside class="sidebar2" id="sidebar2">
-    <nav>
-      <a href="https://zaklab.github.io/zaklab">ZakLab</a>
-      <a href="https://zaklab.github.io/usefull">UseFull</a>
-      <a href="https://zaklab.github.io/mapmc">MapMC</a>
-    </nav>
-  </aside>
-
-  <!-- Main Content -->
-  <main class="content">
-    <h1>Bienvenue sur MineRuns</h1>
-    <p>Lorem ipsum dolor sit amet, scroll pour tester...</p>
-    <div style="height:2000px;"></div>
-  </main>
-
-  <!-- Footer -->
-  <footer class="footer">
-    <div class="icons">
-      <span>🌐</span><span>🐦</span><span>📘</span><span>▶️</span>
-      <span>📸</span><span>💼</span><span>💬</span><span>🎮</span>
-    </div>
-  </footer>
-
-  <script>
-    function toggleSidebar() {
-      document.getElementById("sidebar").classList.toggle("collapsed");
-    }
-    function openSidebar2() {
-      document.getElementById("sidebar2").classList.add("active");
-      document.getElementById("overlay").classList.add("active");
-    }
-    function closeSidebar2() {
-      document.getElementById("sidebar2").classList.remove("active");
-      document.getElementById("overlay").classList.remove("active");
-    }
-  </script>
 </body>
 </html>
