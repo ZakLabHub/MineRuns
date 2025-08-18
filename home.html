@@ -1,146 +1,50 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>ZakLab Base</title>
-<style>
-  @font-face {
-    font-family: 'SK Cuber';
-    src: url('fonts/SKCuber.woff2') format('woff2');
-    font-display: swap;
-  }
-  body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-    background-color: #000;
-    color: #fff;
-    display: flex;
-    height: 100vh;
-  }
-  /* Sidebar */
-  .sidebar {
-    width: 240px;
-    background-color: #000;
-    border-right: 1px solid #333;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-between;
-  }
-  .sidebar-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 16px;
-  }
-  .sidebar-logo {
-    font-family: 'SK Cuber', sans-serif;
-    font-size: 36px;
-  }
-  .sidebar-toggle {
-    background: none;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-    font-size: 20px;
-  }
-  .sidebar-nav {
-    margin-top: 24px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-    padding-left: 16px;
-  }
-  .sidebar-nav a {
-    color: #ccc;
-    text-decoration: none;
-    font-size: 14px;
-  }
-  .sidebar-nav a:hover {
-    color: #fff;
-  }
-  .sidebar-bottom {
-    padding: 16px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-  }
-
-  /* Main content */
-  .main {
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-  }
-  .mini-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 12px 24px;
-    border-bottom: 1px solid #333;
-  }
-  .search-input {
-    padding: 6px 12px;
-    border-radius: 8px;
-    border: none;
-    background-color: #111;
-    color: #fff;
-  }
-  .login-btn {
-    padding: 6px 12px;
-    border-radius: 8px;
-    background-color: #5B2DFE;
-    border: none;
-    color: #fff;
-    cursor: pointer;
-  }
-  .login-btn:hover {
-    background-color: #7A42FF;
-  }
-
-  /* Page content */
-  .page-content {
-    flex: 1;
-    overflow-y: auto;
-    padding: 24px;
-  }
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine Runs - Maquette</title>
+    <link rel="stylesheet" href="styles.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
 </head>
 <body>
-
-  <aside class="sidebar">
-    <div>
-      <div class="sidebar-header">
-        <span class="sidebar-logo">M</span>
-        <button class="sidebar-toggle">&#x25C0;</button>
-      </div>
-      <nav class="sidebar-nav">
-        <a href="#">MineRuns</a>
-        <a href="#">Map</a>
-        <a href="#">Music</a>
-        <a href="#">News</a>
-        <a href="#">About</a>
-        <a href="#">Feedback</a>
-        <a href="#">Chat</a>
-      </nav>
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="logo">MINE<br>RUNS</span>
+                <span class="chevron-icon">&gt;</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="active">Server</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Jeux</a></li>
+                    <li><a href="#">Stats</a></li>
+                    <li><a href="#">Explorer</a></li>
+                    <li><a href="#">Histoire</a></li>
+                </ul>
+            </nav>
+            
+            <div class="sidebar-footer">
+                <div class="profile-placeholder">
+                    <p>(photo de profil), quand l'utilisateur est déjà cponnecté ne pas afficher le ("se connecter" en haut à droite.</p>
+                </div>
+                <div class="footer-dot"></div>
+            </div>
+        </aside>
+        
+        <main class="main-content">
+            <header class="mini-header">
+                <button class="connect-btn">Se connecter</button>
+            </header>
+            
+            <div class="page-content">
+                <p>Contenu de la page...</p>
+            </div>
+        </main>
     </div>
-    <div class="sidebar-bottom">
-      <span class="profile-pic">Z</span>
-      <button class="login-btn">Se connecter</button>
-    </div>
-  </aside>
-
-  <div class="main">
-    <header class="mini-header">
-      <input type="text" class="search-input" placeholder="Rechercher...">
-      <button class="login-btn">Se connecter</button>
-    </header>
-
-    <div class="page-content">
-      <!-- Contenu spécifique à chaque page -->
-    </div>
-  </div>
-
 </body>
 </html>
-
