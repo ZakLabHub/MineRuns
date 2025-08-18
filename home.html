@@ -1,50 +1,84 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mine Runs - Maquette</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=VT323&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MineRuns</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Police SKCuber -->
+  <style>
+    @font-face {
+      font-family: 'SKCuber';
+      src: url('SKCuber-Expanded.woff2') format('woff2');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
 </head>
 <body>
-    <div class="main-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <span class="logo">MINE<br>RUNS</span>
-                <span class="chevron-icon">&gt;</span>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="#" class="active">Server</a></li>
-                    <li><a href="#">News</a></li>
-                    <li><a href="#">Jeux</a></li>
-                    <li><a href="#">Stats</a></li>
-                    <li><a href="#">Explorer</a></li>
-                    <li><a href="#">Histoire</a></li>
-                </ul>
-            </nav>
-            
-            <div class="sidebar-footer">
-                <div class="profile-placeholder">
-                    <p>(photo de profil), quand l'utilisateur est déjà cponnecté ne pas afficher le ("se connecter" en haut à droite.</p>
-                </div>
-                <div class="footer-dot"></div>
-            </div>
-        </aside>
-        
-        <main class="main-content">
-            <header class="mini-header">
-                <button class="connect-btn">Se connecter</button>
-            </header>
-            
-            <div class="page-content">
-                <p>Contenu de la page...</p>
-            </div>
-        </main>
+  <!-- Sidebar -->
+  <aside class="sidebar" id="sidebar">
+    <div class="logo-row">
+      <a href="home.html" class="logo">--M--</a>
+      <span class="toggle" onclick="toggleSidebar()">&#8250;</span>
     </div>
+    <nav class="menu">
+      <a href="server.html">Server</a>
+      <a href="news.html">News</a>
+      <a href="jeux.html">Jeux</a>
+      <a href="stats.html">Stats</a>
+      <a href="explorer.html">Explorer</a>
+      <a href="histoire.html">Histoire</a>
+    </nav>
+    <div class="bottom-row">
+      <div class="profile" id="profile"></div>
+      <span class="extra" onclick="openSidebar2()">▣</span>
+    </div>
+  </aside>
+
+  <!-- Mini-header -->
+  <header class="mini-header">
+    <a href="search.html" class="search">&#128269;</a>
+    <a href="login.html" class="login" id="loginBtn">Se connecter</a>
+  </header>
+
+  <!-- Sidebar 2 -->
+  <div class="overlay" id="overlay" onclick="closeSidebar2()"></div>
+  <aside class="sidebar2" id="sidebar2">
+    <nav>
+      <a href="https://zaklab.github.io/zaklab">ZakLab</a>
+      <a href="https://zaklab.github.io/usefull">UseFull</a>
+      <a href="https://zaklab.github.io/mapmc">MapMC</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="content">
+    <h1>Bienvenue sur MineRuns</h1>
+    <p>Lorem ipsum dolor sit amet, scroll pour tester...</p>
+    <div style="height:2000px;"></div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="footer">
+    <div class="icons">
+      <span>🌐</span><span>🐦</span><span>📘</span><span>▶️</span>
+      <span>📸</span><span>💼</span><span>💬</span><span>🎮</span>
+    </div>
+  </footer>
+
+  <script>
+    function toggleSidebar() {
+      document.getElementById("sidebar").classList.toggle("collapsed");
+    }
+    function openSidebar2() {
+      document.getElementById("sidebar2").classList.add("active");
+      document.getElementById("overlay").classList.add("active");
+    }
+    function closeSidebar2() {
+      document.getElementById("sidebar2").classList.remove("active");
+      document.getElementById("overlay").classList.remove("active");
+    }
+  </script>
 </body>
 </html>
