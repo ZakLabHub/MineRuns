@@ -49,36 +49,6 @@
             width: 60px;
         }
 
-        /* Header de la sidebar fixe - AJUSTÉ */
-        .sidebar-header {
-            position: relative;
-            height: 100px;
-            display: flex;
-            flex-direction: row; /* align horizontalement */
-            align-items: center;
-            justify-content: space-between; /* logo à gauche, flèche à droite */
-            padding: 0 15px; /* espace interne */
-            flex-shrink: 0;
-        }
-
-        .logo {
-            font-family: 'SKCuber', 'League Spartan', sans-serif;
-            font-size: 28px;
-            font-weight: bold;
-            color: #a020f0;
-            cursor: pointer;
-            text-decoration: none;
-        }
-
-        .toggle-arrow {
-            cursor: pointer;
-            color: #a020f0;
-            font-size: 20px;
-            font-family: 'League Spartan', sans-serif;
-            font-weight: 700;
-            user-select: none;
-        }
-
         /* Contenu de la sidebar */
         .sidebar-content {
             flex: 1;
@@ -339,6 +309,36 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
+        /* Logo + flèche statique */
+        .logo-arrow-container {
+            position: fixed;
+            top: 25px;
+            left: 25px;
+            z-index: 2000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 150px;
+        }
+
+        .logo-arrow-container .logo {
+            font-family: 'SKCuber', 'League Spartan', sans-serif;
+            font-size: 28px;
+            font-weight: bold;
+            color: #a020f0;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .logo-arrow-container .toggle-arrow {
+            font-family: 'League Spartan', sans-serif;
+            font-weight: 700;
+            font-size: 22px;
+            color: #a020f0;
+            cursor: pointer;
+            user-select: none;
+        }
+
         /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
@@ -359,18 +359,25 @@
             .search-bar {
                 width: 220px;
             }
+
+            .logo-arrow-container {
+                top: 20px;
+                left: 20px;
+                width: 130px;
+            }
         }
     </style>
 </head>
 <body>
     <div class="overlay" id="overlay"></div>
 
+    <!-- Logo + Flèche statiques -->
+    <div class="logo-arrow-container">
+        <a href="home.html" class="logo">-M-</a>
+        <div class="toggle-arrow" id="toggleArrow">></div>
+    </div>
+
     <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <a href="home.html" class="logo">-M-</a>
-            <div class="toggle-arrow" id="toggleArrow">></div>
-        </div>
-        
         <div class="sidebar-content">
             <div class="sidebar-section" onclick="window.location.href='server.html'">
                 <span>SERVER</span>
@@ -443,12 +450,15 @@
 
     <script>
         let isLoggedIn = false;
+        let isSidebarCollapsed = false;
 
         const sidebar = document.getElementById('sidebar');
         const toggleArrow = document.getElementById('toggleArrow');
 
         toggleArrow.addEventListener('click', function() {
             sidebar.classList.toggle('collapsed');
+            isSidebarCollapsed = !isSidebarCollapsed;
+            toggleArrow.textContent = isSidebarCollapsed ? '>' : '⊟';
         });
 
         const homeButton = document.getElementById('homeButton');
