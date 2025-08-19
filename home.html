@@ -49,14 +49,16 @@
             width: 60px;
         }
 
-        /* Header de la sidebar fixe */
+        /* Header de la sidebar fixe - AJUSTÉ */
         .sidebar-header {
             position: relative;
             height: 100px;
             display: flex;
-            flex-direction: column;
+            flex-direction: row; /* align horizontalement */
             align-items: center;
-            justify-content: center;
+            justify-content: space-between; /* logo à gauche, flèche à droite */
+            padding: 0 15px; /* espace interne */
+            flex-shrink: 0;
         }
 
         .logo {
@@ -74,7 +76,7 @@
             font-size: 20px;
             font-family: 'League Spartan', sans-serif;
             font-weight: 700;
-            margin-top: 10px;
+            user-select: none;
         }
 
         /* Contenu de la sidebar */
