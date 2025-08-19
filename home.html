@@ -3,35 +3,37 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Zakariya - Home</title>
+  <title>Zakariya — Interface</title>
 
-  <!-- Police Open Sans -->
-  <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;700&display=swap" rel="stylesheet" />
-
-  <!-- Icônes Font Awesome -->
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
-  <!-- CSS principal -->
+  <!-- Fichier CSS principal -->
   <link rel="stylesheet" href="/css/style.css" />
 
-  <!-- Police SK Cuber -->
-  <link rel="preload" href="/fonts/SKCuber-Expanded.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
+  <!-- Import de la police SK Cuber -->
+  <style>
+    @font-face {
+      font-family: 'SKCuber';
+      src: url('/fonts/SKCuber-Expanded.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+  </style>
+
+  <!-- Police secondaire (Open Sans via Google Fonts) -->
+  <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet" />
 </head>
 <body>
 
   <!-- Sidebar principale -->
   <aside class="sidebar1">
     <div class="sidebar-header">
-      <a href="home.html" class="logo">-M-</a>
-      <span class="sidebar-toggle">&gt;</span>
+      <a href="#" class="logo">ZakLab</a>
+      <div class="sidebar-toggle">☰</div>
     </div>
     <nav class="sidebar-links">
-      <a href="Server.html">Server <span>&gt;</span></a>
-      <a href="News.html">News <span>&gt;</span></a>
-      <a href="Jeux.html">Jeux <span>&gt;</span></a>
-      <a href="Stats.html">Stats <span>&gt;</span></a>
-      <a href="Explorer.html">Explorer <span>&gt;</span></a>
-      <a href="Histoire.html">Histoire <span>&gt;</span></a>
+      <a href="#"><span>🏠</span> Accueil</a>
+      <a href="#"><span>🧪</span> Expériences</a>
+      <a href="#"><span>📁</span> Projets</a>
+      <a href="#"><span>📞</span> Contact</a>
     </nav>
     <div class="sidebar-bottom">
       <button class="open-sidebar2">▣</button>
@@ -41,75 +43,34 @@
   <!-- Sidebar secondaire -->
   <aside class="sidebar2 hidden">
     <nav class="sidebar-links">
-      <a href="UseFull.html">UseFull <span>&gt;</span></a>
-      <a href="QuestiHub.html">QuestiHub <span>&gt;</span></a>
-      <a href="ZakLab.html">ZakLab <span>&gt;</span></a>
-      <a href="MapMC.html">MapMC <span>&gt;</span></a>
+      <a href="#"><span>🔧</span> Paramètres</a>
+      <a href="#"><span>🔒</span> Sécurité</a>
+      <a href="#"><span>⚙️</span> Préférences</a>
     </nav>
   </aside>
 
   <!-- Mini-header -->
   <header class="mini-header">
     <div class="search-wrapper">
-      <i class="fas fa-search search-icon"></i>
-      <input type="text" class="search-bar hidden" placeholder="Rechercher une page..." />
+      <div class="search-icon">🔍</div>
+      <input type="text" class="search-bar" placeholder="Rechercher..." />
     </div>
-    <a href="login.html" class="login-btn">Se connecter</a>
+    <a href="#" class="login-btn">Connexion</a>
   </header>
 
   <!-- Contenu principal -->
   <main class="main-content">
-    <section>
-      <h1>Notre échange</h1>
-      <p>Zakariya a demandé une interface minimaliste, moderne, sans PNG, avec des icônes en code. Voici une simulation de contenu pour tester le scroll.</p>
-      <p>Chaque élément est codé avec précision : sidebar fixe, logo SK Cuber, boutons dynamiques, et footer fonctionnel.</p>
-      <p>Ce texte est répété pour simuler du contenu long...</p>
-      <p>Ce texte est répété pour simuler du contenu long...</p>
-      <p>Ce texte est répété pour simuler du contenu long...</p>
-      <p>Ce texte est répété pour simuler du contenu long...</p>
-      <p>Ce texte est répété pour simuler du contenu long...</p>
-      <p>Ce texte est répété pour simuler du contenu long...</p>
-      <p>Ce texte est répété pour simuler du contenu long...</p>
-      <p>Ce texte est répété pour simuler du contenu long...</p>
-    </section>
+    <h1>Bienvenue dans ZakLab</h1>
+    <p>Explore mes projets, mes idées et mes expériences numériques.</p>
+    <p>Ce site est conçu pour être minimaliste, rapide et élégant.</p>
   </main>
 
   <!-- Footer -->
   <footer class="footer">
-    <a href="discord.html"><i class="fab fa-discord"></i></a>
-    <a href="#"><i class="fab fa-facebook"></i></a>
-    <a href="#"><i class="fab fa-twitter"></i></a>
-    <a href="#"><i class="fab fa-instagram"></i></a>
-    <a href="#"><i class="fab fa-linkedin"></i></a>
-    <a href="#"><i class="fab fa-github"></i></a>
+    <a href="#">🐦</a>
+    <a href="#">📸</a>
+    <a href="#">💼</a>
   </footer>
-
-  <!-- JS interactions -->
-  <script>
-    const sidebar2 = document.querySelector('.sidebar2');
-    const openSidebar2 = document.querySelector('.open-sidebar2');
-    const searchIcon = document.querySelector('.search-icon');
-    const searchBar = document.querySelector('.search-bar');
-
-    openSidebar2.addEventListener('click', () => {
-      sidebar2.classList.toggle('hidden');
-    });
-
-    searchIcon.addEventListener('click', (e) => {
-      e.stopPropagation();
-      searchBar.classList.toggle('hidden');
-      searchBar.focus();
-    });
-
-    document.addEventListener('click', (e) => {
-      if (!searchBar.contains(e.target) && !searchIcon.contains(e.target)) {
-        searchBar.classList.add('hidden');
-      }
-      if (!sidebar2.contains(e.target) && !openSidebar2.contains(e.target)) {
-        sidebar2.classList.add('hidden');
-      }
-    });
-  </script>
 
 </body>
 </html>
