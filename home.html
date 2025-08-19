@@ -1,94 +1,188 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mine Runs - Accueil</title>
-    <link rel="stylesheet" href="style.css">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ZakCorp - MineRuns</title>
+  <!-- Import police via SK Cuber -->
+  <link href="https://fonts.cdnfonts.com/css/sk-cuber" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'SK Cuber', sans-serif;
+      display: flex;
+      background-color: #000;
+      color: #a64dff; /* texte violet */
+      min-height: 100vh;
+    }
+
+    /* --- Sidebar --- */
+    .sidebar {
+      width: 220px;
+      background-color: #000;
+      padding: 2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+      position: fixed;
+      left: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    .sidebar a {
+      text-decoration: none;
+      color: #a64dff;
+      font-weight: 600;
+      font-size: 1rem;
+      transition: color 0.2s;
+    }
+
+    .sidebar a:hover {
+      color: #fff;
+    }
+
+    /* --- Contenu principal --- */
+    .main {
+      margin-left: 220px;
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .topbar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 1rem 2rem;
+      background-color: #000;
+    }
+
+    .topbar .search {
+      margin-right: 1.5rem;
+      cursor: pointer;
+      font-size: 1.2rem;
+      color: #a64dff;
+    }
+
+    .topbar .login {
+      background: #111;
+      padding: 0.5rem 1rem;
+      border-radius: 20px;
+      text-decoration: none;
+      color: #a64dff;
+      font-weight: 600;
+      transition: background 0.2s, color 0.2s;
+    }
+
+    .topbar .login:hover {
+      background: #a64dff;
+      color: #fff;
+    }
+
+    /* --- Layout principal (hero + cartes) --- */
+    .content {
+      display: grid;
+      grid-template-columns: 2fr 1fr;
+      gap: 1rem;
+      padding: 2rem;
+    }
+
+    /* Bloc central (hero) */
+    .hero {
+      background: url('https://images.unsplash.com/photo-1506748686214-e9df14d4d9d0?auto=format&fit=crop&w=1600&q=80') center/cover no-repeat;
+      border-radius: 10px;
+      min-height: 400px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+    }
+
+    .hero h1 {
+      font-size: 4rem;
+      font-weight: bold;
+      margin-bottom: 1rem;
+      color: #a64dff;
+      text-shadow: 0 0 15px rgba(0,0,0,0.7);
+    }
+
+    .hero p {
+      font-size: 1.2rem;
+      color: #ddd;
+    }
+
+    /* Cartes à droite */
+    .cards {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .card {
+      background: #111;
+      border-radius: 10px;
+      padding: 1rem;
+      min-height: 150px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      font-weight: bold;
+      font-size: 1.2rem;
+      color: #a64dff;
+    }
+
+    footer {
+      padding: 1rem;
+      background: #000;
+      text-align: center;
+      font-size: 0.8rem;
+      color: #666;
+    }
+  </style>
 </head>
 <body>
-    <div class="main-container">
-        <aside class="sidebar">
-            <div class="sidebar-header">
-                <span class="logo">MINE RUNS</span>
-            </div>
-            
-            <nav class="sidebar-nav">
-                <ul>
-                    <li><a href="#" class="active">Server</a></li>
-                    <li><a href="#">News</a></li>
-                    <li><a href="#">Jeux</a></li>
-                    <li><a href="#">Stats</a></li>
-                    <li><a href="#">Explorer</a></li>
-                    <li><a href="#">Histoire</a></li>
-                </ul>
-            </nav>
-        </aside>
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <a href="#">MineRuns</a>
+    <a href="#">ZakLab</a>
+    <a href="#">UseFull</a>
+    <a href="#">MapMC</a>
+    <a href="#">Musique</a>
+    <a href="#">Contact</a>
+  </aside>
 
-        <main class="main-content">
-            <header class="main-header">
-                <div class="search-bar-container">
-                    <span class="search-icon">🔎</span>
-                    <input type="text" class="search-input" placeholder="Rechercher">
-                </div>
-            </header>
-
-            <section class="content-section">
-                <div class="main-card">
-                    <div class="card-image-placeholder main-image"></div>
-                    <div class="card-details">
-                        <h3>Dernière vidéo en ligne</h3>
-                        <h2>Vivre la folie en survie</h2>
-                        <div class="card-meta">
-                            <span>150 vues</span>
-                            <span class="dot">•</span>
-                            <span>il y a 2 jours</span>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="cards-container">
-                    <div class="secondary-card">
-                        <div class="card-image-placeholder secondary-image"></div>
-                        <div class="card-details">
-                            <h2>Chasse aux monstres rares</h2>
-                            <div class="card-meta">
-                                <span>120 vues</span>
-                                <span class="dot">•</span>
-                                <span>il y a 4 jours</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="secondary-card">
-                        <div class="card-image-placeholder secondary-image"></div>
-                        <div class="card-details">
-                            <h2>Le guide des ressources</h2>
-                            <div class="card-meta">
-                                <span>89 vues</span>
-                                <span class="dot">•</span>
-                                <span>il y a 1 semaine</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="secondary-card">
-                        <div class="card-image-placeholder secondary-image"></div>
-                        <div class="card-details">
-                            <h2>Un nouveau monde</h2>
-                            <div class="card-meta">
-                                <span>250 vues</span>
-                                <span class="dot">•</span>
-                                <span>il y a 2 semaines</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </section>
-        </main>
+  <!-- Main -->
+  <div class="main">
+    <!-- Topbar -->
+    <div class="topbar">
+      <span class="search">⌕</span>
+      <a href="#" class="login">Se connecter</a>
     </div>
 
-    <script src="script.js"></script>
+    <!-- Content (Hero + Cards) -->
+    <div class="content">
+      <section class="hero">
+        <h1>MineRuns</h1>
+        <p>Le serveur Minecraft nouvelle génération par ZakCorp</p>
+      </section>
+      <div class="cards">
+        <div class="card">Serveur rapide ⚡</div>
+        <div class="card">Plugins exclusifs 🔮</div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+      © 2025 ZakCorp - Tous droits réservés
+    </footer>
+  </div>
 </body>
 </html>
