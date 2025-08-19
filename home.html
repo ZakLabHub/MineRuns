@@ -1,128 +1,94 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Sidebar + Mini Header</title>
-  <style>
-    /* Reset */
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-
-    body {
-      font-family: Arial, sans-serif;
-      display: flex;
-      min-height: 100vh;
-      background: #f3f3f3;
-    }
-
-    /* Sidebar */
-    .sidebar {
-      width: 220px;
-      background: #1e1e2f;
-      color: #fff;
-      padding: 20px 0;
-      flex-shrink: 0;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .sidebar h2 {
-      margin-bottom: 30px;
-      font-size: 22px;
-    }
-
-    .sidebar a {
-      display: block;
-      width: 100%;
-      padding: 12px 20px;
-      color: #ccc;
-      text-decoration: none;
-      transition: 0.3s;
-    }
-
-    .sidebar a:hover {
-      background: #33334d;
-      color: #fff;
-    }
-
-    /* Content area */
-    .main {
-      flex-grow: 1;
-      display: flex;
-      flex-direction: column;
-    }
-
-    /* Mini header */
-    .mini-header {
-      background: #fff;
-      border-bottom: 1px solid #ddd;
-      padding: 10px 20px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .mini-header h1 {
-      font-size: 20px;
-      color: #333;
-    }
-
-    .mini-header .profile {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-    }
-
-    .mini-header img {
-      width: 35px;
-      height: 35px;
-      border-radius: 50%;
-    }
-
-    /* Content body */
-    .content {
-      padding: 20px;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mine Runs - Accueil</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <div class="main-container">
+        <aside class="sidebar">
+            <div class="sidebar-header">
+                <span class="logo">MINE RUNS</span>
+            </div>
+            
+            <nav class="sidebar-nav">
+                <ul>
+                    <li><a href="#" class="active">Server</a></li>
+                    <li><a href="#">News</a></li>
+                    <li><a href="#">Jeux</a></li>
+                    <li><a href="#">Stats</a></li>
+                    <li><a href="#">Explorer</a></li>
+                    <li><a href="#">Histoire</a></li>
+                </ul>
+            </nav>
+        </aside>
 
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>ZakCorp</h2>
-    <a href="#">🏠 Accueil</a>
-    <a href="#">🗺️ Map</a>
-    <a href="#">🎵 Music</a>
-    <a href="#">📰 News</a>
-    <a href="#">ℹ️ About</a>
-    <a href="#">💬 Feedback</a>
-    <a href="#">💻 Chat</a>
-  </div>
+        <main class="main-content">
+            <header class="main-header">
+                <div class="search-bar-container">
+                    <span class="search-icon">🔎</span>
+                    <input type="text" class="search-input" placeholder="Rechercher">
+                </div>
+            </header>
 
-  <!-- Main content -->
-  <div class="main">
+            <section class="content-section">
+                <div class="main-card">
+                    <div class="card-image-placeholder main-image"></div>
+                    <div class="card-details">
+                        <h3>Dernière vidéo en ligne</h3>
+                        <h2>Vivre la folie en survie</h2>
+                        <div class="card-meta">
+                            <span>150 vues</span>
+                            <span class="dot">•</span>
+                            <span>il y a 2 jours</span>
+                        </div>
+                    </div>
+                </div>
 
-    <!-- Mini header -->
-    <div class="mini-header">
-      <h1>Dashboard</h1>
-      <div class="profile">
-        <span>ZakMC</span>
-        <img src="https://i.pravatar.cc/35" alt="Profil">
-      </div>
+                <div class="cards-container">
+                    <div class="secondary-card">
+                        <div class="card-image-placeholder secondary-image"></div>
+                        <div class="card-details">
+                            <h2>Chasse aux monstres rares</h2>
+                            <div class="card-meta">
+                                <span>120 vues</span>
+                                <span class="dot">•</span>
+                                <span>il y a 4 jours</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="secondary-card">
+                        <div class="card-image-placeholder secondary-image"></div>
+                        <div class="card-details">
+                            <h2>Le guide des ressources</h2>
+                            <div class="card-meta">
+                                <span>89 vues</span>
+                                <span class="dot">•</span>
+                                <span>il y a 1 semaine</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="secondary-card">
+                        <div class="card-image-placeholder secondary-image"></div>
+                        <div class="card-details">
+                            <h2>Un nouveau monde</h2>
+                            <div class="card-meta">
+                                <span>250 vues</span>
+                                <span class="dot">•</span>
+                                <span>il y a 2 semaines</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
     </div>
 
-    <!-- Content -->
-    <div class="content">
-      <h2>Bienvenue 👋</h2>
-      <p>Voici ton espace avec une sidebar et un mini-header intégrés 100% dans ce fichier HTML.</p>
-    </div>
-
-  </div>
-
+    <script src="script.js"></script>
 </body>
 </html>
