@@ -1,581 +1,153 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>-M- Server</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @font-face {
-            font-family: 'SKCuber';
-            src: url('fonts/SKCuber-Expanded.ttf') format('truetype');
-            font-weight: normal;
-            font-style: normal;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>ZakCorp Layout</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-        }
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f5f5f5;
+      display: flex;
+      height: 100vh;
+      overflow: hidden;
+    }
 
-        body {
-            font-family: 'League Spartan', sans-serif;
-            background-color: #0a0a0a;
-            color: white;
-            overflow-x: hidden;
-        }
+    .sidebar {
+      width: 250px;
+      background-color: #2c2c2c;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* centrage vertical */
+      align-items: flex-start;
+      padding: 20px 10px;
+      transition: width 0.3s ease;
+    }
 
-        /* Sidebar principale */
-        .sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 200px;
-            height: 100vh;
-            background-color: #0a0a0a;
-            z-index: 1000;
-            transition: width 0.3s ease;
-            display: flex;
-            flex-direction: column;
-        }
+    .sidebar .logo {
+      font-size: 24px;
+      font-weight: bold;
+      color: #a64dff;
+      margin-bottom: 40px;
+      align-self: center;
+    }
 
-        .sidebar.collapsed {
-            width: 60px;
-        }
+    .sidebar ul {
+      list-style: none;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start; /* texte aligné à gauche */
+      gap: 15px; /* espacement réduit */
+    }
 
-        .sidebar-header {
-            /* Aligne mieux logo + flèche */
-            display: grid;
-            grid-template-columns: 1fr auto;
-            align-items: center;
-            padding: 20px 16px;
-            position: relative;
-            height: 80px;
-        }
+    .sidebar ul li {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+    }
 
-        .logo {
-            font-family: 'SKCuber', 'League Spartan', sans-serif;
-            font-size: 28px;
-            font-weight: bold;
-            color: #a020f0;
-            cursor: pointer;
-            text-decoration: none;
-            /* centré réellement, plus d'absolu */
-            justify-self: center;
-        }
+    .sidebar ul li:hover {
+      background-color: #3a3a3a;
+    }
 
-        .toggle-arrow {
-            cursor: pointer;
-            color: #a020f0;
-            font-size: 18px;
-            font-family: 'League Spartan', sans-serif;
-            font-weight: 700;
-            /* placé à droite proprement */
-            justify-self: end;
-            transition: transform 0.3s ease;
-        }
+    .toggle-btn {
+      background: none;
+      border: none;
+      color: #fff;
+      font-size: 20px;
+      cursor: pointer;
+      margin-top: 20px;
+      align-self: center;
+      transition: none; /* aucune animation */
+    }
 
-        .sidebar.collapsed .toggle-arrow {
-            transform: rotate(180deg);
-        }
+    .content {
+      flex: 1;
+      padding: 40px;
+      overflow-y: auto;
+    }
 
-        .sidebar-content {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            padding: 10px 0; /* plus concise */
-            gap: 3px; /* moins d'espacement entre sections */
-            transition: opacity 0.3s ease;
-        }
+    /* Sidebar droite */
+    .sidebar-right {
+      width: 250px;
+      background-color: #1f1f1f;
+      color: #fff;
+      display: flex;
+      flex-direction: column;
+      justify-content: center; /* centrage vertical */
+      align-items: flex-start;
+      padding: 20px 10px;
+      transition: width 0.3s ease;
+    }
 
-        .sidebar.collapsed .sidebar-content {
-            opacity: 0;
-            pointer-events: none;
-        }
+    .sidebar-right ul {
+      list-style: none;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 15px; /* espacement réduit */
+    }
 
-        .sidebar-section {
-            padding: 10px 12px; /* plus compacte */
-            cursor: pointer;
-            transition: all 0.3s ease;
-            display: flex;
-            align-items: center;
-            justify-content: center; /* contenu bien centré */
-            margin: 2px 8px; /* moins d'espace latéral/vertical */
-            border-radius: 10px;
-            position: relative;
-        }
+    .sidebar-right ul li {
+      width: 100%;
+      padding: 10px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      text-align: left;
+    }
 
-        .sidebar-section:hover {
-            background: rgba(160, 32, 240, 0.1);
-            border: 1px solid #a020f0;
-        }
-
-        .sidebar-section span {
-            font-size: 14px;
-            font-weight: 700;
-            color: #a020f0;
-            text-align: center;
-        }
-
-        .sidebar-section .arrow {
-            color: #a020f0;
-            font-size: 12px;
-            opacity: 0;
-            transition: opacity 0.3s ease;
-            position: absolute; /* garde la flèche sans décentrer le texte */
-            right: 10px;
-        }
-
-        .sidebar-section:hover .arrow {
-            opacity: 1;
-        }
-
-        .sidebar-footer {
-            /* épinglé tout en bas */
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            padding: 16px; /* pas ultra à droite */
-            display: flex;
-            align-items: center;
-            justify-content: flex-end;
-            height: 80px;
-        }
-
-        .profile-pic {
-            width: 35px;
-            height: 35px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, #a020f0, #8a1ad1);
-            border: 2px solid #a020f0;
-            display: none;
-        }
-
-        .profile-pic.logged-in {
-            display: block;
-        }
-
-        .home-button {
-            background: none;
-            border: none;
-            color: #a020f0;
-            font-size: 24px; /* plus grand */
-            font-weight: 800; /* plus gras */
-            cursor: pointer;
-            /* pas ultra à droite, léger padding droit via .sidebar-footer */
-            transition: all 0.3s ease;
-            font-family: 'League Spartan', sans-serif;
-        }
-
-        .home-button:hover {
-            color: white;
-            transform: scale(1.06);
-        }
-
-        /* Sidebar secondaire */
-        .secondary-sidebar {
-            position: fixed;
-            left: 0;
-            top: 0;
-            width: 200px;
-            height: 100vh;
-            background-color: #0a0a0a;
-            z-index: 1001;
-            transform: translateX(-100%);
-            transition: transform 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            padding-top: 100px;
-        }
-
-        .secondary-sidebar.active {
-            transform: translateX(0);
-        }
-
-        .secondary-sidebar .sidebar-content {
-            padding-top: 0;
-        }
-
-        .secondary-sidebar .sidebar-section {
-            margin: 5px 10px;
-        }
-
-        /* Overlay */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            z-index: 999;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-        }
-
-        .overlay.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        /* Mini-header */
-        .mini-header {
-            position: fixed;
-            top: 25px;
-            right: 25px;
-            display: flex;
-            align-items: center;
-            gap: 20px;
-            z-index: 1002;
-        }
-
-        .search-container {
-            position: relative;
-        }
-
-        .search-icon {
-            cursor: pointer;
-            color: #a020f0;
-            font-size: 20px;
-            padding: 8px;
-            transition: all 0.3s ease;
-            border-radius: 8px;
-        }
-
-        .search-icon:hover {
-            background: rgba(160, 32, 240, 0.1);
-            color: white;
-        }
-
-        .search-bar {
-            position: absolute;
-            right: 0;
-            top: 50%;
-            transform: translateY(-50%);
-            width: 280px;
-            padding: 12px 18px;
-            background: rgba(26, 26, 26, 0.95);
-            border: 1px solid #a020f0;
-            border-radius: 25px;
-            color: white;
-            font-family: 'League Spartan', sans-serif;
-            font-weight: 400;
-            outline: none;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.3s ease;
-            backdrop-filter: blur(10px);
-        }
-
-        .search-bar.active {
-            opacity: 1;
-            visibility: visible;
-        }
-
-        .login-btn {
-            background: linear-gradient(135deg, #a020f0, #8a1ad1);
-            color: white;
-            border: none;
-            padding: 12px 26px;
-            border-radius: 25px;
-            font-family: 'League Spartan', sans-serif;
-            font-weight: 700;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
-        }
-
-        .login-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
-        }
-
-        .mini-header.logged-in .login-btn {
-            display: none;
-        }
-
-        .mini-header.logged-in .search-container {
-            order: 2;
-        }
-
-        /* Contenu principal */
-        .main-content {
-            margin-left: 200px;
-            padding: 40px 40px 80px 40px;
-            min-height: 100vh;
-            transition: margin-left 0.3s ease;
-        }
-
-        .sidebar.collapsed + .main-content {
-            margin-left: 60px;
-        }
-
-        .content-section {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .content-section h1 {
-            font-size: 36px;
-            margin-bottom: 25px;
-            color: #a020f0;
-            font-weight: 700;
-        }
-
-        .content-section h2 {
-            font-size: 26px;
-            margin: 35px 0 18px 0;
-            color: #a020f0;
-            font-weight: 700;
-        }
-
-        .content-section p {
-            line-height: 1.7;
-            margin-bottom: 18px;
-            color: #e0e0e0;
-            font-weight: 400;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 16px;
-        }
-
-        /* Footer moderne */
-        .footer {
-            background: linear-gradient(135deg, #a020f0, #8a1ad1);
-            padding: 25px 0;
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 60px;
-        }
-
-        .social-icon {
-            color: white;
-            font-size: 24px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            padding: 12px;
-            border-radius: 50%;
-            background: rgba(255, 255, 255, 0.1);
-            width: 48px;
-            height: 48px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            backdrop-filter: blur(10px);
-        }
-
-        .social-icon:hover {
-            transform: translateY(-3px) scale(1.1);
-            background: rgba(255, 255, 255, 0.2);
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-        }
-
-        .social-icon.discord:hover { background: #5865f2; }
-        .social-icon.facebook:hover { background: #1877f2; }
-        .social-icon.twitter:hover { background: #1da1f2; }
-        .social-icon.instagram:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); }
-        .social-icon.linkedin:hover { background: #0077b5; }
-        .social-icon.github:hover { background: #333; }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .sidebar { width: 60px; }
-            .main-content { margin-left: 60px; padding: 40px 20px 80px 20px; }
-            .mini-header { top: 20px; right: 20px; gap: 15px; }
-            .search-bar { width: 220px; }
-        }
-    </style>
+    .sidebar-right ul li:hover {
+      background-color: #333;
+    }
+  </style>
 </head>
 <body>
-    <!-- Overlay -->
-    <div class="overlay" id="overlay"></div>
+  <div class="sidebar">
+    <div class="logo">-M-</div>
+    <ul>
+      <li>MineRuns</li>
+      <li>Map</li>
+      <li>Music</li>
+      <li>News</li>
+      <li>About</li>
+      <li>Feedback</li>
+      <li>Chat</li>
+    </ul>
+    <button class="toggle-btn">⮜</button>
+  </div>
 
-    <!-- Sidebar principale -->
-    <div class="sidebar" id="sidebar">
-        <div class="sidebar-header">
-            <a href="home.html" class="logo">-M-</a>
-            <div class="toggle-arrow" id="toggleArrow">></div>
-        </div>
-        
-        <div class="sidebar-content">
-            <div class="sidebar-section" onclick="window.location.href='server.html'">
-                <span>SERVER</span>
-                <div class="arrow">></div>
-            </div>
-            <div class="sidebar-section" onclick="window.location.href='game.html'">
-                <span>GAME</span>
-                <div class="arrow">></div>
-            </div>
-            <div class="sidebar-section" onclick="window.location.href='explore.html'">
-                <span>EXPLORE</span>
-                <div class="arrow">></div>
-            </div>
-            <div class="sidebar-section" onclick="window.location.href='news.html'">
-                <span>NEWS</span>
-                <div class="arrow">></div>
-            </div>
-            <div class="sidebar-section" onclick="window.location.href='stats.html'">
-                <span>STATS</span>
-                <div class="arrow">></div>
-            </div>
-        </div>
-        
-        <div class="sidebar-footer">
-            <div class="profile-pic" id="profilePic"></div>
-            <button class="home-button" id="homeButton">⌂</button>
-        </div>
-    </div>
+  <div class="content">
+    <h1>Bienvenue sur ZakCorp</h1>
+    <p>
+      Ceci est la zone principale de contenu. Ajoute ici tes sections et modules.
+      Toute la mise en page reprend la base que tu avais, mais corrigée selon tes
+      demandes.
+    </p>
+    <p>
+      Les sidebars sont centrées verticalement, le texte commence bien à gauche,
+      les espacements entre sections sont réduits et les logos/flèches restent
+      statiques sans animation.
+    </p>
+  </div>
 
-    <!-- Sidebar secondaire -->
-    <div class="secondary-sidebar" id="secondarySidebar">
-        <div class="sidebar-content">
-            <div class="sidebar-section" onclick="window.location.href='UseFull.html'">
-                <span>USEFULL</span>
-                <div class="arrow">></div>
-            </div>
-            <div class="sidebar-section" onclick="window.location.href='ZakLab.html'">
-                <span>ZAKLAB</span>
-                <div class="arrow">></div>
-            </div>
-            <div class="sidebar-section" onclick="window.location.href='MapMC.html'">
-                <span>MAPMC</span>
-                <div class="arrow">></div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Mini-header -->
-    <div class="mini-header" id="miniHeader">
-        <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
-        <div class="search-container">
-            <div class="search-icon" id="searchIcon">⌕</div>
-            <input type="text" class="search-bar" id="searchBar" placeholder="Search pages...">
-        </div>
-    </div>
-
-    <!-- Contenu principal -->
-    <div class="main-content">
-        <div class="content-section">
-            <h1>Welcome to -M- Server</h1>
-            
-            <h2>About This Website</h2>
-            <p>This modern website has been created with a sleek design inspired by contemporary web applications. The goal is to provide practical information for our server with organized articles and an optimal user experience.</p>
-
-            <h2>Development and Creation</h2>
-            <p>Unlike other AI that made mistakes, this site has been developed with precision according to your exact specifications. Every detail has been respected: the purple gradients, League Spartan font, the clean sidebar, and all interactive elements.</p>
-
-            <h2>Main Features</h2>
-            <p>The main sidebar contains five key sections: SERVER, GAME, EXPLORE, NEWS, and STATS. It collapses smoothly while keeping the -M- logo and toggle arrow perfectly centered. The mini-header offers quick login and smart search functionality.</p>
-
-            <h2>Modern Navigation</h2>
-            <p>The interface uses smooth transitions, subtle hover effects with purple accents, and a layout that perfectly adapts to different screen sizes. Every element has been designed for optimal user experience with minimal visual clutter.</p>
-
-            <h2>GitHub Pages Integration</h2>
-            <p>This code is perfectly optimized for GitHub Pages. A single HTML file contains all the necessary CSS and JavaScript, with fonts loaded efficiently. No complex configuration is required for deployment.</p>
-
-            <h2>Social Networks</h2>
-            <p>The footer features a modern gradient design with social network icons that have unique hover effects. Each platform has its signature color on hover, creating an engaging user experience.</p>
-
-            <p>This clean, minimal design leaves plenty of space for your future content while maintaining a professional and modern appearance.</p>
-        </div>
-    </div>
-
-    <!-- Footer moderne -->
-    <div class="footer">
-        <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord.html'"></i>
-        <i class="fab fa-facebook social-icon facebook"></i>
-        <i class="fab fa-twitter social-icon twitter"></i>
-        <i class="fab fa-instagram social-icon instagram"></i>
-        <i class="fab fa-linkedin social-icon linkedin"></i>
-        <i class="fab fa-github social-icon github"></i>
-    </div>
-
-    <script>
-        // Simuler l'état de connexion
-        let isLoggedIn = false;
-
-        // Toggle sidebar principale
-        const sidebar = document.getElementById('sidebar');
-        const toggleArrow = document.getElementById('toggleArrow');
-
-        toggleArrow.addEventListener('click', function() {
-            sidebar.classList.toggle('collapsed');
-        });
-
-        // Gestion de la sidebar secondaire
-        const homeButton = document.getElementById('homeButton');
-        const secondarySidebar = document.getElementById('secondarySidebar');
-        const overlay = document.getElementById('overlay');
-
-        homeButton.addEventListener('click', function(e) {
-            e.stopPropagation();
-            secondarySidebar.classList.add('active');
-            overlay.classList.add('active');
-        });
-
-        // Fermer la sidebar secondaire
-        overlay.addEventListener('click', function() {
-            secondarySidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!secondarySidebar.contains(e.target) && !homeButton.contains(e.target)) {
-                secondarySidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            }
-        });
-
-        // Search functionality
-        const searchIcon = document.getElementById('searchIcon');
-        const searchBar = document.getElementById('searchBar');
-
-        searchIcon.addEventListener('click', function(e) {
-            e.stopPropagation();
-            searchBar.classList.toggle('active');
-            if (searchBar.classList.contains('active')) {
-                searchBar.focus();
-            }
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!searchBar.contains(e.target) && !searchIcon.contains(e.target)) {
-                searchBar.classList.remove('active');
-            }
-        });
-
-        searchBar.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        searchBar.addEventListener('input', function(e) {
-            const query = e.target.value.toLowerCase();
-            console.log('Search:', query);
-        });
-
-        // Gestion de l'état connecté
-        function updateLoginState() {
-            const miniHeader = document.getElementById('miniHeader');
-            const profilePic = document.getElementById('profilePic');
-            
-            if (isLoggedIn) {
-                miniHeader.classList.add('logged-in');
-                profilePic.classList.add('logged-in');
-            } else {
-                miniHeader.classList.remove('logged-in');
-                profilePic.classList.remove('logged-in');
-            }
-        }
-
-        updateLoginState();
-    </script>
+  <div class="sidebar-right">
+    <ul>
+      <li>Profil</li>
+      <li>Paramètres</li>
+      <li>Support</li>
+      <li>Déconnexion</li>
+    </ul>
+  </div>
 </body>
 </html>
