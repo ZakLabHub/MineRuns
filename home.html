@@ -1,32 +1,88 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-  <meta charset="UTF-8">
-  <title>MineRuns</title>
-  <link rel="stylesheet" href="css/style.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Zakariya - Home</title>
+  <link rel="stylesheet" href="css/style.css" />
+  <link rel="preload" href="fonts/SKCuber-Expanded.ttf" as="font" type="font/ttf" crossorigin="anonymous" />
 </head>
 <body>
-  <nav class="sidebar">
-    <ul>
-      <li>Recherches</li>
-      <li>Sécurité</li>
-      <li>Pour les entreprises</li>
-      <li>Plateforme API</li>
-      <li>ChatGPT</li>
-      <li>Sora</li>
-      <li>Témoignages</li>
-      <li>Société</li>
-      <li>Actualités</li>
+
+  <!-- Sidebar principale -->
+  <nav class="sidebar1">
+    <div class="logo">-M-</div>
+    <button class="toggle-sidebar">←</button>
+    <ul class="nav-links">
+      <li><a href="Server.html">Server <span>›</span></a></li>
+      <li><a href="News.html">News <span>›</span></a></li>
+      <li><a href="Jeux.html">Jeux <span>›</span></a></li>
+      <li><a href="Stats.html">Stats <span>›</span></a></li>
+      <li><a href="Explorer.html">Explorer <span>›</span></a></li>
+      <li><a href="Histoire.html">Histoire <span>›</span></a></li>
+    </ul>
+    <button class="open-sidebar2">▣</button>
+  </nav>
+
+  <!-- Sidebar secondaire -->
+  <nav class="sidebar2 hidden">
+    <ul class="nav-links">
+      <li><a href="UseFull.html">UseFull</a></li>
+      <li><a href="QuestiHub.html">QuestiHub</a></li>
+      <li><a href="ZakLab.html">ZakLab</a></li>
+      <li><a href="MapMC.html">MapMC</a></li>
     </ul>
   </nav>
 
-  <main class="content">
-    <div class="hero">
-      <h1 class="mine-title">MineRuns</h1>
-      <h2>GPT-5</h2>
-      <p class="caption">GPT-5 est disponible</p>
-      <p class="caption-en">Our smartest, fastest, and most useful model yet.</p>
+  <!-- Mini-header -->
+  <header class="mini-header">
+    <button class="login-btn">Se connecter</button>
+    <button class="search-btn">⌕</button>
+    <div class="profile hidden">
+      <a href="gestion.html"><img src="img/profil.jpg" alt="Profil" /></a>
     </div>
+  </header>
+
+  <!-- Barre de recherche -->
+  <div class="search-bar hidden">
+    <input type="text" placeholder="Rechercher une page..." />
+  </div>
+
+  <!-- Contenu principal -->
+  <main>
+    <h1>Bienvenue Zakariya 👑</h1>
+    <p>Voici ton espace personnalisé. On est prêt à coder tout le reste !</p>
   </main>
+
+  <!-- Footer -->
+  <footer>
+    <div class="social-bar">
+      <a href="discord.html"><img src="img/discord-icon.png" alt="Discord" /></a>
+      <!-- Autres icônes à venir -->
+    </div>
+  </footer>
+
+  <!-- Script JS pour interactions -->
+  <script>
+    const sidebar2 = document.querySelector('.sidebar2');
+    const openSidebar2 = document.querySelector('.open-sidebar2');
+    const searchBtn = document.querySelector('.search-btn');
+    const searchBar = document.querySelector('.search-bar');
+
+    openSidebar2.addEventListener('click', () => {
+      sidebar2.classList.toggle('hidden');
+    });
+
+    searchBtn.addEventListener('click', () => {
+      searchBar.classList.toggle('hidden');
+    });
+
+    document.addEventListener('click', (e) => {
+      if (!sidebar2.contains(e.target) && !openSidebar2.contains(e.target)) {
+        sidebar2.classList.add('hidden');
+      }
+    });
+  </script>
+
 </body>
 </html>
