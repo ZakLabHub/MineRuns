@@ -30,6 +30,7 @@
             overflow-x: hidden;
         }
 
+        /* Logo et flèche totalement statiques */
         .static-header {
             position: fixed;
             top: 20px;
@@ -56,8 +57,14 @@
             font-size: 20px;
             font-family: 'League Spartan', sans-serif;
             font-weight: 700;
+            transition: transform 0.3s ease;
         }
 
+        .toggle-arrow.rotate {
+            transform: rotate(90deg);
+        }
+
+        /* Sidebar principale */
         .sidebar {
             position: fixed;
             left: 0;
@@ -154,6 +161,7 @@
             cursor: pointer;
         }
 
+        /* Sidebar secondaire */
         .secondary-sidebar {
             position: fixed;
             left: 0;
@@ -179,6 +187,7 @@
             justify-content: flex-start;
         }
 
+        /* Overlay */
         .overlay {
             position: fixed;
             top: 0;
@@ -197,6 +206,7 @@
             visibility: visible;
         }
 
+        /* Mini-header */
         .mini-header {
             position: fixed;
             top: 25px;
@@ -276,6 +286,7 @@
             order: 2;
         }
 
+        /* Contenu principal avec transition */
         .main-content {
             margin-left: 200px;
             padding: 80px 40px 80px 40px;
@@ -315,6 +326,7 @@
             font-size: 16px;
         }
 
+        /* Footer moderne */
         .footer {
             background: linear-gradient(135deg, #a020f0, #8a1ad1);
             padding: 25px 0;
@@ -346,6 +358,7 @@
             box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
         }
 
+        /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
                 width: 60px;
@@ -375,33 +388,64 @@
     </style>
 </head>
 <body>
+    <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
 
+    <!-- Logo et flèche totalement statiques -->
     <div class="static-header">
         <a href="home.html" class="logo">-M-</a>
         <div class="toggle-arrow" id="toggleArrow">></div>
     </div>
 
+    <!-- Sidebar principale -->
     <div class="sidebar" id="sidebar">
         <div class="sidebar-header"></div>
         <div class="sidebar-content">
-            <div class="sidebar-section" onclick="window.location.href='server.html'"><span>SERVER</span><div class="arrow">></div></div>
-            <div class="sidebar-section" onclick="window.location.href='game.html'"><span>GAME</span><div class="arrow">></div></div>
-            <div class="sidebar-section" onclick="window.location.href='explore.html'"><span>EXPLORE</span><div class="arrow">></div></div>
-            <div class="sidebar-section" onclick="window.location.href='news.html'"><span>NEWS</span><div class="arrow">></div></div>
-            <div class="sidebar-section" onclick="window.location.href='stats.html'"><span>STATS</span><div class="arrow">></div></div>
+            <div class="sidebar-section" onclick="window.location.href='server.html'">
+                <span>SERVER</span>
+                <div class="arrow">></div>
+            </div>
+            <div class="sidebar-section" onclick="window.location.href='game.html'">
+                <span>GAME</span>
+                <div class="arrow">></div>
+            </div>
+            <div class="sidebar-section" onclick="window.location.href='explore.html'">
+                <span>EXPLORE</span>
+                <div class="arrow">></div>
+            </div>
+            <div class="sidebar-section" onclick="window.location.href='news.html'">
+                <span>NEWS</span>
+                <div class="arrow">></div>
+            </div>
+            <div class="sidebar-section" onclick="window.location.href='stats.html'">
+                <span>STATS</span>
+                <div class="arrow">></div>
+            </div>
         </div>
-        <div class="sidebar-footer"><button class="home-button" id="homeButton">⌂</button></div>
+        <div class="sidebar-footer">
+            <button class="home-button" id="homeButton">⌂</button>
+        </div>
     </div>
 
+    <!-- Sidebar secondaire -->
     <div class="secondary-sidebar" id="secondarySidebar">
         <div class="sidebar-content">
-            <div class="sidebar-section" onclick="window.location.href='UseFull.html'"><span>USEFULL</span><div class="arrow">></div></div>
-            <div class="sidebar-section" onclick="window.location.href='ZakLab.html'"><span>ZAKLAB</span><div class="arrow">></div></div>
-            <div class="sidebar-section" onclick="window.location.href='MapMC.html'"><span>MAPMC</span><div class="arrow">></div></div>
+            <div class="sidebar-section" onclick="window.location.href='UseFull.html'">
+                <span>USEFULL</span>
+                <div class="arrow">></div>
+            </div>
+            <div class="sidebar-section" onclick="window.location.href='ZakLab.html'">
+                <span>ZAKLAB</span>
+                <div class="arrow">></div>
+            </div>
+            <div class="sidebar-section" onclick="window.location.href='MapMC.html'">
+                <span>MAPMC</span>
+                <div class="arrow">></div>
+            </div>
         </div>
     </div>
 
+    <!-- Mini-header -->
     <div class="mini-header" id="miniHeader">
         <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
         <div class="search-container">
@@ -410,6 +454,7 @@
         </div>
     </div>
 
+    <!-- Contenu principal -->
     <div class="main-content">
         <div class="content-section">
             <h1>Welcome to -M- Server</h1>
@@ -429,6 +474,7 @@
         </div>
     </div>
 
+    <!-- Footer moderne -->
     <div class="footer">
         <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord.html'"></i>
         <i class="fab fa-facebook social-icon facebook"></i>
@@ -440,11 +486,12 @@
 
     <script>
         let isLoggedIn = false;
+
         const sidebar = document.getElementById('sidebar');
         const toggleArrow = document.getElementById('toggleArrow');
-
         toggleArrow.addEventListener('click', function() {
             sidebar.classList.toggle('collapsed');
+            toggleArrow.classList.toggle('rotate');
         });
 
         const homeButton = document.getElementById('homeButton');
@@ -475,35 +522,21 @@
         searchIcon.addEventListener('click', function(e) {
             e.stopPropagation();
             searchBar.classList.toggle('active');
-            if (searchBar.classList.contains('active')) {
-                searchBar.focus();
-            }
+            if (searchBar.classList.contains('active')) searchBar.focus();
         });
 
         document.addEventListener('click', function(e) {
-            if (!searchBar.contains(e.target) && !searchIcon.contains(e.target)) {
-                searchBar.classList.remove('active');
-            }
+            if (!searchBar.contains(e.target) && !searchIcon.contains(e.target)) searchBar.classList.remove('active');
         });
 
-        searchBar.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        searchBar.addEventListener('input', function(e) {
-            const query = e.target.value.toLowerCase();
-            console.log('Search:', query);
-        });
+        searchBar.addEventListener('click', function(e) { e.stopPropagation(); });
+        searchBar.addEventListener('input', function(e) { console.log('Search:', e.target.value.toLowerCase()); });
 
         function updateLoginState() {
             const miniHeader = document.getElementById('miniHeader');
-            if (isLoggedIn) {
-                miniHeader.classList.add('logged-in');
-            } else {
-                miniHeader.classList.remove('logged-in');
-            }
+            if (isLoggedIn) miniHeader.classList.add('logged-in');
+            else miniHeader.classList.remove('logged-in');
         }
-
         updateLoginState();
     </script>
 </body>
