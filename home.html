@@ -54,9 +54,9 @@
         .toggle-arrow {
             cursor: pointer;
             color: #a020f0;
-            font-size: 20px;
+            font-size: 28px;
             font-family: 'League Spartan', sans-serif;
-            font-weight: 700;
+            font-weight: 900;
         }
 
         /* Sidebar principale */
@@ -290,7 +290,7 @@
         }
 
         .sidebar.collapsed ~ .main-content {
-            margin-left: 200px;
+            margin-left: 80px; /* espace pour logo + ≡ */
         }
 
         .content-section {
@@ -389,7 +389,7 @@
     <!-- Logo et flèche totalement statiques -->
     <div class="static-header">
         <a href="home.html" class="logo">-M-</a>
-        <div class="toggle-arrow" id="toggleArrow">></div>
+        <div class="toggle-arrow" id="toggleArrow">≡</div>
     </div>
 
     <!-- Sidebar principale -->
@@ -487,84 +487,4 @@
         <i class="fab fa-twitter social-icon twitter"></i>
         <i class="fab fa-instagram social-icon instagram"></i>
         <i class="fab fa-linkedin social-icon linkedin"></i>
-        <i class="fab fa-github social-icon github"></i>
-    </div>
-
-    <script>
-        // État de connexion
-        let isLoggedIn = false;
-
-        // Toggle sidebar principale
-        const sidebar = document.getElementById('sidebar');
-        const toggleArrow = document.getElementById('toggleArrow');
-
-        toggleArrow.addEventListener('click', function() {
-            sidebar.classList.toggle('collapsed');
-        });
-
-        // Gestion de la sidebar secondaire
-        const homeButton = document.getElementById('homeButton');
-        const secondarySidebar = document.getElementById('secondarySidebar');
-        const overlay = document.getElementById('overlay');
-
-        homeButton.addEventListener('click', function(e) {
-            e.stopPropagation();
-            secondarySidebar.classList.add('active');
-            overlay.classList.add('active');
-        });
-
-        // Fermer la sidebar secondaire
-        overlay.addEventListener('click', function() {
-            secondarySidebar.classList.remove('active');
-            overlay.classList.remove('active');
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!secondarySidebar.contains(e.target) && !homeButton.contains(e.target)) {
-                secondarySidebar.classList.remove('active');
-                overlay.classList.remove('active');
-            }
-        });
-
-        // Search functionality
-        const searchIcon = document.getElementById('searchIcon');
-        const searchBar = document.getElementById('searchBar');
-
-        searchIcon.addEventListener('click', function(e) {
-            e.stopPropagation();
-            searchBar.classList.toggle('active');
-            if (searchBar.classList.contains('active')) {
-                searchBar.focus();
-            }
-        });
-
-        document.addEventListener('click', function(e) {
-            if (!searchBar.contains(e.target) && !searchIcon.contains(e.target)) {
-                searchBar.classList.remove('active');
-            }
-        });
-
-        searchBar.addEventListener('click', function(e) {
-            e.stopPropagation();
-        });
-
-        searchBar.addEventListener('input', function(e) {
-            const query = e.target.value.toLowerCase();
-            console.log('Search:', query);
-        });
-
-        // Gestion de l'état connecté
-        function updateLoginState() {
-            const miniHeader = document.getElementById('miniHeader');
-            
-            if (isLoggedIn) {
-                miniHeader.classList.add('logged-in');
-            } else {
-                miniHeader.classList.remove('logged-in');
-            }
-        }
-
-        updateLoginState();
-    </script>
-</body>
-</html>
+        <i class="fab fa-github social
