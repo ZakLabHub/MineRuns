@@ -19,7 +19,7 @@ body {
 }
 .logo {
   font-family: 'SKCuber', sans-serif; font-size:48px; color:violet; text-align:left; margin-bottom:20px;
-  user-select: none; /* non sélectionnable */
+  user-select: none;
 }
 input {
   width:100%; padding:10px; margin:10px 0; border-radius:10px; border:none;
@@ -28,15 +28,10 @@ input {
 button {
   width:100%; padding:12px; background:violet; border:none; border-radius:10px;
   color:#fff; font-weight:bold; margin-top:10px;
-  user-select: none; /* non sélectionnable */
+  user-select: none;
 }
-#sendCodeBtn {
-  cursor: pointer; /* cliquable */
-}
-#doneBtn {
-  cursor:not-allowed;
-  opacity:0.6;
-}
+#sendCodeBtn { cursor: pointer; }
+#doneBtn { cursor:not-allowed; opacity:0.6; }
 #doneBtn.enabled { cursor:pointer; opacity:1; }
 .checkbox { margin:15px 0; font-size:14px; text-align:left; }
 a { color:#fff; text-decoration:underline; cursor:pointer; }
@@ -45,24 +40,29 @@ a { color:#fff; text-decoration:underline; cursor:pointer; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+// ⚡ Config Supabase
 const supabaseUrl = 'https://cesmjxusnkaymfuubwgl.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlc21qeHVzbmtheW1mdXVid2dsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3NzA4MDIsImV4cCI6MjA3MTM0NjgwMn0.Ksyn8lOlIsrhpmb7n4Pd7SJmv1qPaPe3vipqPaCe1Bc';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
+// ⚡ URL de ta Supabase Function
+const functionUrl = "https://cesmjxusnkaymfuubwgl.supabase.co/functions/v1/resend-email";
+
+// Variables code et timer
 let verificationCode = '';
 let codeExpiry = 0;
 let timerInterval;
-const functionUrl = "https://cesmjxusnkaymfuubwgl.supabase.co/functions/v1/resend-email";
 
+// Envoi code de vérification
 async function sendVerificationCode() {
     const email = document.getElementById('email').value;
     if(!email) return alert("Enter your email first");
 
     // Générer code aléatoire 4 chiffres
     verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
-    codeExpiry = 5*60;
+    codeExpiry = 5*60; // 5 minutes
 
-    // Afficher le champ code et timer
+    // Affiche le champ code et timer
     document.getElementById('codeSection').style.display = 'block';
     document.getElementById('timer').textContent = '05:00';
 
@@ -72,11 +72,14 @@ async function sendVerificationCode() {
         let sec = codeExpiry%60;
         document.getElementById('timer').textContent = `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
         codeExpiry--;
-        if(codeExpiry<0){ clearInterval(timerInterval); alert("Verification code expired"); }
+        if(codeExpiry<0){
+            clearInterval(timerInterval);
+            alert("Verification code expired");
+        }
         checkForm();
     },1000);
 
-    // Envoi réel via Supabase Function
+    // 🔥 Envoi via ta Edge Function
     try {
         const res = await fetch(functionUrl, {
             method:'POST',
@@ -95,6 +98,7 @@ async function sendVerificationCode() {
     }
 }
 
+// Vérifie si le formulaire est valide
 function checkForm() {
     const email = document.getElementById('email').value;
     const username = document.getElementById('username').value;
@@ -112,28 +116,29 @@ function checkForm() {
     }
 }
 
+// Création utilisateur dans Supabase
 async function signUpUser(event){
     event.preventDefault();
     const email = document.getElementById('email').value;
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
 
-    // Vérifier si username existe déjà
+    // Vérifie si username existe déjà
     const { data: existing } = await supabase.from('users').select('username').eq('username', username);
     if(existing.length>0){ alert("Username already taken"); return; }
 
-    // Signup via Supabase Auth
+    // Création compte
     const { data, error } = await supabase.auth.signUp({ email, password });
     if(error){ alert(error.message); return; }
 
-    // Ajouter username et consentement CGU dans table users
+    // Insère username + CGU
     await supabase.from('users').insert([{ id:data.user.id, email, username, accepted_cgu:true }]);
 
     alert("Signup successful! Check your email to confirm.");
     window.location.href = "home.html";
 }
 
-// Vérifier session pour redirection si déjà connecté
+// Redirection si déjà connecté
 supabase.auth.getSession().then(({data:{session}})=>{
     if(session) window.location.href="home.html";
 });
