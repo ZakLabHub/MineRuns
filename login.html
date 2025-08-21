@@ -39,119 +39,16 @@ a { color:#fff; text-decoration:underline; cursor:pointer; }
 #timer { margin-top:5px; font-size:14px; color:#ddd; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-<script>
-// ⚡ Config Supabase
-const supabaseUrl = 'https://cesmjxusnkaymfuubwgl.supabase.co';
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlc21qeHVzbmtheW1mdXVid2dsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3NzA4MDIsImV4cCI6MjA3MTM0NjgwMn0.Ksyn8lOlIsrhpmb7n4Pd7SJmv1qPaPe3vipqPaCe1Bc';
-const supabase = supabase.createClient(supabaseUrl, supabaseKey);
-
-// ⚡ URL de ta Supabase Function
-const functionUrl = "https://cesmjxusnkaymfuubwgl.supabase.co/functions/v1/resend-email";
-
-// Variables code et timer
-let verificationCode = '';
-let codeExpiry = 0;
-let timerInterval;
-
-// Envoi code de vérification
-async function sendVerificationCode() {
-    const email = document.getElementById('email').value;
-    if(!email) return alert("Enter your email first");
-
-    // Générer code aléatoire 4 chiffres
-    verificationCode = Math.floor(1000 + Math.random() * 9000).toString();
-    codeExpiry = 5*60; // 5 minutes
-
-    // Affiche le champ code et timer
-    document.getElementById('codeSection').style.display = 'block';
-    document.getElementById('timer').textContent = '05:00';
-
-    clearInterval(timerInterval);
-    timerInterval = setInterval(()=>{
-        let min = Math.floor(codeExpiry/60);
-        let sec = codeExpiry%60;
-        document.getElementById('timer').textContent = `${min.toString().padStart(2,'0')}:${sec.toString().padStart(2,'0')}`;
-        codeExpiry--;
-        if(codeExpiry<0){
-            clearInterval(timerInterval);
-            alert("Verification code expired");
-        }
-        checkForm();
-    },1000);
-
-    // 🔥 Envoi via ta Edge Function
-    try {
-        const res = await fetch(functionUrl, {
-            method:'POST',
-            headers:{ 'Content-Type':'application/json' },
-            body: JSON.stringify({ email, code: verificationCode })
-        });
-        const data = await res.json();
-        if(data.status === "ok"){
-            alert("Verification code sent! Check your email.");
-        } else {
-            alert("Error sending verification code");
-        }
-    } catch(e){
-        alert("Error connecting to email service");
-        console.error(e);
-    }
-}
-
-// Vérifie si le formulaire est valide
-function checkForm() {
-    const email = document.getElementById('email').value;
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const code = document.getElementById('codeInput') ? document.getElementById('codeInput').value : '';
-    const cgu = document.getElementById('cgu').checked;
-    const btn = document.getElementById('doneBtn');
-
-    if(email && username && password && code===verificationCode && codeExpiry>0 && cgu){
-        btn.classList.add('enabled');
-        btn.disabled = false;
-    } else {
-        btn.classList.remove('enabled');
-        btn.disabled = true;
-    }
-}
-
-// Création utilisateur dans Supabase
-async function signUpUser(event){
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-
-    // Vérifie si username existe déjà
-    const { data: existing } = await supabase.from('users').select('username').eq('username', username);
-    if(existing.length>0){ alert("Username already taken"); return; }
-
-    // Création compte
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if(error){ alert(error.message); return; }
-
-    // Insère username + CGU
-    await supabase.from('users').insert([{ id:data.user.id, email, username, accepted_cgu:true }]);
-
-    alert("Signup successful! Check your email to confirm.");
-    window.location.href = "home.html";
-}
-
-// Redirection si déjà connecté
-supabase.auth.getSession().then(({data:{session}})=>{
-    if(session) window.location.href="home.html";
-});
-</script>
+<script src="login.js" type="module"></script>
 </head>
 <body>
 <div class="container">
     <div class="logo">-M-</div>
-    <form oninput="checkForm()" onsubmit="signUpUser(event)">
+    <form id="signupForm">
         <input type="email" id="email" placeholder="Email" required>
         <input type="text" id="username" placeholder="Username" required>
         <input type="password" id="password" placeholder="Password" required>
-        <button type="button" id="sendCodeBtn" onclick="sendVerificationCode()">Send Verification Code</button>
+        <button type="button" id="sendCodeBtn">Send Verification Code</button>
         <div id="codeSection">
             <input type="text" id="codeInput" placeholder="Enter verification code" required>
             <div id="timer">05:00</div>
