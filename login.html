@@ -19,6 +19,7 @@ body {
 }
 .logo {
   font-family: 'SKCuber', sans-serif; font-size:48px; color:violet; text-align:left; margin-bottom:20px;
+  user-select: none; /* non sélectionnable */
 }
 input {
   width:100%; padding:10px; margin:10px 0; border-radius:10px; border:none;
@@ -27,6 +28,10 @@ input {
 button {
   width:100%; padding:12px; background:violet; border:none; border-radius:10px;
   color:#fff; font-weight:bold; margin-top:10px;
+  user-select: none; /* non sélectionnable */
+}
+#sendCodeBtn {
+  cursor: pointer; /* cliquable */
 }
 #doneBtn {
   cursor:not-allowed;
