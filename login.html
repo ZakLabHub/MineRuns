@@ -3,71 +3,91 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Login - ZakLab</title>
+<title>Signup - ZakLab</title>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap">
 <style>
-  @font-face {
-    font-family: 'SKCuber';
-    src: url('SKCuber-Expanded.ttf') format('truetype');
-  }
-  body {
-    margin: 0; font-family: 'League Spartan', sans-serif; background: #121212; display: flex; justify-content: center; align-items: center; height: 100vh; color: #fff;
-  }
-  .container { background: rgba(100, 0, 255, 0.2); padding: 40px; border-radius: 15px; text-align: center; width: 300px; }
-  .logo { font-family: 'SKCuber', sans-serif; font-size: 48px; color: violet; text-align: left; margin-bottom: 20px; }
-  input { width: 100%; padding: 10px; margin: 10px 0; border-radius: 10px; border: none; background: rgba(255,255,255,0.1); color: #fff; font-size: 16px; }
-  button { width: 100%; padding: 12px; background: violet; border: none; border-radius: 10px; color: #fff; font-weight: bold; cursor: pointer; margin-top: 10px; }
-  .checkbox { margin: 15px 0; font-size: 14px; }
-  a { color: #fff; text-decoration: underline; cursor: pointer; }
+@font-face { font-family:'SKCuber'; src:url('fonts/SKCuber-Expanded.ttf') format('truetype'); }
+body{margin:0; font-family:'League Spartan', sans-serif; background:#121212; display:flex; justify-content:center; align-items:center; height:100vh; color:#fff;}
+.container{background: rgba(100,0,255,0.2); padding:40px; border-radius:15px; text-align:center; width:300px;}
+.logo{font-family:'SKCuber', sans-serif; font-size:48px; color:violet; text-align:left; margin-bottom:20px;}
+input{width:100%; padding:10px; margin:10px 0; border-radius:10px; border:none; background: rgba(255,255,255,0.1); color:#fff; font-size:16px;}
+button{width:100%; padding:12px; background:violet; border:none; border-radius:10px; color:#fff; font-weight:bold; cursor:pointer; margin-top:10px;}
+.checkbox{margin:15px 0; font-size:14px;}
+a{color:#fff; text-decoration:underline; cursor:pointer;}
+.hidden{display:none;}
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-  const supabaseUrl = 'https://cesmjxusnkaymfuvbwgI.supabase.co';
-  const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlc21qeHVzbmtheW1mdXVid2dsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3NzA4MDIsImV4cCI6MjA3MTM0NjgwMn0.Ksyn8lOlIsrhpmb7n4Pd7SJmv1qPaPe3vipqPaCe1Bc';
-  const supabase = supabase.createClient(supabaseUrl, supabaseKey);
+const supabaseUrl='https://cesmjxusnkaymfuvbwgI.supabase.co';
+const supabaseKey='eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlc21qeHVzbmtheW1mdXVid2dsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3NzA4MDIsImV4cCI6MjA3MTM0NjgwMn0.Ksyn8lOlIsrhpmb7n4Pd7SJmv1qPaPe3vipqPaCe1Bc';
+const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
-  async function signUpUser(event) {
-    event.preventDefault();
-    const email = document.getElementById('email').value;
-    const username = document.getElementById('username').value;
-    const password = document.getElementById('password').value;
-    const cgu = document.getElementById('cgu').checked;
+let codeSent = null;
 
-    if(!cgu){ alert("You must accept data collection to continue."); return; }
+async function sendCode(){
+  const email = document.getElementById('email').value;
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+  const cgu = document.getElementById('cgu').checked;
 
-    const { data, error } = await supabase.auth.signUp({ email, password });
-    if(error){ alert(error.message); return; }
+  if(!cgu){ alert("You must accept data collection."); return; }
+  if(password.length < 6){ alert("Password must be at least 6 chars."); return; }
+  if(!username){ alert("Username required."); return; }
 
-    // Insérer username et consentement dans une table 'users'
-    await supabase.from('users').insert([{ id: data.user.id, email, username, accepted_cgu: cgu }]);
+  // Vérifier si username existe
+  const { data: users } = await supabase.from('users').select('username').eq('username', username);
+  if(users.length > 0){ alert("Username already taken."); return; }
 
-    alert("Signup successful! Please verify your email.");
-  }
+  // Générer code 4 chiffres
+  codeSent = Math.floor(1000 + Math.random()*9000);
+  alert("Verification code sent to email (demo: "+codeSent+")"); // Pour test, en vrai tu enverras email via Supabase function ou SMTP
 
-  // Vérifier session
-  supabase.auth.getSession().then(({ data: { session } }) => {
-    if(session){
-      // Si connecté, redirection vers home.html ou afficher profil
-      window.location.href = "home.html";
-    }
-  });
+  // Afficher le champ code
+  document.getElementById('codeSection').classList.remove('hidden');
+}
+
+async function verifyCode(event){
+  event.preventDefault();
+  const codeInput = document.getElementById('code').value;
+  const email = document.getElementById('email').value;
+  const username = document.getElementById('username').value;
+  const password = document.getElementById('password').value;
+
+  if(codeInput != codeSent){ alert("Wrong code."); return; }
+
+  const { data, error } = await supabase.auth.signUp({ email, password });
+  if(error){ alert(error.message); return; }
+
+  await supabase.from('users').insert([{ id:data.user.id, email, username, accepted_cgu:true }]);
+
+  alert("Signup success! Redirecting...");
+  window.location.href="home.html";
+}
+
+// Vérification session
+supabase.auth.getSession().then(({ data:{session} })=>{
+  if(session){ window.location.href="home.html"; }
+});
 </script>
 </head>
 <body>
-  <div class="container">
-    <div class="logo">-M-</div>
-    <form onsubmit="signUpUser(event)">
-      <input type="email" id="email" placeholder="Email" required>
-      <input type="text" id="username" placeholder="Username" required>
-      <input type="password" id="password" placeholder="Password" required>
-      <div class="checkbox">
-        <input type="checkbox" id="cgu"> If you click here, you agree that we collect data to operate the site
-      </div>
-      <button type="submit">Done</button>
-    </form>
-    <div style="margin-top:15px;">
-      You already have an account? <a href="connection.html">click here</a>
+<div class="container">
+  <div class="logo">-M-</div>
+  <form id="signupForm" onsubmit="sendCode(); return false;">
+    <input type="email" id="email" placeholder="Email" required>
+    <input type="text" id="username" placeholder="Username" required>
+    <input type="password" id="password" placeholder="Password" required>
+    <div class="checkbox">
+      <input type="checkbox" id="cgu"> If you click here, you agree that we collect data to operate the site
     </div>
-  </div>
+    <button type="submit">Send verification code</button>
+  </form>
+  <form id="verifyForm" class="hidden" onsubmit="verifyCode(event)">
+    <input type="text" id="code" placeholder="Enter 4-digit code" required maxlength="4">
+    <button type="submit">Done</button>
+  </form>
+  <div style="margin-top:15px;">You already have an account? <a href="connection.html">click here</a></div>
+  <div id="debug"></div>
+</div>
 </body>
 </html>
