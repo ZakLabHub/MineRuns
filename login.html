@@ -26,9 +26,13 @@ input {
 }
 button {
   width:100%; padding:12px; background:violet; border:none; border-radius:10px;
-  color:#fff; font-weight:bold; cursor:not-allowed; margin-top:10px; opacity:0.6;
+  color:#fff; font-weight:bold; margin-top:10px;
 }
-button.enabled { cursor:pointer; opacity:1; }
+#doneBtn {
+  cursor:not-allowed;
+  opacity:0.6;
+}
+#doneBtn.enabled { cursor:pointer; opacity:1; }
 .checkbox { margin:15px 0; font-size:14px; text-align:left; }
 a { color:#fff; text-decoration:underline; cursor:pointer; }
 #codeSection { display:none; margin-top:10px; }
@@ -67,14 +71,18 @@ async function sendVerificationCode() {
     },1000);
 
     // Envoi réel à implémenter via Supabase Function ou API mail
-    fetch('/send-code', {  // À remplacer par ton endpoint Supabase Function
+    fetch('/send-code', {  // Remplace par ton endpoint Supabase Function
         method: 'POST',
         headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({email, code:verificationCode})
+        body: JSON.stringify({
+            email,
+            code: verificationCode,
+            message: `Thank you for signing up!\nYour verification code is: ${verificationCode}\nPlease enter this code in the form to complete your registration.\nThe code expires in 5 minutes.`
+        })
     }).then(()=>{ alert("Verification code sent! Check your email. (demo: "+verificationCode+")"); });
 }
 
-async function checkForm() {
+function checkForm() {
     const email = document.getElementById('email').value;
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
@@ -82,7 +90,7 @@ async function checkForm() {
     const cgu = document.getElementById('cgu').checked;
     const btn = document.getElementById('doneBtn');
 
-    if(email && username && password.length>=6 && code===verificationCode && codeExpiry>0 && cgu){
+    if(email && username && password && code===verificationCode && codeExpiry>0 && cgu){
         btn.classList.add('enabled');
         btn.disabled = false;
     } else {
@@ -124,7 +132,7 @@ supabase.auth.getSession().then(({data:{session}})=>{
     <form oninput="checkForm()" onsubmit="signUpUser(event)">
         <input type="email" id="email" placeholder="Email" required>
         <input type="text" id="username" placeholder="Username" required>
-        <input type="password" id="password" placeholder="Password (6+ chars)" required>
+        <input type="password" id="password" placeholder="Password" required>
         <button type="button" id="sendCodeBtn" onclick="sendVerificationCode()">Send Verification Code</button>
         <div id="codeSection">
             <input type="text" id="codeInput" placeholder="Enter verification code" required>
