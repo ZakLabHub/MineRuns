@@ -40,13 +40,14 @@ a { color:#fff; text-decoration:underline; cursor:pointer; }
 </style>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
-const supabaseUrl = 'https://cesmjxusnkaymfuvbwgI.supabase.co';
+const supabaseUrl = 'https://cesmjxusnkaymfuubwgl.supabase.co';
 const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNlc21qeHVzbmtheW1mdXVid2dsIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NTU3NzA4MDIsImV4cCI6MjA3MTM0NjgwMn0.Ksyn8lOlIsrhpmb7n4Pd7SJmv1qPaPe3vipqPaCe1Bc';
 const supabase = supabase.createClient(supabaseUrl, supabaseKey);
 
 let verificationCode = '';
 let codeExpiry = 0;
 let timerInterval;
+const functionUrl = "https://cesmjxusnkaymfuubwgl.supabase.co/functions/v1/resend-email";
 
 async function sendVerificationCode() {
     const email = document.getElementById('email').value;
@@ -70,16 +71,23 @@ async function sendVerificationCode() {
         checkForm();
     },1000);
 
-    // Envoi réel à implémenter via Supabase Function ou API mail
-    fetch('/send-code', {  // Remplace par ton endpoint Supabase Function
-        method: 'POST',
-        headers: {'Content-Type':'application/json'},
-        body: JSON.stringify({
-            email,
-            code: verificationCode,
-            message: `Thank you for signing up!\nYour verification code is: ${verificationCode}\nPlease enter this code in the form to complete your registration.\nThe code expires in 5 minutes.`
-        })
-    }).then(()=>{ alert("Verification code sent! Check your email. (demo: "+verificationCode+")"); });
+    // Envoi réel via Supabase Function
+    try {
+        const res = await fetch(functionUrl, {
+            method:'POST',
+            headers:{ 'Content-Type':'application/json' },
+            body: JSON.stringify({ email, code: verificationCode })
+        });
+        const data = await res.json();
+        if(data.status === "ok"){
+            alert("Verification code sent! Check your email.");
+        } else {
+            alert("Error sending verification code");
+        }
+    } catch(e){
+        alert("Error connecting to email service");
+        console.error(e);
+    }
 }
 
 function checkForm() {
@@ -109,11 +117,11 @@ async function signUpUser(event){
     const { data: existing } = await supabase.from('users').select('username').eq('username', username);
     if(existing.length>0){ alert("Username already taken"); return; }
 
-    // Signup via Supabase
+    // Signup via Supabase Auth
     const { data, error } = await supabase.auth.signUp({ email, password });
     if(error){ alert(error.message); return; }
 
-    // Ajouter username et consentement CGU
+    // Ajouter username et consentement CGU dans table users
     await supabase.from('users').insert([{ id:data.user.id, email, username, accepted_cgu:true }]);
 
     alert("Signup successful! Check your email to confirm.");
