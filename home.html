@@ -431,8 +431,9 @@
       </div>
     </div>
     <div class="sidebar-footer">
-  <button class="home-button" id="homeButton">⌂</button>
-</div>
+      <button class="home-button" id="homeButton">⌂</button>
+    </div>
+  </div>
 
   <!-- Sidebar secondaire -->
   <div class="secondary-sidebar" id="secondarySidebar">
@@ -532,4 +533,25 @@
     });
 
     document.addEventListener('click', function(e) {
-      if (!searchBar.contains(e.target) && !searchIcon.contains(e.target))
+      if (!searchBar.contains(e.target) && !searchIcon.contains(e.target)) {
+        searchBar.classList.remove('active');
+      }
+    });
+
+    searchBar.addEventListener('click', function(e) { 
+      e.stopPropagation(); 
+    });
+    
+    searchBar.addEventListener('input', function(e) { 
+      console.log('Search:', e.target.value.toLowerCase()); 
+    });
+
+    function updateLoginState() {
+      const miniHeader = document.getElementById('miniHeader');
+      if (isLoggedIn) miniHeader.classList.add('logged-in');
+      else miniHeader.classList.remove('logged-in');
+    }
+    updateLoginState();
+  </script>
+</body>
+</html>
