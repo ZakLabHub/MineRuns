@@ -383,6 +383,104 @@
       margin: 0 auto;
     }
 
+    /* IP Container */
+    .ip-container {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      margin-bottom: 40px;
+      max-width: 600px;
+    }
+
+    .ip-label {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 60px;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
+    }
+
+    .ip-label:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+    }
+
+    .ip-box {
+      flex: 1;
+      border: 2px solid #a020f0;
+      border-radius: 12px;
+      padding: 12px 18px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      min-height: 45px;
+    }
+
+    .ip-text {
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: #a020f0;
+      user-select: text;
+      flex: 1;
+    }
+
+    .copy-btn {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 12px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      min-width: 70px;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+    }
+
+    /* Toast de confirmation */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 10000;
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    }
+
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-10px);
+    }
+
     .content-section h1 {
       font-size: 36px;
       margin-bottom: 25px;
@@ -404,86 +502,6 @@
       font-weight: 400;
       font-family: 'Open Sans', sans-serif;
       font-size: 16px;
-    }
-
-    /* Container pour l'IP du serveur */
-    .server-info-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-      margin-top: 20px;
-    }
-
-    .ip-label-btn {
-      background: linear-gradient(135deg, #a020f0, #8a1ad1);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 15px;
-      font-family: 'League Spartan', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.2);
-    }
-
-    .ip-label-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.3);
-    }
-
-    .server-ip-box {
-      background: transparent;
-      border: 2px solid #a020f0;
-      border-radius: 15px;
-      padding: 12px 24px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-width: 280px;
-      transition: all 0.3s ease;
-    }
-
-    .server-ip-box:hover {
-      background: rgba(160, 32, 240, 0.05);
-      box-shadow: 0 0 20px rgba(160, 32, 240, 0.1);
-    }
-
-    .server-ip-text {
-      font-family: 'League Spartan', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      color: #a020f0;
-      user-select: text;
-      letter-spacing: 0.5px;
-    }
-
-    .copy-btn {
-      background: linear-gradient(135deg, #a020f0, #8a1ad1);
-      color: white;
-      border: none;
-      padding: 12px;
-      border-radius: 15px;
-      font-size: 16px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.2);
-      width: 45px;
-      height: 45px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-
-    .copy-btn:hover {
-      transform: translateY(-2px) scale(1.05);
-      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.3);
-    }
-
-    .copy-btn:active {
-      transform: translateY(0) scale(0.98);
     }
 
     /* Footer moderne */
@@ -528,6 +546,17 @@
         width: 300px;
       }
       
+      .ip-container {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+      }
+      
+      .ip-container .ip-label,
+      .ip-container .copy-btn {
+        align-self: flex-start;
+      }
+      
       .sidebar {
         width: 60px;
       }
@@ -551,21 +580,6 @@
         top: 10px;
         left: 10px;
         width: 140px;
-      }
-
-      .server-info-container {
-        flex-direction: column;
-        gap: 15px;
-        align-items: flex-start;
-      }
-
-      .server-ip-box {
-        min-width: 250px;
-      }
-
-      .ip-label-btn,
-      .copy-btn {
-        align-self: flex-start;
       }
     }
   </style>
@@ -651,14 +665,23 @@
     <!-- Contenu principal -->
     <div class="main-content">
       <div class="content-section">
-        <div class="server-info-container">
-          <button class="ip-label-btn" onclick="window.location.href='ip.html'">IP :</button>
-          <div class="server-ip-box">
-            <span class="server-ip-text" id="serverIP">minerunsmc.falixsrv.me</span>
+        <h1>Welcome to -M- Server</h1>
+        
+        <!-- Container IP -->
+        <div class="ip-container">
+          <a href="ip.html" class="ip-label">IP :</a>
+          <div class="ip-box">
+            <span class="ip-text" id="serverIP">minerunsmc.falixsrv.me</span>
           </div>
-          <button class="copy-btn" onclick="copyServerIP()">📋</button>
+          <button class="copy-btn" onclick="copyServerIP()">COPY</button>
         </div>
+
       </div>
+    </div>
+
+    <!-- Toast de confirmation -->
+    <div class="toast" id="copyToast">
+      Copied to clipboard ✓
     </div>
 
     <!-- Footer moderne -->
@@ -688,6 +711,32 @@
         }, 500);
       }, 4000);
     });
+
+    // FONCTION DE COPIE IP
+    function copyServerIP() {
+      const serverIP = document.getElementById('serverIP').textContent;
+      const toast = document.getElementById('copyToast');
+      
+      navigator.clipboard.writeText(serverIP).then(() => {
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 1500);
+      }).catch(() => {
+        // Fallback pour les navigateurs plus anciens
+        const textArea = document.createElement('textarea');
+        textArea.value = serverIP;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 1500);
+      });
+    }
 
     // CODE ORIGINAL DU SITE
     let isLoggedIn = false;
@@ -750,41 +799,6 @@
       else miniHeader.classList.remove('logged-in');
     }
     updateLoginState();
-
-    // FONCTION POUR COPIER L'IP DU SERVEUR
-    function copyServerIP() {
-      const serverIPText = document.getElementById('serverIP').textContent;
-      navigator.clipboard.writeText(serverIPText).then(() => {
-        // Animation de feedback visuel
-        const copyBtn = event.target;
-        const originalText = copyBtn.innerHTML;
-        copyBtn.innerHTML = '✅';
-        copyBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-        
-        setTimeout(() => {
-          copyBtn.innerHTML = originalText;
-          copyBtn.style.background = 'linear-gradient(135deg, #a020f0, #8a1ad1)';
-        }, 1500);
-      }).catch(() => {
-        // Fallback pour les navigateurs plus anciens
-        const textArea = document.createElement('textarea');
-        textArea.value = serverIPText;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        
-        const copyBtn = event.target;
-        const originalText = copyBtn.innerHTML;
-        copyBtn.innerHTML = '✅';
-        copyBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
-        
-        setTimeout(() => {
-          copyBtn.innerHTML = originalText;
-          copyBtn.style.background = 'linear-gradient(135deg, #a020f0, #8a1ad1)';
-        }, 1500);
-      });
-    }
   </script>
 </body>
 </html>
