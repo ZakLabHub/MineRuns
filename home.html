@@ -31,6 +31,78 @@
       user-select: text;
     }
 
+    /* ÉCRAN DE CHARGEMENT */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: #000000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      transition: opacity 0.5s ease;
+    }
+
+    .loading-screen.fade-out {
+      opacity: 0;
+      pointer-events: none;
+    }
+
+    .zaklab-label {
+      position: absolute;
+      top: 20px;
+      left: 20px;
+      font-family: 'SKCuber', 'League Spartan', sans-serif;
+      font-size: 16px;
+      color: #a020f0;
+      font-weight: normal;
+    }
+
+    .loading-logo {
+      font-family: 'SKCuber', 'League Spartan', sans-serif;
+      font-size: 48px;
+      color: #a020f0;
+      margin-bottom: 40px;
+      font-weight: normal;
+    }
+
+    .loading-bar-container {
+      width: 400px;
+      height: 20px;
+      background-color: #333333;
+      border: 2px solid #666666;
+      border-radius: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .loading-bar {
+      width: 0%;
+      height: 100%;
+      background-color: #a020f0;
+      transition: none;
+      animation: loadProgress 4s ease-in-out forwards;
+    }
+
+    @keyframes loadProgress {
+      0% { width: 0%; }
+      100% { width: 100%; }
+    }
+
+    /* SITE PRINCIPAL (caché au début) */
+    .main-site {
+      opacity: 0;
+      transition: opacity 0.5s ease;
+    }
+
+    .main-site.show {
+      opacity: 1;
+    }
+
     body {
       font-family: 'League Spartan', sans-serif;
       background-color: #0a0a0a;
@@ -368,6 +440,14 @@
 
     /* Responsive */
     @media (max-width: 768px) {
+      .loading-logo {
+        font-size: 36px;
+      }
+      
+      .loading-bar-container {
+        width: 300px;
+      }
+      
       .sidebar {
         width: 60px;
       }
@@ -396,102 +476,132 @@
   </style>
 </head>
 <body>
-  <!-- Overlay -->
-  <div class="overlay" id="overlay"></div>
-
-  <!-- Logo et flèche totalement statiques -->
-  <div class="static-header">
-    <a href="home.html" class="logo">-M-</a>
-    <div class="toggle-arrow" id="toggleArrow">></div>
-  </div>
-
-  <!-- Sidebar principale -->
-  <div class="sidebar" id="sidebar">
-    <div class="sidebar-header"></div>
-    <div class="sidebar-content">
-      <div class="sidebar-section" onclick="window.location.href='server.html'">
-        <span>SERVER</span>
-        <div class="arrow">></div>
-      </div>
-      <div class="sidebar-section" onclick="window.location.href='game.html'">
-        <span>GAME</span>
-        <div class="arrow">></div>
-      </div>
-      <div class="sidebar-section" onclick="window.location.href='explore.html'">
-        <span>EXPLORE</span>
-        <div class="arrow">></div>
-      </div>
-      <div class="sidebar-section" onclick="window.location.href='news.html'">
-        <span>NEWS</span>
-        <div class="arrow">></div>
-      </div>
-      <div class="sidebar-section" onclick="window.location.href='stats.html'">
-        <span>STATS</span>
-        <div class="arrow">></div>
-      </div>
-    </div>
-    <div class="sidebar-footer">
-      <button class="home-button" id="homeButton">⌂</button>
+  <!-- ÉCRAN DE CHARGEMENT -->
+  <div class="loading-screen" id="loadingScreen">
+    <div class="zaklab-label">ZAKLAB</div>
+    <div class="loading-logo">MineRuns</div>
+    <div class="loading-bar-container">
+      <div class="loading-bar" id="loadingBar"></div>
     </div>
   </div>
 
-  <!-- Sidebar secondaire -->
-  <div class="secondary-sidebar" id="secondarySidebar">
-    <div class="sidebar-content">
-      <div class="sidebar-section" onclick="window.location.href='UseFull.html'">
-        <span>USEFULL</span>
-        <div class="arrow">></div>
+  <!-- SITE PRINCIPAL -->
+  <div class="main-site" id="mainSite">
+    <!-- Overlay -->
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Logo et flèche totalement statiques -->
+    <div class="static-header">
+      <a href="home.html" class="logo">-M-</a>
+      <div class="toggle-arrow" id="toggleArrow">></div>
+    </div>
+
+    <!-- Sidebar principale -->
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header"></div>
+      <div class="sidebar-content">
+        <div class="sidebar-section" onclick="window.location.href='server.html'">
+          <span>SERVER</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='game.html'">
+          <span>GAME</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='explore.html'">
+          <span>EXPLORE</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='news.html'">
+          <span>NEWS</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='stats.html'">
+          <span>STATS</span>
+          <div class="arrow">></div>
+        </div>
       </div>
-      <div class="sidebar-section" onclick="window.location.href='ZakLab.html'">
-        <span>ZAKLAB</span>
-        <div class="arrow">></div>
-      </div>
-      <div class="sidebar-section" onclick="window.location.href='MapMC.html'">
-        <span>MAPMC</span>
-        <div class="arrow">></div>
+      <div class="sidebar-footer">
+        <button class="home-button" id="homeButton">⌂</button>
       </div>
     </div>
-  </div>
 
-  <!-- Mini-header -->
-  <div class="mini-header" id="miniHeader">
-    <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
-    <div class="search-container">
-      <div class="search-icon" id="searchIcon">⌕</div>
-      <input type="text" class="search-bar" id="searchBar" placeholder="Search pages...">
+    <!-- Sidebar secondaire -->
+    <div class="secondary-sidebar" id="secondarySidebar">
+      <div class="sidebar-content">
+        <div class="sidebar-section" onclick="window.location.href='UseFull.html'">
+          <span>USEFULL</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='ZakLab.html'">
+          <span>ZAKLAB</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='MapMC.html'">
+          <span>MAPMC</span>
+          <div class="arrow">></div>
+        </div>
+      </div>
     </div>
-  </div>
 
-  <!-- Contenu principal -->
-  <div class="main-content">
-    <div class="content-section">
-      <h1>Welcome to -M- Server</h1>
-      <h2>About This Website</h2>
-      <p>This modern website has been created with a sleek design inspired by contemporary web applications. The goal is to provide practical information for our server with organized articles and an optimal user experience.</p>
-      <h2>Development and Creation</h2>
-      <p>Unlike other AI that made mistakes, this site has been developed with precision according to your exact specifications. Every detail has been respected: the purple gradients, League Spartan font, the clean sidebar, and all interactive elements.</p>
-      <h2>Main Features</h2>
-      <p>The main sidebar contains five key sections: SERVER, GAME, EXPLORE, NEWS, and STATS. It collapses completely while keeping the -M- logo and toggle arrow perfectly static. The mini-header offers quick login and smart search functionality.</p>
-      <h2>Modern Navigation</h2>
-      <p>The interface uses smooth transitions, subtle hover effects with purple accents, and a layout that perfectly adapts to different screen sizes. Every element has been designed for optimal user experience with minimal visual clutter.</p>
-      <h2>GitHub Pages Integration</h2>
-      <p>This code is perfectly optimized for GitHub Pages. A single HTML file contains all the necessary CSS and JavaScript, with fonts loaded efficiently. No complex configuration is required for deployment.</p>
-      <h2>Social Networks</h2>
-      <p>The footer features a modern gradient design with social network icons that have unique hover effects. Each platform has its signature color on hover, creating an engaging user experience.</p>
-      <p>This clean, minimal design leaves plenty of space for your future content while maintaining a professional and modern appearance. When the sidebar is collapsed, the content expands to use the available space without overlapping the static logo and arrow.</p>
+    <!-- Mini-header -->
+    <div class="mini-header" id="miniHeader">
+      <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+      <div class="search-container">
+        <div class="search-icon" id="searchIcon">⌕</div>
+        <input type="text" class="search-bar" id="searchBar" placeholder="Search pages...">
+      </div>
     </div>
-  </div>
 
-  <!-- Footer moderne -->
-  <div class="footer">
-    <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord.html'"></i>
-    <i class="fab fa-instagram social-icon instagram" onclick="window.open('https://instagram.com/zakmc_1', '_blank')"></i>
-    <i class="fab fa-youtube social-icon youtube" onclick="window.open('https://youtube.com/@ZakMC_1', '_blank')"></i>
-    <i class="fab fa-twitch social-icon twitch" onclick="window.open('https://twitch.tv/zakmc_', '_blank')"></i>
-    <i class="fab fa-pinterest social-icon pinterest" onclick="window.open('https://pinterest.com/Minecraft&Chill', '_blank')"></i>
+    <!-- Contenu principal -->
+    <div class="main-content">
+      <div class="content-section">
+        <h1>Welcome to -M- Server</h1>
+        <h2>About This Website</h2>
+        <p>This modern website has been created with a sleek design inspired by contemporary web applications. The goal is to provide practical information for our server with organized articles and an optimal user experience.</p>
+        <h2>Development and Creation</h2>
+        <p>Unlike other AI that made mistakes, this site has been developed with precision according to your exact specifications. Every detail has been respected: the purple gradients, League Spartan font, the clean sidebar, and all interactive elements.</p>
+        <h2>Main Features</h2>
+        <p>The main sidebar contains five key sections: SERVER, GAME, EXPLORE, NEWS, and STATS. It collapses completely while keeping the -M- logo and toggle arrow perfectly static. The mini-header offers quick login and smart search functionality.</p>
+        <h2>Modern Navigation</h2>
+        <p>The interface uses smooth transitions, subtle hover effects with purple accents, and a layout that perfectly adapts to different screen sizes. Every element has been designed for optimal user experience with minimal visual clutter.</p>
+        <h2>GitHub Pages Integration</h2>
+        <p>This code is perfectly optimized for GitHub Pages. A single HTML file contains all the necessary CSS and JavaScript, with fonts loaded efficiently. No complex configuration is required for deployment.</p>
+        <h2>Social Networks</h2>
+        <p>The footer features a modern gradient design with social network icons that have unique hover effects. Each platform has its signature color on hover, creating an engaging user experience.</p>
+        <p>This clean, minimal design leaves plenty of space for your future content while maintaining a professional and modern appearance. When the sidebar is collapsed, the content expands to use the available space without overlapping the static logo and arrow.</p>
+      </div>
+    </div>
+
+    <!-- Footer moderne -->
+    <div class="footer">
+      <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord.html'"></i>
+      <i class="fab fa-instagram social-icon instagram" onclick="window.open('https://instagram.com/zakmc_1', '_blank')"></i>
+      <i class="fab fa-youtube social-icon youtube" onclick="window.open('https://youtube.com/@ZakMC_1', '_blank')"></i>
+      <i class="fab fa-twitch social-icon twitch" onclick="window.open('https://twitch.tv/zakmc_', '_blank')"></i>
+      <i class="fab fa-pinterest social-icon pinterest" onclick="window.open('https://pinterest.com/Minecraft&Chill', '_blank')"></i>
+    </div>
   </div>
 
   <script>
+    // GESTION DE L'ÉCRAN DE CHARGEMENT
+    window.addEventListener('load', function() {
+      const loadingScreen = document.getElementById('loadingScreen');
+      const mainSite = document.getElementById('mainSite');
+      
+      // Après 4 secondes, faire disparaître l'écran de chargement
+      setTimeout(() => {
+        loadingScreen.classList.add('fade-out');
+        mainSite.classList.add('show');
+        
+        // Supprimer complètement l'écran de chargement après la transition
+        setTimeout(() => {
+          loadingScreen.style.display = 'none';
+        }, 500);
+      }, 4000);
+    });
+
+    // CODE ORIGINAL DU SITE
     let isLoggedIn = false;
 
     const sidebar = document.getElementById('sidebar');
