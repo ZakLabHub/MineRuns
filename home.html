@@ -406,6 +406,86 @@
       font-size: 16px;
     }
 
+    /* Container pour l'IP du serveur */
+    .server-info-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-top: 20px;
+    }
+
+    .ip-label-btn {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 15px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.2);
+    }
+
+    .ip-label-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.3);
+    }
+
+    .server-ip-box {
+      background: transparent;
+      border: 2px solid #a020f0;
+      border-radius: 15px;
+      padding: 12px 24px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 280px;
+      transition: all 0.3s ease;
+    }
+
+    .server-ip-box:hover {
+      background: rgba(160, 32, 240, 0.05);
+      box-shadow: 0 0 20px rgba(160, 32, 240, 0.1);
+    }
+
+    .server-ip-text {
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: #a020f0;
+      user-select: text;
+      letter-spacing: 0.5px;
+    }
+
+    .copy-btn {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      border: none;
+      padding: 12px;
+      border-radius: 15px;
+      font-size: 16px;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.2);
+      width: 45px;
+      height: 45px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .copy-btn:hover {
+      transform: translateY(-2px) scale(1.05);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.3);
+    }
+
+    .copy-btn:active {
+      transform: translateY(0) scale(0.98);
+    }
+
     /* Footer moderne */
     .footer {
       background: linear-gradient(135deg, #a020f0, #8a1ad1);
@@ -471,6 +551,21 @@
         top: 10px;
         left: 10px;
         width: 140px;
+      }
+
+      .server-info-container {
+        flex-direction: column;
+        gap: 15px;
+        align-items: flex-start;
+      }
+
+      .server-ip-box {
+        min-width: 250px;
+      }
+
+      .ip-label-btn,
+      .copy-btn {
+        align-self: flex-start;
       }
     }
   </style>
@@ -556,20 +651,13 @@
     <!-- Contenu principal -->
     <div class="main-content">
       <div class="content-section">
-        <h1>Welcome to -M- Server</h1>
-        <h2>About This Website</h2>
-        <p>This modern website has been created with a sleek design inspired by contemporary web applications. The goal is to provide practical information for our server with organized articles and an optimal user experience.</p>
-        <h2>Development and Creation</h2>
-        <p>Unlike other AI that made mistakes, this site has been developed with precision according to your exact specifications. Every detail has been respected: the purple gradients, League Spartan font, the clean sidebar, and all interactive elements.</p>
-        <h2>Main Features</h2>
-        <p>The main sidebar contains five key sections: SERVER, GAME, EXPLORE, NEWS, and STATS. It collapses completely while keeping the -M- logo and toggle arrow perfectly static. The mini-header offers quick login and smart search functionality.</p>
-        <h2>Modern Navigation</h2>
-        <p>The interface uses smooth transitions, subtle hover effects with purple accents, and a layout that perfectly adapts to different screen sizes. Every element has been designed for optimal user experience with minimal visual clutter.</p>
-        <h2>GitHub Pages Integration</h2>
-        <p>This code is perfectly optimized for GitHub Pages. A single HTML file contains all the necessary CSS and JavaScript, with fonts loaded efficiently. No complex configuration is required for deployment.</p>
-        <h2>Social Networks</h2>
-        <p>The footer features a modern gradient design with social network icons that have unique hover effects. Each platform has its signature color on hover, creating an engaging user experience.</p>
-        <p>This clean, minimal design leaves plenty of space for your future content while maintaining a professional and modern appearance. When the sidebar is collapsed, the content expands to use the available space without overlapping the static logo and arrow.</p>
+        <div class="server-info-container">
+          <button class="ip-label-btn" onclick="window.location.href='ip.html'">IP :</button>
+          <div class="server-ip-box">
+            <span class="server-ip-text" id="serverIP">minerunsmc.falixsrv.me</span>
+          </div>
+          <button class="copy-btn" onclick="copyServerIP()">📋</button>
+        </div>
       </div>
     </div>
 
@@ -662,6 +750,41 @@
       else miniHeader.classList.remove('logged-in');
     }
     updateLoginState();
+
+    // FONCTION POUR COPIER L'IP DU SERVEUR
+    function copyServerIP() {
+      const serverIPText = document.getElementById('serverIP').textContent;
+      navigator.clipboard.writeText(serverIPText).then(() => {
+        // Animation de feedback visuel
+        const copyBtn = event.target;
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '✅';
+        copyBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        
+        setTimeout(() => {
+          copyBtn.innerHTML = originalText;
+          copyBtn.style.background = 'linear-gradient(135deg, #a020f0, #8a1ad1)';
+        }, 1500);
+      }).catch(() => {
+        // Fallback pour les navigateurs plus anciens
+        const textArea = document.createElement('textarea');
+        textArea.value = serverIPText;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        const copyBtn = event.target;
+        const originalText = copyBtn.innerHTML;
+        copyBtn.innerHTML = '✅';
+        copyBtn.style.background = 'linear-gradient(135deg, #10b981, #059669)';
+        
+        setTimeout(() => {
+          copyBtn.innerHTML = originalText;
+          copyBtn.style.background = 'linear-gradient(135deg, #a020f0, #8a1ad1)';
+        }, 1500);
+      });
+    }
   </script>
 </body>
 </html>
