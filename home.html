@@ -383,77 +383,176 @@
       margin: 0 auto;
     }
 
-    /* Discord Section */
-    .discord-section {
+    /* IP Container */
+    .ip-container {
       display: flex;
-      flex-direction: column;
       align-items: center;
-      gap: 30px;
+      gap: 15px;
+      margin-bottom: 40px;
       max-width: 600px;
-      margin: 0 auto;
     }
 
-    .discord-title {
-      font-family: 'League Spartan', sans-serif;
-      font-size: 48px;
-      font-weight: 700;
-      color: #a020f0;
-      text-align: center;
-      margin-bottom: 10px;
-    }
-
-    .discord-subtitle {
-      font-family: 'League Spartan', sans-serif;
-      font-size: 16px;
-      font-weight: 700;
-      color: #a020f0;
-      text-align: center;
-      margin-bottom: 30px;
-      line-height: 1.4;
-    }
-
-    .discord-widget-container {
-      background: rgba(26, 26, 26, 0.5);
-      border: 2px solid #a020f0;
-      border-radius: 16px;
-      padding: 20px;
-      box-shadow: 0 8px 25px rgba(160, 32, 240, 0.2);
-      transition: all 0.3s ease;
-    }
-
-    .discord-widget-container:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 12px 35px rgba(160, 32, 240, 0.3);
-    }
-
-    .discord-iframe {
-      width: 350px;
-      height: 500px;
-      border: none;
+    .ip-label {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      padding: 12px 20px;
       border-radius: 12px;
-      background: transparent;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 60px;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
     }
 
-    .join-discord-btn {
+    .ip-label:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+    }
+
+    .ip-box {
+      flex: 1;
+      border: 2px solid #a020f0;
+      border-radius: 12px;
+      padding: 12px 18px;
+      background: transparent;
+      display: flex;
+      align-items: center;
+      min-height: 45px;
+    }
+
+    .ip-text {
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: #a020f0;
+      user-select: text;
+      flex: 1;
+    }
+
+    .copy-btn {
       background: linear-gradient(135deg, #a020f0, #8a1ad1);
       color: white;
       border: none;
-      padding: 16px 32px;
-      border-radius: 25px;
+      padding: 12px 20px;
+      border-radius: 12px;
       font-family: 'League Spartan', sans-serif;
       font-weight: 700;
-      font-size: 18px;
+      font-size: 14px;
       cursor: pointer;
       transition: all 0.3s ease;
+      min-width: 70px;
       box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
-      text-decoration: none;
-      display: inline-block;
-      margin-top: 20px;
     }
 
-    .join-discord-btn:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 8px 25px rgba(160, 32, 240, 0.5);
+    .copy-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+    }
+
+    /* Toast de confirmation */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 10000;
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    }
+
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-10px);
+    }
+
+    /* Article Cover */
+    .article-cover {
+      max-width: 600px;
+      margin-bottom: 30px;
+      border-radius: 16px;
+      overflow: hidden;
+      background: rgba(26, 26, 26, 0.5);
+      transition: all 0.3s ease;
+    }
+
+    .article-cover:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(160, 32, 240, 0.2);
+    }
+
+    .article-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 15px 20px;
+      border-bottom: 1px solid rgba(160, 32, 240, 0.2);
+    }
+
+    .article-time {
+      font-family: 'League Spartan', sans-serif;
+      font-style: italic;
+      font-size: 14px;
+      color: #888;
+      font-weight: 400;
+    }
+
+    .read-btn {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      text-decoration: none;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      box-shadow: 0 2px 8px rgba(160, 32, 240, 0.3);
+    }
+
+    .read-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.4);
+    }
+
+    .article-image {
+      width: 100%;
+      height: 300px;
+      object-fit: cover;
+      display: block;
+      user-select: none;
+    }
+
+    .article-footer {
+      padding: 15px 20px;
+    }
+
+    .article-title {
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 22px;
+      color: #a020f0;
+      margin: 0;
     }
 
     .content-section h1 {
@@ -520,24 +619,28 @@
       .loading-bar-container {
         width: 300px;
       }
-
-      .discord-title {
-        font-size: 36px;
+      
+      .ip-container {
+        flex-direction: column;
+        gap: 10px;
+        align-items: stretch;
+      }
+      
+      .ip-container .ip-label,
+      .ip-container .copy-btn {
+        align-self: flex-start;
       }
 
-      .discord-subtitle {
-        font-size: 14px;
-        padding: 0 20px;
+      .article-cover {
+        max-width: 100%;
       }
-
-      .discord-iframe {
-        width: 300px;
-        height: 450px;
+      
+      .article-image {
+        height: 240px;
       }
-
-      .discord-widget-container {
-        padding: 15px;
-        margin: 0 10px;
+      
+      .article-title {
+        font-size: 18px;
       }
       
       .sidebar {
@@ -650,29 +753,102 @@
       <div class="content-section">
         <h1>Welcome to MineRuns ! a Minecraft server.</h1>
         
-        <!-- Discord Section -->
-        <div class="discord-section">
-          <div class="discord-title">Discord</div>
-          <div class="discord-subtitle">
-            Join our Discord server for chat about Minecraft and MineRuns,<br>
-            and make new friends !
+        <!-- Container IP -->
+        <div class="ip-container">
+          <a href="ip.html" class="ip-label">IP :</a>
+          <div class="ip-box">
+            <span class="ip-text" id="serverIP">minerunsmc.falixsrv.me</span>
           </div>
-          
-          <div class="discord-widget-container">
-            <iframe 
-              class="discord-iframe"
-              src="https://discord.com/widget?id=1393203631284817950&theme=dark" 
-              allowtransparency="true" 
-              frameborder="0" 
-              sandbox="allow-popups allow-popups-to-escape-sandbox allow-same-origin allow-scripts">
-            </iframe>
-          </div>
-          
-          <a href="https://discord.gg/XJuvvDzn" class="join-discord-btn" target="_blank">
-            Join now !
-          </a>
+          <button class="copy-btn" onclick="copyServerIP()">COPY</button>
         </div>
+
+       <!-- Article Cover 1 -->
+        <a href="read1.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
+            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;"> [temps] • [NOMBRE_MOTS] mots</span>
+          </div>
+          <div style="position: relative; overflow: hidden;">
+            <img src="article1.png" alt="Article 1" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
+          </div>
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
+            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Learn how to join the server !</h2>
+          </div>
+        </a>
+        
+        <!-- Article Cover 2 -->
+        <a href="read2.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
+            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;">[TEMPS] • [NOMBRE_MOTS] mots</span>
+          </div>
+          <div style="position: relative; overflow: hidden;">
+            <img src="article2.png" alt="Article 2" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
+          </div>
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
+            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Learn more about server hosting. </h2>
+          </div>
+        </a>
+        
+        <!-- Article Cover 3 -->
+        <a href="read3.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
+            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;">[TEMPS] • [NOMBRE_MOTS] mots</span>
+          </div>
+          <div style="position: relative; overflow: hidden;">
+            <img src="article3.png" alt="Article 3" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
+          </div>
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
+            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">List of availables games.</h2>
+          </div>
+        </a>
+        
+        <!-- Article Cover 4 -->
+        <a href="read4.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
+            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;">[TEMPS] • [NOMBRE_MOTS] mots</span>
+          </div>
+          <div style="position: relative; overflow: hidden;">
+            <img src="article4.png" alt="Article 4" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
+          </div>
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
+            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">List of all lobbys.</h2>
+          </div>
+        </a>
+        
+        <!-- Article Cover 5 -->
+        <a href="read5.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
+            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;">[TEMPS] • [NOMBRE_MOTS] mots</span>
+          </div>
+          <div style="position: relative; overflow: hidden;">
+            <img src="article5.png" alt="Article 5" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
+          </div>
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
+            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">See socials plateforms of the server and ZakMC.</h2>
+          </div>
+        </a>
+        
+        <!-- Article Cover 6 -->
+        <a href="read6.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
+            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;">[TEMPS] • [NOMBRE_MOTS] mots</span>
+          </div>
+          <div style="position: relative; overflow: hidden;">
+            <img src="article6.png" alt="Article 6" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
+          </div>
+          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
+            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Learn more about story of MineRuns. </h2>
+          </div>
+        </a>
       </div>
+    </div>
+    <!-- Toast de confirmation -->
+    <div class="toast" id="copyToast">
+      Copied to clipboard ✓
+    </div>
+
+    <!-- Toast de confirmation -->
+    <div class="toast" id="copyToast">
+      Copied to clipboard ✓
     </div>
 
     <!-- Footer moderne -->
@@ -702,6 +878,32 @@
         }, 500);
       }, 4000);
     });
+
+    // FONCTION DE COPIE IP
+    function copyServerIP() {
+      const serverIP = document.getElementById('serverIP').textContent;
+      const toast = document.getElementById('copyToast');
+      
+      navigator.clipboard.writeText(serverIP).then(() => {
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 1500);
+      }).catch(() => {
+        // Fallback pour les navigateurs plus anciens
+        const textArea = document.createElement('textarea');
+        textArea.value = serverIP;
+        document.body.appendChild(textArea);
+        textArea.select();
+        document.execCommand('copy');
+        document.body.removeChild(textArea);
+        
+        toast.classList.add('show');
+        setTimeout(() => {
+          toast.classList.remove('show');
+        }, 1500);
+      });
+    }
 
     // CODE ORIGINAL DU SITE
     let isLoggedIn = false;
