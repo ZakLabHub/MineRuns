@@ -21,14 +21,130 @@
       margin: 0;
       padding: 0;
       box-sizing: border-box;
-      user-select: none; /* Par défaut, rien n'est sélectionnable */
+      user-select: none;
+      cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect x="14" y="2" width="4" height="4" fill="%23E1F5FE"/><rect x="14" y="6" width="4" height="4" fill="%238DD3F7"/><rect x="14" y="10" width="4" height="4" fill="%234FC3F7"/><rect x="10" y="14" width="12" height="4" fill="%231976D2"/><rect x="14" y="18" width="4" height="4" fill="%230D47A1"/><rect x="14" y="22" width="4" height="8" fill="%23795548"/></svg>') 16 16, auto !important;
     }
 
-    /* ✅ Rendre seulement le contenu sélectionnable */
+    /* Rendre seulement le contenu sélectionnable */
     .content-section h1,
     .content-section h2,
     .content-section p {
       user-select: text;
+    }
+
+    /* Custom Context Menu */
+    .context-menu {
+      position: fixed;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.9);
+      transition: all 0.2s ease;
+      min-width: 200px;
+      overflow: hidden;
+    }
+
+    .context-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+
+    .context-menu-item {
+      padding: 12px 18px;
+      color: white;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .context-menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .context-menu-item:hover {
+      background: linear-gradient(135deg, rgba(160, 32, 240, 0.3), rgba(233, 30, 99, 0.3));
+      color: white;
+    }
+
+    .context-menu-item i {
+      font-size: 14px;
+      width: 16px;
+    }
+
+    /* Menu de recherche */
+    .search-results {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 280px;
+      background: rgba(26, 26, 26, 0.95);
+      border: 1px solid #a020f0;
+      border-radius: 12px;
+      margin-top: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 10001;
+    }
+
+    .search-results.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .search-result-item {
+      padding: 12px 16px;
+      color: white;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover {
+      background: linear-gradient(135deg, rgba(160, 32, 240, 0.3), rgba(233, 30, 99, 0.3));
+    }
+
+    .search-result-item .page-title {
+      font-weight: 700;
+      color: #a020f0;
+    }
+
+    .search-result-item .page-description {
+      font-size: 12px;
+      color: #ccc;
+      margin-top: 4px;
+    }
+
+    .no-results {
+      padding: 16px;
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      font-family: 'League Spartan', sans-serif;
     }
 
     /* ÉCRAN DE CHARGEMENT */
@@ -36,71 +152,90 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background-color: #000000;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease;
+      z-index: 99999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
     .loading-screen.fade-out {
       opacity: 0;
-      pointer-events: none;
+      visibility: hidden;
     }
 
     .zaklab-label {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 30px;
+      left: 30px;
       font-family: 'SKCuber', 'League Spartan', sans-serif;
-      font-size: 16px;
+      font-size: 18px;
       color: #a020f0;
       font-weight: normal;
+      z-index: 100000;
     }
 
     .loading-logo {
       font-family: 'SKCuber', 'League Spartan', sans-serif;
-      font-size: 48px;
+      font-size: 56px;
       color: #a020f0;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
       font-weight: normal;
+      text-align: center;
     }
 
     .loading-bar-container {
-      width: 400px;
-      height: 20px;
-      background-color: #333333;
-      border: 2px solid #666666;
-      border-radius: 2px;
+      width: 450px;
+      height: 24px;
+      background-color: #1a1a1a;
+      border: 3px solid #333333;
+      border-radius: 4px;
       position: relative;
       overflow: hidden;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
     }
 
     .loading-bar {
       width: 0%;
       height: 100%;
-      background-color: #a020f0;
-      transition: none;
-      animation: loadProgress 4s ease-in-out forwards;
+      background: linear-gradient(90deg, #a020f0 0%, #8a1ad1 50%, #a020f0 100%);
+      transition: width 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      border-radius: 1px;
     }
 
-    @keyframes loadProgress {
-      0% { width: 0%; }
-      100% { width: 100%; }
+    .loading-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
 
     /* SITE PRINCIPAL (caché au début) */
     .main-site {
       opacity: 0;
-      transition: opacity 0.5s ease;
+      visibility: hidden;
+      transition: opacity 0.8s ease 0.2s, visibility 0.8s ease 0.2s;
     }
 
     .main-site.show {
       opacity: 1;
+      visibility: visible;
     }
 
     body {
@@ -381,78 +516,119 @@
     .content-section {
       max-width: 900px;
       margin: 0 auto;
-    }
-
-    /* IP Container */
-    .ip-container {
-      display: flex;
-      align-items: center;
-      gap: 15px;
-      margin-bottom: 40px;
-      max-width: 600px;
-    }
-
-    .ip-label {
-      background: linear-gradient(135deg, #a020f0, #8a1ad1);
-      color: white;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-family: 'League Spartan', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
       display: flex;
       align-items: center;
       justify-content: center;
-      min-width: 60px;
-      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
+      min-height: 60vh;
+      flex-direction: column;
+      gap: 40px;
     }
 
-    .ip-label:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
-    }
-
-    .ip-box {
-      flex: 1;
-      border: 2px solid #a020f0;
-      border-radius: 12px;
-      padding: 12px 18px;
-      background: transparent;
+    /* Articles Section */
+    .articles-grid {
       display: flex;
-      align-items: center;
-      min-height: 45px;
+      flex-direction: column;
+      gap: 40px;
+      width: 100%;
+      max-width: 800px;
     }
 
-    .ip-text {
-      font-family: 'League Spartan', sans-serif;
-      font-weight: 700;
-      font-size: 16px;
-      color: #a020f0;
-      user-select: text;
-      flex: 1;
-    }
-
-    .copy-btn {
-      background: linear-gradient(135deg, #a020f0, #8a1ad1);
-      color: white;
-      border: none;
-      padding: 12px 20px;
-      border-radius: 12px;
-      font-family: 'League Spartan', sans-serif;
-      font-weight: 700;
-      font-size: 14px;
-      cursor: pointer;
+    .article-cover {
+      display: block;
+      text-decoration: none;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 3px solid #8B5CF6;
+      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4);
       transition: all 0.3s ease;
-      min-width: 70px;
-      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      width: 100%;
     }
 
-    .copy-btn:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+    .article-cover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(139, 92, 246, 0.6);
+    }
+
+    .article-meta {
+      background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF);
+      padding: 15px 25px;
+    }
+
+    .article-meta span {
+      color: #E5E7EB;
+      font-style: italic;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .article-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-image img {
+      width: 100%;
+      height: 400px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .article-title {
+      background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF);
+      padding: 30px 25px;
+    }
+
+    .article-title h2 {
+      color: white;
+      font-family: 'League Spartan', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      margin: 0;
+      line-height: 1.3;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .empty-message {
+      font-size: 24px;
+      color: #666;
+      font-weight: 400;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .content-placeholder {
+      color: #888;
+      font-size: 14px;
+      background: rgba(160, 32, 240, 0.1);
+      padding: 15px 25px;
+      border-radius: 10px;
+      border: 1px dashed #a020f0;
+      font-family: 'Courier New', monospace;
+    }
+
+    .content-section h1 {
+      font-size: 36px;
+      margin-bottom: 25px;
+      color: #a020f0;
+      font-weight: 700;
+    }
+
+    .content-section h2 {
+      font-size: 26px;
+      margin: 35px 0 18px 0;
+      color: #a020f0;
+      font-weight: 700;
+    }
+
+    .content-section p {
+      line-height: 1.7;
+      margin-bottom: 18px;
+      color: #e0e0e0;
+      font-weight: 400;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 16px;
     }
 
     /* Toast de confirmation */
@@ -479,103 +655,6 @@
       opacity: 1;
       visibility: visible;
       transform: translateX(-50%) translateY(-10px);
-    }
-
-    /* Article Cover */
-    .article-cover {
-      max-width: 600px;
-      margin-bottom: 30px;
-      border-radius: 16px;
-      overflow: hidden;
-      background: rgba(26, 26, 26, 0.5);
-      transition: all 0.3s ease;
-    }
-
-    .article-cover:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 8px 25px rgba(160, 32, 240, 0.2);
-    }
-
-    .article-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 15px 20px;
-      border-bottom: 1px solid rgba(160, 32, 240, 0.2);
-    }
-
-    .article-time {
-      font-family: 'League Spartan', sans-serif;
-      font-style: italic;
-      font-size: 14px;
-      color: #888;
-      font-weight: 400;
-    }
-
-    .read-btn {
-      background: linear-gradient(135deg, #a020f0, #8a1ad1);
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 8px;
-      font-family: 'League Spartan', sans-serif;
-      font-weight: 700;
-      font-size: 12px;
-      cursor: pointer;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      box-shadow: 0 2px 8px rgba(160, 32, 240, 0.3);
-    }
-
-    .read-btn:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 4px 12px rgba(160, 32, 240, 0.4);
-    }
-
-    .article-image {
-      width: 100%;
-      height: 300px;
-      object-fit: cover;
-      display: block;
-      user-select: none;
-    }
-
-    .article-footer {
-      padding: 15px 20px;
-    }
-
-    .article-title {
-      font-family: 'League Spartan', sans-serif;
-      font-weight: 700;
-      font-size: 22px;
-      color: #a020f0;
-      margin: 0;
-    }
-
-    .content-section h1 {
-      font-size: 36px;
-      margin-bottom: 25px;
-      color: #a020f0;
-      font-weight: 700;
-    }
-
-    .content-section h2 {
-      font-size: 26px;
-      margin: 35px 0 18px 0;
-      color: #a020f0;
-      font-weight: 700;
-    }
-
-    .content-section p {
-      line-height: 1.7;
-      margin-bottom: 18px;
-      color: #e0e0e0;
-      font-weight: 400;
-      font-family: 'Open Sans', sans-serif;
-      font-size: 16px;
     }
 
     /* Footer moderne */
@@ -613,52 +692,34 @@
     /* Responsive */
     @media (max-width: 768px) {
       .loading-logo {
-        font-size: 36px;
-      }
-      
-      .loading-bar-container {
-        width: 300px;
-      }
-      
-      .ip-container {
-        flex-direction: column;
-        gap: 10px;
-        align-items: stretch;
-      }
-      
-      .ip-container .ip-label,
-      .ip-container .copy-btn {
-        align-self: flex-start;
+        font-size: 42px;
       }
 
-      .article-cover {
-        max-width: 100%;
+      .loading-bar-container {
+        width: 320px;
+        height: 20px;
       }
-      
-      .article-image {
-        height: 240px;
-      }
-      
-      .article-title {
-        font-size: 18px;
-      }
-      
+
       .sidebar {
         width: 60px;
       }
-      
+
       .main-content {
         margin-left: 60px;
         padding: 80px 20px 80px 20px;
       }
-      
+
       .mini-header {
         top: 20px;
         right: 20px;
         gap: 15px;
       }
-      
+
       .search-bar {
+        width: 220px;
+      }
+
+      .search-results {
         width: 220px;
       }
 
@@ -667,11 +728,43 @@
         left: 10px;
         width: 140px;
       }
+
+      .context-menu {
+        min-width: 180px;
+      }
+
+      .zaklab-label {
+        top: 15px;
+        left: 15px;
+        font-size: 16px;
+      }
     }
   </style>
 </head>
 <body>
-  <!-- ÉCRAN DE CHARGEMENT -->
+  <div class="context-menu" id="contextMenu">
+    <div class="context-menu-item" onclick="closeTab()">
+      <i class="fas fa-times"></i>
+      Close Tab
+    </div>
+    <div class="context-menu-item" onclick="closeWindow()">
+      <i class="fas fa-window-close"></i>
+      Close Window
+    </div>
+    <div class="context-menu-item" onclick="addToBookmarks()">
+      <i class="fas fa-bookmark"></i>
+      Add to Bookmarks
+    </div>
+    <div class="context-menu-item" onclick="copyAddress()">
+      <i class="fas fa-copy"></i>
+      Copy Address
+    </div>
+    <div class="context-menu-item" onclick="refreshPage()">
+      <i class="fas fa-redo"></i>
+      Refresh
+    </div>
+  </div>
+
   <div class="loading-screen" id="loadingScreen">
     <div class="zaklab-label">ZAKLAB</div>
     <div class="loading-logo">MineRuns</div>
@@ -680,38 +773,30 @@
     </div>
   </div>
 
-  <!-- SITE PRINCIPAL -->
   <div class="main-site" id="mainSite">
-    <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Logo et flèche totalement statiques -->
     <div class="static-header">
-      <a href="home.html" class="logo">-M-</a>
+      <a href="home" class="logo">-M-</a>
       <div class="toggle-arrow" id="toggleArrow">></div>
     </div>
 
-    <!-- Sidebar principale -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header"></div>
       <div class="sidebar-content">
-        <div class="sidebar-section" onclick="window.location.href='server.html'">
-          <span>SERVER</span>
-          <div class="arrow">></div>
-        </div>
-        <div class="sidebar-section" onclick="window.location.href='game.html'">
+        <div class="sidebar-section" onclick="window.location.href='game'" onmouseenter="playWindSound()">
           <span>GAME</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="window.location.href='explore.html'">
+        <div class="sidebar-section" onclick="window.location.href='explore'" onmouseenter="playWindSound()">
           <span>EXPLORE</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="window.location.href='news.html'">
+        <div class="sidebar-section" onclick="window.location.href='news'" onmouseenter="playWindSound()">
           <span>NEWS</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="window.location.href='stats.html'">
+        <div class="sidebar-section" onclick="window.location.href='stats'" onmouseenter="playWindSound()">
           <span>STATS</span>
           <div class="arrow">></div>
         </div>
@@ -721,139 +806,120 @@
       </div>
     </div>
 
-    <!-- Sidebar secondaire -->
     <div class="secondary-sidebar" id="secondarySidebar">
       <div class="sidebar-content">
-        <div class="sidebar-section" onclick="window.location.href='UseFull.html'">
+        <div class="sidebar-section" onclick="window.location.href='https://ZakLabHub.github.io/UseFull/'" onmouseenter="playWindSound()">
           <span>USEFULL</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="window.location.href='ZakLab.html'">
+        <div class="sidebar-section" onclick="window.location.href='https://ZakLabHub.github.io/ZakLab/'" onmouseenter="playWindSound()">
           <span>ZAKLAB</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="window.location.href='MapMC.html'">
+        <div class="sidebar-section" onclick="window.location.href='https://ZakLabHub.github.io/MapMC/'" onmouseenter="playWindSound()">
           <span>MAPMC</span>
           <div class="arrow">></div>
         </div>
       </div>
     </div>
 
-    <!-- Mini-header -->
     <div class="mini-header" id="miniHeader">
-      <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
+      <button class="login-btn" onclick="window.location.href='login'">Login</button>
       <div class="search-container">
         <div class="search-icon" id="searchIcon">⌕</div>
         <input type="text" class="search-bar" id="searchBar" placeholder="Search pages...">
+        <div class="search-results" id="searchResults"></div>
       </div>
     </div>
 
-    <!-- Contenu principal -->
     <div class="main-content">
       <div class="content-section">
-        <h1>Welcome to MineRuns ! a Minecraft server.</h1>
-        
-        <!-- Container IP -->
-        <div class="ip-container">
-          <a href="ip.html" class="ip-label">IP :</a>
-          <div class="ip-box">
-            <span class="ip-text" id="serverIP">minerunsmc.falixsrv.me</span>
-          </div>
-          <button class="copy-btn" onclick="copyServerIP()">COPY</button>
-        </div>
+        <div class="articles-grid">
+          <!-- Article Cover 1 -->
+<a href="read1" class="article-cover">
+  <div class="article-meta">
+    <span style="color:white;">5 min • 1,200 mots</span>
+  </div>
+  <div class="article-image">
+    <img src="article1.png" alt="Article 1">
+  </div>
+  <div class="article-title">
+    <h2 style="color:white;">Learn how to join the server !</h2>
+  </div>
+</a>
 
-       <!-- Article Cover 1 -->
-        <a href="read1.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
-            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;"> [temps] • [NOMBRE_MOTS] mots</span>
-          </div>
-          <div style="position: relative; overflow: hidden;">
-            <img src="article1.png" alt="Article 1" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
-          </div>
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
-            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Learn how to join the server !</h2>
-          </div>
-        </a>
-        
-        <!-- Article Cover 2 -->
-        <a href="read2.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
-            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;">[TEMPS] • [NOMBRE_MOTS] mots</span>
-          </div>
-          <div style="position: relative; overflow: hidden;">
-            <img src="article2.png" alt="Article 2" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
-          </div>
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
-            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Learn more about server hosting. </h2>
-          </div>
-        </a>
-        
-        <!-- Article Cover 3 -->
-        <a href="read3.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
-            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;">[TEMPS] • [NOMBRE_MOTS] mots</span>
-          </div>
-          <div style="position: relative; overflow: hidden;">
-            <img src="article3.png" alt="Article 3" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
-          </div>
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
-            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">List of availables games.</h2>
-          </div>
-        </a>
-        
-        <!-- Article Cover 4 -->
-        <a href="read4.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
-            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;">[TEMPS] • [NOMBRE_MOTS] mots</span>
-          </div>
-          <div style="position: relative; overflow: hidden;">
-            <img src="article4.png" alt="Article 4" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
-          </div>
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
-            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">List of all lobbys.</h2>
-          </div>
-        </a>
-        
-        <!-- Article Cover 5 -->
-        <a href="read5.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
-            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;">[TEMPS] • [NOMBRE_MOTS] mots</span>
-          </div>
-          <div style="position: relative; overflow: hidden;">
-            <img src="article5.png" alt="Article 5" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
-          </div>
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
-            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">See socials plateforms of the server and ZakMC.</h2>
-          </div>
-        </a>
-        
-        <!-- Article Cover 6 -->
-        <a href="read6.html" class="article-cover" style="display: block; text-decoration: none; border-radius: 20px; margin-bottom: 40px; overflow: hidden; border: 3px solid #8B5CF6; box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4); transition: all 0.3s ease; background: linear-gradient(145deg, #1e293b, #0f172a); max-width: 800px; width: 100%;">
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 15px 25px; position: relative;">
-            <span style="color: #E5E7EB; font-style: italic; font-size: 14px; font-weight: 500;">[TEMPS] • [NOMBRE_MOTS] mots</span>
-          </div>
-          <div style="position: relative; overflow: hidden;">
-            <img src="article6.png" alt="Article 6" style="width: 100%; height: 400px; display: block; object-fit: cover; object-position: center;">
-          </div>
-          <div style="background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF); padding: 30px 25px;">
-            <h2 style="color: white; font-family: 'League Spartan', Arial, sans-serif; font-weight: 700; font-size: 28px; margin: 0; line-height: 1.3; text-shadow: 0 2px 4px rgba(0,0,0,0.3);">Learn more about story of MineRuns. </h2>
-          </div>
-        </a>
-      </div>
-    </div>
-    <!-- Toast de confirmation -->
+<!-- Article Cover 2 -->
+<a href="read2" class="article-cover">
+  <div class="article-meta">
+    <span style="color:white;">8 min • 1,800 mots</span>
+  </div>
+  <div class="article-image">
+    <img src="article2.png" alt="Article 2">
+  </div>
+  <div class="article-title">
+    <h2 style="color:white;">Learn more about server hosting.</h2>
+  </div>
+</a>
+
+<!-- Article Cover 3 -->
+<a href="read3" class="article-cover">
+  <div class="article-meta">
+    <span style="color:white;">3 min • 800 mots</span>
+  </div>
+  <div class="article-image">
+    <img src="article3.png" alt="Article 3">
+  </div>
+  <div class="article-title">
+    <h2 style="color:white;">List of availables games.</h2>
+  </div>
+</a>
+
+<!-- Article Cover 4 -->
+<a href="read4" class="article-cover">
+  <div class="article-meta">
+    <span style="color:white;">4 min • 1,000 mots</span>
+  </div>
+  <div class="article-image">
+    <img src="article4.png" alt="Article 4">
+  </div>
+  <div class="article-title">
+    <h2 style="color:white;">List of all lobbys.</h2>
+  </div>
+</a>
+
+<!-- Article Cover 5 -->
+<a href="read5" class="article-cover">
+  <div class="article-meta">
+    <span style="color:white;">2 min • 500 mots</span>
+  </div>
+  <div class="article-image">
+    <img src="article5.png" alt="Article 5">
+  </div>
+  <div class="article-title">
+    <h2 style="color:white;">See socials plateforms of the server and ZakMC.</h2>
+  </div>
+</a>
+
+<!-- Article Cover 6 -->
+<a href="read6" class="article-cover">
+  <div class="article-meta">
+    <span style="color:white;">6 min • 1,500 mots</span>
+  </div>
+  <div class="article-image">
+    <img src="article6.png" alt="Article 6">
+  </div>
+  <div class="article-title">
+    <h2 style="color:white;">Learn more about story of MineRuns.</h2>
+  </div>
+</a>
+
+
     <div class="toast" id="copyToast">
       Copied to clipboard ✓
     </div>
 
-    <!-- Toast de confirmation -->
-    <div class="toast" id="copyToast">
-      Copied to clipboard ✓
-    </div>
-
-    <!-- Footer moderne -->
     <div class="footer">
-      <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord.html'"></i>
+      <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord'"></i>
       <i class="fab fa-instagram social-icon instagram" onclick="window.open('https://instagram.com/zakmc_1', '_blank')"></i>
       <i class="fab fa-youtube social-icon youtube" onclick="window.open('https://youtube.com/@ZakMC_1', '_blank')"></i>
       <i class="fab fa-twitch social-icon twitch" onclick="window.open('https://twitch.tv/zakmc_', '_blank')"></i>
@@ -862,110 +928,291 @@
   </div>
 
   <script>
-    // GESTION DE L'ÉCRAN DE CHARGEMENT
-    window.addEventListener('load', function() {
+    // Base de données des pages pour la recherche
+    const pagesDatabase = [
+      {
+        title: "How to join the server",
+        url: "read1",
+        description: "Complete guide to join the MineRuns server"
+      },
+      {
+        title: "Server hosting guide",
+        url: "read2",
+        description: "Learn everything about server hosting and management"
+      },
+      {
+        title: "Available games list",
+        url: "read3",
+        description: "Discover all games available on MineRuns server"
+      },
+      {
+        title: "Lobbys overview",
+        url: "read4",
+        description: "Complete list of all server lobbys and their features"
+      },
+      {
+        title: "Social platforms",
+        url: "read5",
+        description: "Find all social media links for MineRuns and ZakMC"
+      },
+      {
+        title: "MineRuns story",
+        url: "read6",
+        description: "Learn about the history and story behind MineRuns"
+      },
+      {
+        title: "Game section",
+        url: "game",
+        description: "Access gaming features and multiplayer options"
+      },
+      {
+        title: "Explore section",
+        url: "explore",
+        description: "Explore server worlds and discover new content"
+      },
+      {
+        title: "News section",
+        url: "news",
+        description: "Latest news and updates from MineRuns server"
+      },
+      {
+        title: "Stats section",
+        url: "stats",
+        description: "View server statistics and player information"
+      },
+      {
+        title: "Login page",
+        url: "login",
+        description: "Sign in to your MineRuns account"
+      },
+      {
+        title: "Discord server",
+        url: "discord",
+        description: "Join our Discord community"
+      },
+      {
+        title: "Home page",
+        url: "home",
+        description: "MineRuns main homepage"
+      }
+    ];
+
+    // Variables globales pour la gestion du chargement
+    let loadingComplete = false;
+
+    // Ajout du code JavaScript pour la barre de chargement
+    window.addEventListener('load', () => {
+      const loadingBar = document.getElementById('loadingBar');
       const loadingScreen = document.getElementById('loadingScreen');
       const mainSite = document.getElementById('mainSite');
-      
-      // Après 4 secondes, faire disparaître l'écran de chargement
+
+      // La transition CSS gère l'animation sur 3s.
+      // On définit la largeur de la barre à 100% après un court délai pour que la transition s'active.
+      setTimeout(() => {
+        loadingBar.style.width = '100%';
+      }, 50);
+
+      // Une fois la barre remplie (après 3 secondes), on cache l'écran de chargement et on affiche le site principal.
       setTimeout(() => {
         loadingScreen.classList.add('fade-out');
         mainSite.classList.add('show');
-        
-        // Supprimer complètement l'écran de chargement après la transition
-        setTimeout(() => {
-          loadingScreen.style.display = 'none';
-        }, 500);
-      }, 4000);
+      }, 3000);
     });
 
-    // FONCTION DE COPIE IP
-    function copyServerIP() {
-      const serverIP = document.getElementById('serverIP').textContent;
-      const toast = document.getElementById('copyToast');
+    // Création d'objets Audio avec un volume réduit
+    let windSound, buttonPressSound;
+    
+    try {
+      windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
+      windSound.volume = 0.3;
       
-      navigator.clipboard.writeText(serverIP).then(() => {
-        toast.classList.add('show');
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 1500);
-      }).catch(() => {
-        // Fallback pour les navigateurs plus anciens
-        const textArea = document.createElement('textarea');
-        textArea.value = serverIP;
-        document.body.appendChild(textArea);
-        textArea.select();
-        document.execCommand('copy');
-        document.body.removeChild(textArea);
-        
-        toast.classList.add('show');
-        setTimeout(() => {
-          toast.classList.remove('show');
-        }, 1500);
-      });
+      buttonPressSound = new Audio('button-press-382713.mp3');
+      buttonPressSound.volume = 0.5;
+    } catch (e) {
+      console.log('Fichiers audio non trouvés, sons désactivés');
     }
 
-    // CODE ORIGINAL DU SITE
-    let isLoggedIn = false;
+    // Fonction pour jouer le son de vent (au survol)
+    function playWindSound() {
+      if (windSound.paused) {
+        windSound.currentTime = 0;
+        windSound.play().catch(e => console.error("Erreur de lecture du son de vent :", e));
+      }
+    }
 
-    const sidebar = document.getElementById('sidebar');
+    // Fonction pour jouer le son de clic (au clic)
+    function playClickSound() {
+      buttonPressSound.currentTime = 0;
+      buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
+    }
+
+    // Éléments du DOM
     const toggleArrow = document.getElementById('toggleArrow');
-    toggleArrow.addEventListener('click', function() {
-      sidebar.classList.toggle('collapsed');
-      toggleArrow.classList.toggle('rotate');
-    });
-
     const homeButton = document.getElementById('homeButton');
+    const sidebar = document.getElementById('sidebar');
     const secondarySidebar = document.getElementById('secondarySidebar');
     const overlay = document.getElementById('overlay');
+    const mainContent = document.querySelector('.main-content');
+    const searchIcon = document.getElementById('searchIcon');
+    const searchBar = document.getElementById('searchBar');
+    const searchResults = document.getElementById('searchResults');
 
-    homeButton.addEventListener('click', function(e) {
-      e.stopPropagation();
-      secondarySidebar.classList.add('active');
-      overlay.classList.add('active');
+    // Fonction de recherche
+    function searchPages(query) {
+      if (!query.trim()) {
+        searchResults.classList.remove('show');
+        return;
+      }
+
+      const results = pagesDatabase.filter(page => 
+        page.title.toLowerCase().includes(query.toLowerCase()) ||
+        page.description.toLowerCase().includes(query.toLowerCase())
+      );
+
+      displaySearchResults(results, query);
+    }
+
+    // Afficher les résultats de recherche
+    function displaySearchResults(results, query) {
+      searchResults.innerHTML = '';
+
+      if (results.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">Aucun résultat trouvé</div>';
+      } else {
+        results.forEach(result => {
+          const item = document.createElement('div');
+          item.className = 'search-result-item';
+          item.innerHTML = `
+            <div class="page-title">${result.title}</div>
+            <div class="page-description">${result.description}</div>
+          `;
+          item.addEventListener('click', () => {
+            window.location.href = result.url;
+            searchResults.classList.remove('show');
+            searchBar.value = '';
+            searchBar.classList.remove('active');
+          });
+          searchResults.appendChild(item);
+        });
+      }
+
+      searchResults.classList.add('show');
+    }
+
+    // Event listeners pour la recherche
+    searchBar.addEventListener('input', (e) => {
+      searchPages(e.target.value);
     });
 
-    overlay.addEventListener('click', function() {
+    searchBar.addEventListener('blur', () => {
+      // Délai pour permettre le clic sur les résultats
+      setTimeout(() => {
+        searchResults.classList.remove('show');
+      }, 200);
+    });
+
+    searchBar.addEventListener('focus', () => {
+      if (searchBar.value.trim()) {
+        searchPages(searchBar.value);
+      }
+    });
+
+    // Gestion du menu contextuel
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      const contextMenu = document.getElementById('contextMenu');
+      contextMenu.style.top = `${e.clientY}px`;
+      contextMenu.style.left = `${e.clientX}px`;
+      contextMenu.classList.add('show');
+    });
+
+    document.addEventListener('click', function(e) {
+      const contextMenu = document.getElementById('contextMenu');
+      if (contextMenu.classList.contains('show')) {
+        contextMenu.classList.remove('show');
+      }
+    });
+
+    function closeTab() {
+      window.close();
+    }
+    
+    function closeWindow() {
+      window.close();
+    }
+    
+    function addToBookmarks() {
+      alert("Ajouté aux favoris !");
+    }
+    
+    function copyAddress() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showToast('Copied to clipboard ✓');
+      }).catch(err => {
+        console.error('Erreur de copie:', err);
+      });
+    }
+    
+    function refreshPage() {
+      window.location.reload();
+    }
+
+    // Fonction pour afficher un toast
+    function showToast(message) {
+      const toast = document.getElementById('copyToast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Correction de la fonction du bouton de la flèche
+    toggleArrow.addEventListener('click', () => {
+      playClickSound();
+      sidebar.classList.toggle('collapsed');
+      if (sidebar.classList.contains('collapsed')) {
+        mainContent.style.marginLeft = '0';
+      } else {
+        mainContent.style.marginLeft = '200px';
+      }
+    });
+
+    // Correction de la fonction du bouton de la maison
+    homeButton.addEventListener('click', () => {
+      playClickSound();
+      secondarySidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    // Fonctionnalité de la recherche, qui est déjà correcte
+    searchIcon.addEventListener('click', () => {
+      playClickSound();
+      searchBar.classList.toggle('active');
+      if (searchBar.classList.contains('active')) {
+        searchBar.focus();
+      }
+    });
+
+    // Fermer les sidebars en cliquant sur l'overlay
+    overlay.addEventListener('click', () => {
       secondarySidebar.classList.remove('active');
       overlay.classList.remove('active');
     });
 
-    document.addEventListener('click', function(e) {
-      if (!secondarySidebar.contains(e.target) && !homeButton.contains(e.target)) {
-        secondarySidebar.classList.remove('active');
-        overlay.classList.remove('active');
-      }
+    // Ajout des sons de survol pour tous les éléments de la sidebar
+    document.querySelectorAll('.sidebar-section').forEach(item => {
+      item.addEventListener('mouseenter', playWindSound);
     });
 
-    const searchIcon = document.getElementById('searchIcon');
-    const searchBar = document.getElementById('searchBar');
-
-    searchIcon.addEventListener('click', function(e) {
-      e.stopPropagation();
-      searchBar.classList.toggle('active');
-      if (searchBar.classList.contains('active')) searchBar.focus();
-    });
-
-    document.addEventListener('click', function(e) {
-      if (!searchBar.contains(e.target) && !searchIcon.contains(e.target)) {
+    // Fermer la recherche avec Echap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchResults.classList.remove('show');
         searchBar.classList.remove('active');
+        searchBar.value = '';
       }
     });
-
-    searchBar.addEventListener('click', function(e) { 
-      e.stopPropagation(); 
-    });
-    
-    searchBar.addEventListener('input', function(e) { 
-      console.log('Search:', e.target.value.toLowerCase()); 
-    });
-
-    function updateLoginState() {
-      const miniHeader = document.getElementById('miniHeader');
-      if (isLoggedIn) miniHeader.classList.add('logged-in');
-      else miniHeader.classList.remove('logged-in');
-    }
-    updateLoginState();
   </script>
 </body>
 </html>
