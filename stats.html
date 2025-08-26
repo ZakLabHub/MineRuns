@@ -539,26 +539,26 @@
       .loading-logo {
         font-size: 36px;
       }
-      
+
       .loading-bar-container {
         width: 300px;
       }
-      
+
       .sidebar {
         width: 60px;
       }
-      
+
       .main-content {
         margin-left: 60px;
         padding: 80px 20px 80px 20px;
       }
-      
+
       .mini-header {
         top: 20px;
         right: 20px;
         gap: 15px;
       }
-      
+
       .search-bar {
         width: 220px;
       }
@@ -612,49 +612,49 @@
 
     <div class="static-header">
       <a href="home.html" class="logo">-M-</a>
-      <div class="toggle-arrow" id="toggleArrow" onclick="playClickSound()">></div>
+      <div class="toggle-arrow" id="toggleArrow">></div>
     </div>
 
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header"></div>
       <div class="sidebar-content">
-        <div class="sidebar-section" onclick="playClickSoundAndRedirect('server.html')" onmouseenter="playWindSound()">
+        <div class="sidebar-section" onclick="window.location.href='server.html'" onmouseenter="playWindSound()">
           <span>SERVER</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="playClickSoundAndRedirect('game.html')" onmouseenter="playWindSound()">
+        <div class="sidebar-section" onclick="window.location.href='game.html'" onmouseenter="playWindSound()">
           <span>GAME</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="playClickSoundAndRedirect('explore.html')" onmouseenter="playWindSound()">
+        <div class="sidebar-section" onclick="window.location.href='explore.html'" onmouseenter="playWindSound()">
           <span>EXPLORE</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="playClickSoundAndRedirect('news.html')" onmouseenter="playWindSound()">
+        <div class="sidebar-section" onclick="window.location.href='news.html'" onmouseenter="playWindSound()">
           <span>NEWS</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="playClickSoundAndRedirect('stats.html')" onmouseenter="playWindSound()">
+        <div class="sidebar-section" onclick="window.location.href='stats.html'" onmouseenter="playWindSound()">
           <span>STATS</span>
           <div class="arrow">></div>
         </div>
       </div>
       <div class="sidebar-footer">
-        <button class="home-button" id="homeButton" onclick="playClickSoundAndRedirect('home.html')">⌂</button>
+        <button class="home-button" id="homeButton">⌂</button>
       </div>
     </div>
 
     <div class="secondary-sidebar" id="secondarySidebar">
       <div class="sidebar-content">
-        <div class="sidebar-section" onclick="playClickSoundAndRedirect('UseFull.html')" onmouseenter="playWindSound()">
+        <div class="sidebar-section" onclick="window.location.href='UseFull.html'" onmouseenter="playWindSound()">
           <span>USEFULL</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="playClickSoundAndRedirect('ZakLab.html')" onmouseenter="playWindSound()">
+        <div class="sidebar-section" onclick="window.location.href='ZakLab.html'" onmouseenter="playWindSound()">
           <span>ZAKLAB</span>
           <div class="arrow">></div>
         </div>
-        <div class="sidebar-section" onclick="playClickSoundAndRedirect('MapMC.html')" onmouseenter="playWindSound()">
+        <div class="sidebar-section" onclick="window.location.href='MapMC.html'" onmouseenter="playWindSound()">
           <span>MAPMC</span>
           <div class="arrow">></div>
         </div>
@@ -662,9 +662,9 @@
     </div>
 
     <div class="mini-header" id="miniHeader">
-      <button class="login-btn" onclick="playClickSoundAndRedirect('login.html')">Login</button>
+      <button class="login-btn" onclick="window.location.href='login.html'">Login</button>
       <div class="search-container">
-        <div class="search-icon" id="searchIcon" onclick="playClickSound()">⌕</div>
+        <div class="search-icon" id="searchIcon">⌕</div>
         <input type="text" class="search-bar" id="searchBar" placeholder="Search pages...">
       </div>
     </div>
@@ -681,11 +681,11 @@
     </div>
 
     <div class="footer">
-      <i class="fab fa-discord social-icon discord" onclick="playClickSoundAndRedirect('discord.html')"></i>
-      <i class="fab fa-instagram social-icon instagram" onclick="playClickSoundAndOpen('https://instagram.com/zakmc_1')"></i>
-      <i class="fab fa-youtube social-icon youtube" onclick="playClickSoundAndOpen('https://youtube.com/@ZakMC_1')"></i>
-      <i class="fab fa-twitch social-icon twitch" onclick="playClickSoundAndOpen('https://twitch.tv/zakmc_')"></i>
-      <i class="fab fa-pinterest social-icon pinterest" onclick="playClickSoundAndOpen('https://pinterest.com/Minecraft&Chill')"></i>
+      <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord.html'"></i>
+      <i class="fab fa-instagram social-icon instagram" onclick="window.open('https://instagram.com/zakmc_1', '_blank')"></i>
+      <i class="fab fa-youtube social-icon youtube" onclick="window.open('https://youtube.com/@ZakMC_1', '_blank')"></i>
+      <i class="fab fa-twitch social-icon twitch" onclick="window.open('https://twitch.tv/zakmc_', '_blank')"></i>
+      <i class="fab fa-pinterest social-icon pinterest" onclick="window.open('https://pinterest.com/Minecraft&Chill', '_blank')"></i>
     </div>
   </div>
 
@@ -695,11 +695,14 @@
       const loadingBar = document.getElementById('loadingBar');
       const loadingScreen = document.getElementById('loadingScreen');
       const mainSite = document.getElementById('mainSite');
-      
+
+      // La transition CSS gère l'animation sur 3s.
+      // On définit la largeur de la barre à 100% après un court délai pour que la transition s'active.
       setTimeout(() => {
         loadingBar.style.width = '100%';
       }, 50);
 
+      // Une fois la barre remplie (après 3 secondes), on cache l'écran de chargement et on affiche le site principal.
       setTimeout(() => {
         loadingScreen.classList.add('fade-out');
         mainSite.classList.add('show');
@@ -727,21 +730,99 @@
       buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
     }
 
-    // Fonction pour jouer le son puis rediriger
-    function playClickSoundAndRedirect(url) {
-      playClickSound();
-      setTimeout(() => {
-        window.location.href = url;
-      }, 200); // Délai de 200 ms pour laisser le temps au son de jouer
+    // Éléments du DOM
+    const toggleArrow = document.getElementById('toggleArrow');
+    const homeButton = document.getElementById('homeButton');
+    const sidebar = document.getElementById('sidebar');
+    const secondarySidebar = document.getElementById('secondarySidebar');
+    const overlay = document.getElementById('overlay');
+    const mainContent = document.querySelector('.main-content');
+    const searchIcon = document.getElementById('searchIcon');
+    const searchBar = document.getElementById('searchBar');
+
+    // Gestion du menu
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      const contextMenu = document.getElementById('contextMenu');
+      contextMenu.style.top = `${e.clientY}px`;
+      contextMenu.style.left = `${e.clientX}px`;
+      contextMenu.classList.add('show');
+    });
+
+    document.addEventListener('click', function(e) {
+      const contextMenu = document.getElementById('contextMenu');
+      if (contextMenu.classList.contains('show')) {
+        contextMenu.classList.remove('show');
+      }
+    });
+
+    function closeTab() {
+      window.close();
+    }
+    function closeWindow() {
+      window.close();
+    }
+    function addToBookmarks() {
+      alert("Ajouté aux favoris !");
+    }
+    function copyAddress() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showToast('Copied to clipboard ✓');
+      }).catch(err => {
+        console.error('Erreur de copie:', err);
+      });
+    }
+    function refreshPage() {
+      window.location.reload();
     }
 
-    // Fonction pour jouer le son puis ouvrir un nouvel onglet
-    function playClickSoundAndOpen(url) {
-      playClickSound();
+    // Fonction pour afficher un toast
+    function showToast(message) {
+      const toast = document.getElementById('copyToast');
+      toast.textContent = message;
+      toast.classList.add('show');
       setTimeout(() => {
-        window.open(url, '_blank');
-      }, 200); // Délai de 200 ms
+        toast.classList.remove('show');
+      }, 3000);
     }
+
+    // Correction de la fonction du bouton de la flèche
+    toggleArrow.addEventListener('click', () => {
+      playClickSound();
+      sidebar.classList.toggle('collapsed');
+      if (sidebar.classList.contains('collapsed')) {
+        mainContent.style.marginLeft = '0';
+      } else {
+        mainContent.style.marginLeft = '200px';
+      }
+    });
+
+    // Correction de la fonction du bouton de la maison
+    homeButton.addEventListener('click', () => {
+      playClickSound();
+      // La ligne ci-dessous a été corrigée pour diriger vers home.html
+      window.location.href = 'home.html';
+    });
+
+    // Fonctionnalité de la recherche, qui est déjà correcte
+    searchIcon.addEventListener('click', () => {
+      playClickSound();
+      searchBar.classList.toggle('active');
+      if (searchBar.classList.contains('active')) {
+        searchBar.focus();
+      }
+    });
+
+    // Fermer les sidebars en cliquant sur l'overlay
+    overlay.addEventListener('click', () => {
+      secondarySidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
+    // Ajout des sons de survol pour tous les éléments de la sidebar
+    document.querySelectorAll('.sidebar-section').forEach(item => {
+      item.addEventListener('mouseenter', playWindSound);
+    });
   </script>
 </body>
 </html>
