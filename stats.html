@@ -25,7 +25,7 @@
       cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect x="14" y="2" width="4" height="4" fill="%23E1F5FE"/><rect x="14" y="6" width="4" height="4" fill="%238DD3F7"/><rect x="14" y="10" width="4" height="4" fill="%234FC3F7"/><rect x="10" y="14" width="12" height="4" fill="%231976D2"/><rect x="14" y="18" width="4" height="4" fill="%230D47A1"/><rect x="14" y="22" width="4" height="8" fill="%23795548"/></svg>') 16 16, auto !important;
     }
 
-    /* ✅ Rendre seulement le contenu sélectionnable */
+    /* Rendre seulement le contenu sélectionnable */
     .content-section h1,
     .content-section h2,
     .content-section p {
@@ -715,7 +715,6 @@
 
     // Fonction pour jouer le son de vent (au survol)
     function playWindSound() {
-      // Pour éviter de rejouer le son si le survol est rapide
       if (windSound.paused) {
         windSound.currentTime = 0;
         windSound.play().catch(e => console.error("Erreur de lecture du son de vent :", e));
