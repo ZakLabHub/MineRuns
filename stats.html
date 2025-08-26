@@ -612,7 +612,7 @@
 
     <div class="static-header">
       <a href="home.html" class="logo">-M-</a>
-      <div class="toggle-arrow" id="toggleArrow">></div>
+      <div class="toggle-arrow" id="toggleArrow" onclick="playClickSound()">></div>
     </div>
 
     <div class="sidebar" id="sidebar">
@@ -673,8 +673,7 @@
       <div class="content-section">
         <div class="empty-message">hmm.. it's empty here</div>
         <div class="content-placeholder">📝 PLACE YOUR FUTURE CONTENT HERE 📝</div>
-        
-        </div>
+      </div>
     </div>
 
     <div class="toast" id="copyToast">
@@ -710,33 +709,23 @@
       }, 3000);
     });
 
-    // Sons générés procéduralement
-    function createA(frequency, type = 'sine', duration = 0.1, volume = 0.5) {
-      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-      const oscillator = audioContext.createOscillator();
-      const gainNode = audioContext.createGain();
+    // Création d'objets Audio pour les sons
+    const windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
+    const buttonPressSound = new Audio('button-press-382713.mp3');
 
-      oscillator.type = type;
-      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
-      gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
-
-      oscillator.connect(gainNode);
-      gainNode.connect(audioContext.destination);
-
-      oscillator.start();
-      oscillator.stop(audioContext.currentTime + duration);
-    }
-
-    // Fonctions de son pour le survol
+    // Fonction pour jouer le son de vent (au survol)
     function playWindSound() {
-      // Simule un son de vent avec une fréquence basse et une onde de type 'sawtooth'
-      createA(80, 'sawtooth', 0.2, 0.1);
+      // Pour éviter de rejouer le son si le survol est rapide
+      if (windSound.paused) {
+        windSound.currentTime = 0;
+        windSound.play().catch(e => console.error("Erreur de lecture du son de vent :", e));
+      }
     }
 
-    // Fonction de son pour le clic
+    // Fonction pour jouer le son de clic (au clic)
     function playClickSound() {
-      // Simule un clic avec une fréquence plus haute et une onde 'square'
-      createA(200, 'square', 0.05, 0.2);
+      buttonPressSound.currentTime = 0;
+      buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
     }
   </script>
 </body>
