@@ -136,7 +136,7 @@
       width: 0%;
       height: 100%;
       background: linear-gradient(90deg, #a020f0, #8a1ad1);
-      transition: width 0.1s ease;
+      transition: width 3s ease-out; /* Changement ici: 3s de transition */
     }
 
     /* SITE PRINCIPAL (caché au début) */
@@ -576,7 +576,6 @@
   </style>
 </head>
 <body>
-  <!-- Custom Context Menu -->
   <div class="context-menu" id="contextMenu">
     <div class="context-menu-item" onclick="closeTab()">
       <i class="fas fa-times"></i>
@@ -600,7 +599,6 @@
     </div>
   </div>
 
-  <!-- ÉCRAN DE CHARGEMENT -->
   <div class="loading-screen" id="loadingScreen">
     <div class="zaklab-label">ZAKLAB</div>
     <div class="loading-logo">MineRuns</div>
@@ -609,18 +607,14 @@
     </div>
   </div>
 
-  <!-- SITE PRINCIPAL -->
   <div class="main-site" id="mainSite">
-    <!-- Overlay -->
     <div class="overlay" id="overlay"></div>
 
-    <!-- Logo et flèche totalement statiques -->
     <div class="static-header">
       <a href="home.html" class="logo">-M-</a>
       <div class="toggle-arrow" id="toggleArrow">></div>
     </div>
 
-    <!-- Sidebar principale -->
     <div class="sidebar" id="sidebar">
       <div class="sidebar-header"></div>
       <div class="sidebar-content">
@@ -650,7 +644,6 @@
       </div>
     </div>
 
-    <!-- Sidebar secondaire -->
     <div class="secondary-sidebar" id="secondarySidebar">
       <div class="sidebar-content">
         <div class="sidebar-section" onclick="playClickSound(); window.location.href='UseFull.html'" onmouseenter="playWindSound()">
@@ -668,7 +661,6 @@
       </div>
     </div>
 
-    <!-- Mini-header -->
     <div class="mini-header" id="miniHeader">
       <button class="login-btn" onclick="playClickSound(); window.location.href='login.html'">Login</button>
       <div class="search-container">
@@ -677,33 +669,18 @@
       </div>
     </div>
 
-    <!-- Contenu principal -->
     <div class="main-content">
       <div class="content-section">
         <div class="empty-message">hmm.. it's empty here</div>
         <div class="content-placeholder">📝 PLACE YOUR FUTURE CONTENT HERE 📝</div>
         
-        <!-- 
-        ═══════════════════════════════════════════════════════════════
-        🚀 VOTRE CONTENU FUTUR ICI 🚀
-        
-        Remplacez tout le contenu dans cette div .content-section
-        par votre propre contenu. Vous pouvez supprimer :
-        - .empty-message
-        - .content-placeholder
-        
-        Et ajouter vos propres éléments HTML ici.
-        ═══════════════════════════════════════════════════════════════
-        -->
-      </div>
+        </div>
     </div>
 
-    <!-- Toast de confirmation -->
     <div class="toast" id="copyToast">
       Copied to clipboard ✓
     </div>
 
-    <!-- Footer moderne -->
     <div class="footer">
       <i class="fab fa-discord social-icon discord" onclick="playClickSound(); window.location.href='discord.html'"></i>
       <i class="fab fa-instagram social-icon instagram" onclick="playClickSound(); window.open('https://instagram.com/zakmc_1', '_blank')"></i>
@@ -714,5 +691,27 @@
   </div>
 
   <script>
+    // Ajout du code JavaScript pour la barre de chargement
+    window.addEventListener('load', () => {
+      const loadingBar = document.getElementById('loadingBar');
+      const loadingScreen = document.getElementById('loadingScreen');
+      const mainSite = document.getElementById('mainSite');
+      
+      // La transition CSS gère déjà l'animation en 3s.
+      // On définit la largeur de la barre à 100% après un court délai pour que la transition s'active.
+      setTimeout(() => {
+        loadingBar.style.width = '100%';
+      }, 50);
+
+      // Une fois la barre remplie (après 3 secondes), on cache l'écran de chargement et on affiche le site principal.
+      setTimeout(() => {
+        loadingScreen.classList.add('fade-out');
+        mainSite.classList.add('show');
+      }, 3000);
+    });
+
     // Sons générés procéduralement
     function createA
+  </script>
+</body>
+</html>
