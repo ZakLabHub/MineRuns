@@ -83,6 +83,70 @@
       width: 16px;
     }
 
+    /* Menu de recherche */
+    .search-results {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 280px;
+      background: rgba(26, 26, 26, 0.95);
+      border: 1px solid #a020f0;
+      border-radius: 12px;
+      margin-top: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 10001;
+    }
+
+    .search-results.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .search-result-item {
+      padding: 12px 16px;
+      color: white;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover {
+      background: linear-gradient(135deg, rgba(160, 32, 240, 0.3), rgba(233, 30, 99, 0.3));
+    }
+
+    .search-result-item .page-title {
+      font-weight: 700;
+      color: #a020f0;
+    }
+
+    .search-result-item .page-description {
+      font-size: 12px;
+      color: #ccc;
+      margin-top: 4px;
+    }
+
+    .no-results {
+      padding: 16px;
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      font-family: 'League Spartan', sans-serif;
+    }
+
     /* ÉCRAN DE CHARGEMENT */
     .loading-screen {
       position: fixed;
@@ -432,7 +496,73 @@
       justify-content: center;
       min-height: 60vh;
       flex-direction: column;
-      gap: 20px;
+      gap: 40px;
+    }
+
+    /* Articles Section */
+    .articles-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    .article-cover {
+      display: block;
+      text-decoration: none;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 3px solid #8B5CF6;
+      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4);
+      transition: all 0.3s ease;
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      width: 100%;
+    }
+
+    .article-cover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(139, 92, 246, 0.6);
+    }
+
+    .article-meta {
+      background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF);
+      padding: 15px 25px;
+    }
+
+    .article-meta span {
+      color: #E5E7EB;
+      font-style: italic;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .article-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-image img {
+      width: 100%;
+      height: 400px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .article-title {
+      background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF);
+      padding: 30px 25px;
+    }
+
+    .article-title h2 {
+      color: white;
+      font-family: 'League Spartan', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      margin: 0;
+      line-height: 1.3;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
     .empty-message {
@@ -563,6 +693,10 @@
         width: 220px;
       }
 
+      .search-results {
+        width: 220px;
+      }
+
       .static-header {
         top: 10px;
         left: 10px;
@@ -662,13 +796,91 @@
       <div class="search-container">
         <div class="search-icon" id="searchIcon">⌕</div>
         <input type="text" class="search-bar" id="searchBar" placeholder="Search pages...">
+        <div class="search-results" id="searchResults"></div>
       </div>
     </div>
 
     <div class="main-content">
       <div class="content-section">
-        <div class="empty-message">hmm.. it's empty here</div>
-        <div class="content-placeholder">📝 PLACE YOUR FUTURE CONTENT HERE 📝</div>
+        <div class="articles-grid">
+          <!-- Article Cover 1 -->
+          <a href="read1" class="article-cover">
+            <div class="article-meta">
+              <span>5 min • 1,200 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article1.png" alt="Article 1">
+            </div>
+            <div class="article-title">
+              <h2>Learn how to join the server !</h2>
+            </div>
+          </a>
+          
+          <!-- Article Cover 2 -->
+          <a href="read2" class="article-cover">
+            <div class="article-meta">
+              <span>8 min • 1,800 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article2.png" alt="Article 2">
+            </div>
+            <div class="article-title">
+              <h2>Learn more about server hosting.</h2>
+            </div>
+          </a>
+          
+          <!-- Article Cover 3 -->
+          <a href="read3" class="article-cover">
+            <div class="article-meta">
+              <span>3 min • 800 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article3.png" alt="Article 3">
+            </div>
+            <div class="article-title">
+              <h2>List of availables games.</h2>
+            </div>
+          </a>
+          
+          <!-- Article Cover 4 -->
+          <a href="read4" class="article-cover">
+            <div class="article-meta">
+              <span>4 min • 1,000 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article4.png" alt="Article 4">
+            </div>
+            <div class="article-title">
+              <h2>List of all lobbys.</h2>
+            </div>
+          </a>
+          
+          <!-- Article Cover 5 -->
+          <a href="read5" class="article-cover">
+            <div class="article-meta">
+              <span>2 min • 500 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article5.png" alt="Article 5">
+            </div>
+            <div class="article-title">
+              <h2>See socials plateforms of the server and ZakMC.</h2>
+            </div>
+          </a>
+          
+          <!-- Article Cover 6 -->
+          <a href="read6" class="article-cover">
+            <div class="article-meta">
+              <span>6 min • 1,500 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article6.png" alt="Article 6">
+            </div>
+            <div class="article-title">
+              <h2>Learn more about story of MineRuns.</h2>
+            </div>
+          </a>
+        </div>
       </div>
     </div>
 
@@ -686,6 +898,75 @@
   </div>
 
   <script>
+    // Base de données des pages pour la recherche
+    const pagesDatabase = [
+      {
+        title: "How to join the server",
+        url: "read1",
+        description: "Complete guide to join the MineRuns server"
+      },
+      {
+        title: "Server hosting guide",
+        url: "read2",
+        description: "Learn everything about server hosting and management"
+      },
+      {
+        title: "Available games list",
+        url: "read3",
+        description: "Discover all games available on MineRuns server"
+      },
+      {
+        title: "Lobbys overview",
+        url: "read4",
+        description: "Complete list of all server lobbys and their features"
+      },
+      {
+        title: "Social platforms",
+        url: "read5",
+        description: "Find all social media links for MineRuns and ZakMC"
+      },
+      {
+        title: "MineRuns story",
+        url: "read6",
+        description: "Learn about the history and story behind MineRuns"
+      },
+      {
+        title: "Game section",
+        url: "game",
+        description: "Access gaming features and multiplayer options"
+      },
+      {
+        title: "Explore section",
+        url: "explore",
+        description: "Explore server worlds and discover new content"
+      },
+      {
+        title: "News section",
+        url: "news",
+        description: "Latest news and updates from MineRuns server"
+      },
+      {
+        title: "Stats section",
+        url: "stats",
+        description: "View server statistics and player information"
+      },
+      {
+        title: "Login page",
+        url: "login",
+        description: "Sign in to your MineRuns account"
+      },
+      {
+        title: "Discord server",
+        url: "discord",
+        description: "Join our Discord community"
+      },
+      {
+        title: "Home page",
+        url: "home",
+        description: "MineRuns main homepage"
+      }
+    ];
+
     // Ajout du code JavaScript pour la barre de chargement
     window.addEventListener('load', () => {
       const loadingBar = document.getElementById('loadingBar');
@@ -693,7 +974,6 @@
       const mainSite = document.getElementById('mainSite');
 
       // La transition CSS gère l'animation sur 3s.
-      // On définit la largeur de la barre à 100% après un court délai pour que la transition s'active.
       setTimeout(() => {
         loadingBar.style.width = '100%';
       }, 50);
@@ -707,10 +987,10 @@
 
     // Création d'objets Audio avec un volume réduit
     const windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
-    windSound.volume = 0.3; // Volume à 30%
+    windSound.volume = 0.3;
 
     const buttonPressSound = new Audio('button-press-382713.mp3');
-    buttonPressSound.volume = 0.5; // Volume à 50%
+    buttonPressSound.volume = 0.5;
 
     // Fonction pour jouer le son de vent (au survol)
     function playWindSound() {
@@ -735,8 +1015,69 @@
     const mainContent = document.querySelector('.main-content');
     const searchIcon = document.getElementById('searchIcon');
     const searchBar = document.getElementById('searchBar');
+    const searchResults = document.getElementById('searchResults');
 
-    // Gestion du menu
+    // Fonction de recherche
+    function searchPages(query) {
+      if (!query.trim()) {
+        searchResults.classList.remove('show');
+        return;
+      }
+
+      const results = pagesDatabase.filter(page => 
+        page.title.toLowerCase().includes(query.toLowerCase()) ||
+        page.description.toLowerCase().includes(query.toLowerCase())
+      );
+
+      displaySearchResults(results, query);
+    }
+
+    // Afficher les résultats de recherche
+    function displaySearchResults(results, query) {
+      searchResults.innerHTML = '';
+
+      if (results.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">Aucun résultat trouvé</div>';
+      } else {
+        results.forEach(result => {
+          const item = document.createElement('div');
+          item.className = 'search-result-item';
+          item.innerHTML = `
+            <div class="page-title">${result.title}</div>
+            <div class="page-description">${result.description}</div>
+          `;
+          item.addEventListener('click', () => {
+            window.location.href = result.url;
+            searchResults.classList.remove('show');
+            searchBar.value = '';
+            searchBar.classList.remove('active');
+          });
+          searchResults.appendChild(item);
+        });
+      }
+
+      searchResults.classList.add('show');
+    }
+
+    // Event listeners pour la recherche
+    searchBar.addEventListener('input', (e) => {
+      searchPages(e.target.value);
+    });
+
+    searchBar.addEventListener('blur', () => {
+      // Délai pour permettre le clic sur les résultats
+      setTimeout(() => {
+        searchResults.classList.remove('show');
+      }, 200);
+    });
+
+    searchBar.addEventListener('focus', () => {
+      if (searchBar.value.trim()) {
+        searchPages(searchBar.value);
+      }
+    });
+
+    // Gestion du menu contextuel
     document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
       const contextMenu = document.getElementById('contextMenu');
@@ -759,7 +1100,7 @@
       window.close();
     }
     function addToBookmarks() {
-      alert("Ajouté aux favoris !");
+      showToast('Ajouté aux favoris !');
     }
     function copyAddress() {
       navigator.clipboard.writeText(window.location.href).then(() => {
@@ -800,12 +1141,15 @@
       overlay.classList.toggle('active');
     });
 
-    // Fonctionnalité de la recherche, qui est déjà correcte
+    // Fonctionnalité de la recherche
     searchIcon.addEventListener('click', () => {
       playClickSound();
       searchBar.classList.toggle('active');
       if (searchBar.classList.contains('active')) {
         searchBar.focus();
+      } else {
+        searchResults.classList.remove('show');
+        searchBar.value = '';
       }
     });
 
@@ -819,6 +1163,12 @@
     document.querySelectorAll('.sidebar-section').forEach(item => {
       item.addEventListener('mouseenter', playWindSound);
     });
-  </script>
-</body>
-</html>
+
+    // Fermer la recherche avec Echap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchResults.classList.remove('show');
+        searchBar.classList.remove('active');
+        searchBar.value = '';
+      }
+    });
