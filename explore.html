@@ -152,65 +152,90 @@
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background-color: #000000;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease;
+      z-index: 99999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
     .loading-screen.fade-out {
       opacity: 0;
-      pointer-events: none;
+      visibility: hidden;
     }
 
     .zaklab-label {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 30px;
+      left: 30px;
       font-family: 'SKCuber', 'League Spartan', sans-serif;
-      font-size: 16px;
+      font-size: 18px;
       color: #a020f0;
       font-weight: normal;
+      z-index: 100000;
     }
 
     .loading-logo {
       font-family: 'SKCuber', 'League Spartan', sans-serif;
-      font-size: 48px;
+      font-size: 56px;
       color: #a020f0;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
       font-weight: normal;
+      text-align: center;
     }
 
     .loading-bar-container {
-      width: 400px;
-      height: 20px;
-      background-color: #333333;
-      border: 2px solid #666666;
-      border-radius: 2px;
+      width: 450px;
+      height: 24px;
+      background-color: #1a1a1a;
+      border: 3px solid #333333;
+      border-radius: 4px;
       position: relative;
       overflow: hidden;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
     }
 
     .loading-bar {
       width: 0%;
       height: 100%;
-      background: linear-gradient(90deg, #a020f0, #8a1ad1);
-      transition: width 3s ease-out;
+      background: linear-gradient(90deg, #a020f0 0%, #8a1ad1 50%, #a020f0 100%);
+      transition: width 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      border-radius: 1px;
+    }
+
+    .loading-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
 
     /* SITE PRINCIPAL (caché au début) */
     .main-site {
       opacity: 0;
-      transition: opacity 0.5s ease;
+      visibility: hidden;
+      transition: opacity 0.8s ease 0.2s, visibility 0.8s ease 0.2s;
     }
 
     .main-site.show {
       opacity: 1;
+      visibility: visible;
     }
 
     body {
@@ -667,11 +692,12 @@
     /* Responsive */
     @media (max-width: 768px) {
       .loading-logo {
-        font-size: 36px;
+        font-size: 42px;
       }
 
       .loading-bar-container {
-        width: 300px;
+        width: 320px;
+        height: 20px;
       }
 
       .sidebar {
@@ -705,6 +731,12 @@
 
       .context-menu {
         min-width: 180px;
+      }
+
+      .zaklab-label {
+        top: 15px;
+        left: 15px;
+        font-size: 16px;
       }
     }
   </style>
@@ -967,6 +999,9 @@
       }
     ];
 
+    // Variables globales pour la gestion du chargement
+    let loadingComplete = false;
+
     // Ajout du code JavaScript pour la barre de chargement
     window.addEventListener('load', () => {
       const loadingBar = document.getElementById('loadingBar');
@@ -974,6 +1009,7 @@
       const mainSite = document.getElementById('mainSite');
 
       // La transition CSS gère l'animation sur 3s.
+      // On définit la largeur de la barre à 100% après un court délai pour que la transition s'active.
       setTimeout(() => {
         loadingBar.style.width = '100%';
       }, 50);
@@ -986,11 +1022,17 @@
     });
 
     // Création d'objets Audio avec un volume réduit
-    const windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
-    windSound.volume = 0.3;
-
-    const buttonPressSound = new Audio('button-press-382713.mp3');
-    buttonPressSound.volume = 0.5;
+    let windSound, buttonPressSound;
+    
+    try {
+      windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
+      windSound.volume = 0.3;
+      
+      buttonPressSound = new Audio('button-press-382713.mp3');
+      buttonPressSound.volume = 0.5;
+    } catch (e) {
+      console.log('Fichiers audio non trouvés, sons désactivés');
+    }
 
     // Fonction pour jouer le son de vent (au survol)
     function playWindSound() {
@@ -1096,12 +1138,15 @@
     function closeTab() {
       window.close();
     }
+    
     function closeWindow() {
       window.close();
     }
+    
     function addToBookmarks() {
-      showToast('Ajouté aux favoris !');
+      alert("Ajouté aux favoris !");
     }
+    
     function copyAddress() {
       navigator.clipboard.writeText(window.location.href).then(() => {
         showToast('Copied to clipboard ✓');
@@ -1109,6 +1154,7 @@
         console.error('Erreur de copie:', err);
       });
     }
+    
     function refreshPage() {
       window.location.reload();
     }
@@ -1141,15 +1187,12 @@
       overlay.classList.toggle('active');
     });
 
-    // Fonctionnalité de la recherche
+    // Fonctionnalité de la recherche, qui est déjà correcte
     searchIcon.addEventListener('click', () => {
       playClickSound();
       searchBar.classList.toggle('active');
       if (searchBar.classList.contains('active')) {
         searchBar.focus();
-      } else {
-        searchResults.classList.remove('show');
-        searchBar.value = '';
       }
     });
 
@@ -1172,3 +1215,6 @@
         searchBar.value = '';
       }
     });
+  </script>
+</body>
+</html>
