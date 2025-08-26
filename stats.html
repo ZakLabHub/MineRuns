@@ -136,7 +136,7 @@
       width: 0%;
       height: 100%;
       background: linear-gradient(90deg, #a020f0, #8a1ad1);
-      transition: width 3s ease-out; /* Changement ici: 3s de transition */
+      transition: width 3s ease-out;
     }
 
     /* SITE PRINCIPAL (caché au début) */
@@ -697,7 +697,7 @@
       const loadingScreen = document.getElementById('loadingScreen');
       const mainSite = document.getElementById('mainSite');
       
-      // La transition CSS gère déjà l'animation en 3s.
+      // La transition CSS gère l'animation sur 3s.
       // On définit la largeur de la barre à 100% après un court délai pour que la transition s'active.
       setTimeout(() => {
         loadingBar.style.width = '100%';
@@ -711,7 +711,33 @@
     });
 
     // Sons générés procéduralement
-    function createA
+    function createA(frequency, type = 'sine', duration = 0.1, volume = 0.5) {
+      const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+      const oscillator = audioContext.createOscillator();
+      const gainNode = audioContext.createGain();
+
+      oscillator.type = type;
+      oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime);
+      gainNode.gain.setValueAtTime(volume, audioContext.currentTime);
+
+      oscillator.connect(gainNode);
+      gainNode.connect(audioContext.destination);
+
+      oscillator.start();
+      oscillator.stop(audioContext.currentTime + duration);
+    }
+
+    // Fonctions de son pour le survol
+    function playWindSound() {
+      // Simule un son de vent avec une fréquence basse et une onde de type 'sawtooth'
+      createA(80, 'sawtooth', 0.2, 0.1);
+    }
+
+    // Fonction de son pour le clic
+    function playClickSound() {
+      // Simule un clic avec une fréquence plus haute et une onde 'square'
+      createA(200, 'square', 0.05, 0.2);
+    }
   </script>
 </body>
 </html>
