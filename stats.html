@@ -22,7 +22,7 @@
       padding: 0;
       box-sizing: border-box;
       user-select: none;
-      cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><defs><linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%"><stop offset="0%" stop-color="%23a020f0"/><stop offset="100%" stop-color="%23e91e63"/></linearGradient></defs><circle cx="12" cy="12" r="10" fill="url(%23grad)" stroke="white" stroke-width="2" rx="5"/></svg>') 12 12, auto !important;
+      cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect x="14" y="2" width="4" height="4" fill="%23E1F5FE"/><rect x="14" y="6" width="4" height="4" fill="%238DD3F7"/><rect x="14" y="10" width="4" height="4" fill="%234FC3F7"/><rect x="10" y="14" width="12" height="4" fill="%231976D2"/><rect x="14" y="18" width="4" height="4" fill="%230D47A1"/><rect x="14" y="22" width="4" height="8" fill="%23795548"/></svg>') 16 16, auto !important;
     }
 
     /* ✅ Rendre seulement le contenu sélectionnable */
@@ -135,14 +135,8 @@
     .loading-bar {
       width: 0%;
       height: 100%;
-      background-color: #a020f0;
-      transition: none;
-      animation: loadProgress 4s ease-in-out forwards;
-    }
-
-    @keyframes loadProgress {
-      0% { width: 0%; }
-      100% { width: 100%; }
+      background: linear-gradient(90deg, #a020f0, #8a1ad1);
+      transition: width 0.1s ease;
     }
 
     /* SITE PRINCIPAL (caché au début) */
@@ -719,6 +713,6 @@
     </div>
   </div>
 
-  <!-- Audio pour les effets sonores -->
-  <audio id="windSound" preload="auto">
-    <source src="data:audio/wav;base64,UklGRnoGAABXQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YQoGAACBhYqFbF1fdJivrJBhNjVgodDbq2EcBj+a2/LDciUFLIHO8tiJNwgZaLvt559NEAxQp+PwtmMcBjiR1/LMeSwFJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N2QQAoUXrTp66hVFApGn+DyvmUfCjaK2fjMfSwGJHfH8N
+  <script>
+    // Sons générés procéduralement
+    function createA
