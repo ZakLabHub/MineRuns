@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +23,10 @@
       box-sizing: border-box;
       user-select: none;
       cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect x="14" y="2" width="4" height="4" fill="%23E1F5FE"/><rect x="14" y="6" width="4" height="4" fill="%238DD3F7"/><rect x="14" y="10" width="4" height="4" fill="%234FC3F7"/><rect x="10" y="14" width="12" height="4" fill="%231976D2"/><rect x="14" y="18" width="4" height="4" fill="%230D47A1"/><rect x="14" y="22" width="4" height="8" fill="%23795548"/></svg>') 16 16, auto !important;
+    }
+
+    html, body {
+      height: 100%;
     }
 
     /* Rendre seulement le contenu sélectionnable */
@@ -83,70 +87,162 @@
       width: 16px;
     }
 
+    /* Menu de recherche */
+    .search-results {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 280px;
+      background: rgba(26, 26, 26, 0.95);
+      border: 1px solid #a020f0;
+      border-radius: 12px;
+      margin-top: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 10001;
+    }
+
+    .search-results.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .search-result-item {
+      padding: 12px 16px;
+      color: white;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover {
+      background: linear-gradient(135deg, rgba(160, 32, 240, 0.3), rgba(233, 30, 99, 0.3));
+    }
+
+    .search-result-item .page-title {
+      font-weight: 700;
+      color: #a020f0;
+    }
+
+    .search-result-item .page-description {
+      font-size: 12px;
+      color: #ccc;
+      margin-top: 4px;
+    }
+
+    .no-results {
+      padding: 16px;
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      font-family: 'League Spartan', sans-serif;
+    }
+
     /* ÉCRAN DE CHARGEMENT */
     .loading-screen {
       position: fixed;
       top: 0;
       left: 0;
-      width: 100%;
-      height: 100%;
+      width: 100vw;
+      height: 100vh;
       background-color: #000000;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      z-index: 9999;
-      transition: opacity 0.5s ease;
+      z-index: 99999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
     }
 
     .loading-screen.fade-out {
       opacity: 0;
-      pointer-events: none;
+      visibility: hidden;
     }
 
     .zaklab-label {
       position: absolute;
-      top: 20px;
-      left: 20px;
+      top: 30px;
+      left: 30px;
       font-family: 'SKCuber', 'League Spartan', sans-serif;
-      font-size: 16px;
+      font-size: 18px;
       color: #a020f0;
       font-weight: normal;
+      z-index: 100000;
     }
 
     .loading-logo {
       font-family: 'SKCuber', 'League Spartan', sans-serif;
-      font-size: 48px;
+      font-size: 56px;
       color: #a020f0;
-      margin-bottom: 40px;
+      margin-bottom: 50px;
       font-weight: normal;
+      text-align: center;
     }
 
     .loading-bar-container {
-      width: 400px;
-      height: 20px;
-      background-color: #333333;
-      border: 2px solid #666666;
-      border-radius: 2px;
+      width: 450px;
+      height: 24px;
+      background-color: #1a1a1a;
+      border: 3px solid #333333;
+      border-radius: 4px;
       position: relative;
       overflow: hidden;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
     }
 
     .loading-bar {
       width: 0%;
       height: 100%;
-      background: linear-gradient(90deg, #a020f0, #8a1ad1);
-      transition: width 3s ease-out;
+      background: linear-gradient(90deg, #a020f0 0%, #8a1ad1 50%, #a020f0 100%);
+      transition: width 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      border-radius: 1px;
+    }
+
+    .loading-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
     }
 
     /* SITE PRINCIPAL (caché au début) */
     .main-site {
       opacity: 0;
-      transition: opacity 0.5s ease;
+      visibility: hidden;
+      transition: opacity 0.8s ease 0.2s, visibility 0.8s ease 0.2s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .main-site.show {
       opacity: 1;
+      visibility: visible;
     }
 
     body {
@@ -412,16 +508,17 @@
       order: 2;
     }
 
-    /* Contenu principal avec transition */
+    /* Contenu principal avec transition - STRUCTURE CORRIGÉE */
     .main-content {
       margin-left: 200px;
-      padding: 80px 40px 80px 40px;
-      min-height: 100vh;
+      padding: 80px 40px 0 40px; /* Suppression du padding-bottom */
+      min-height: calc(100vh - 80px); /* Hauteur minimale pour pousser le footer */
       transition: margin-left 0.3s ease;
+      flex: 1; /* Permet au contenu de s'étendre */
     }
 
     .sidebar.collapsed ~ .main-content {
-      margin-left: 200px;
+      margin-left: 0;
     }
 
     .content-section {
@@ -432,7 +529,91 @@
       justify-content: center;
       min-height: 60vh;
       flex-direction: column;
-      gap: 20px;
+      gap: 40px;
+    }
+
+    /* ==================== ZONE DE CONTENU FUTUR ==================== */
+    /* 
+       Ajoutez votre contenu principal dans .content-section > .articles-grid 
+       ou créez de nouvelles sections dans .content-section
+    */
+    .articles-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    /* Placeholder pour le contenu futur */
+    .content-placeholder {
+      color: #888;
+      font-size: 14px;
+      background: rgba(160, 32, 240, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px dashed #a020f0;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    /* Articles Section */
+    .article-cover {
+      display: block;
+      text-decoration: none;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 3px solid #8B5CF6;
+      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4);
+      transition: all 0.3s ease;
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      width: 100%;
+    }
+
+    .article-cover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(139, 92, 246, 0.6);
+    }
+
+    .article-meta {
+      background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF);
+      padding: 15px 25px;
+    }
+
+    .article-meta span {
+      color: #E5E7EB;
+      font-style: italic;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .article-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-image img {
+      width: 100%;
+      height: 400px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .article-title {
+      background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF);
+      padding: 30px 25px;
+    }
+
+    .article-title h2 {
+      color: white;
+      font-family: 'League Spartan', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      margin: 0;
+      line-height: 1.3;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
     .empty-message {
@@ -441,16 +622,6 @@
       font-weight: 400;
       font-style: italic;
       text-align: center;
-    }
-
-    .content-placeholder {
-      color: #888;
-      font-size: 14px;
-      background: rgba(160, 32, 240, 0.1);
-      padding: 15px 25px;
-      border-radius: 10px;
-      border: 1px dashed #a020f0;
-      font-family: 'Courier New', monospace;
     }
 
     .content-section h1 {
@@ -475,6 +646,7 @@
       font-family: 'Open Sans', sans-serif;
       font-size: 16px;
     }
+    /* ================================================================= */
 
     /* Toast de confirmation */
     .toast {
@@ -502,14 +674,15 @@
       transform: translateX(-50%) translateY(-10px);
     }
 
-    /* Footer moderne */
+    /* Footer moderne - CORRIGÉ POUR ÊTRE EN BAS */
     .footer {
       background: linear-gradient(135deg, #a020f0, #8a1ad1);
       padding: 25px 0;
       display: flex;
       justify-content: center;
       gap: 25px;
-      margin-top: 60px;
+      margin-top: auto; /* Pousse le footer vers le bas */
+      width: 100%;
     }
 
     .social-icon {
@@ -537,11 +710,12 @@
     /* Responsive */
     @media (max-width: 768px) {
       .loading-logo {
-        font-size: 36px;
+        font-size: 42px;
       }
 
       .loading-bar-container {
-        width: 300px;
+        width: 320px;
+        height: 20px;
       }
 
       .sidebar {
@@ -550,7 +724,7 @@
 
       .main-content {
         margin-left: 60px;
-        padding: 80px 20px 80px 20px;
+        padding: 80px 20px 0 20px;
       }
 
       .mini-header {
@@ -563,6 +737,10 @@
         width: 220px;
       }
 
+      .search-results {
+        width: 220px;
+      }
+
       .static-header {
         top: 10px;
         left: 10px;
@@ -571,6 +749,12 @@
 
       .context-menu {
         min-width: 180px;
+      }
+
+      .zaklab-label {
+        top: 15px;
+        left: 15px;
+        font-size: 16px;
       }
     }
   </style>
@@ -662,20 +846,47 @@
       <div class="search-container">
         <div class="search-icon" id="searchIcon">⌕</div>
         <input type="text" class="search-bar" id="searchBar" placeholder="Search pages...">
+        <div class="search-results" id="searchResults"></div>
       </div>
     </div>
 
+    <!-- ==================== ZONE CONTENU PRINCIPAL ==================== -->
     <div class="main-content">
       <div class="content-section">
-        <div class="empty-message">hmm.. it's empty here</div>
-        <div class="content-placeholder">📝 PLACE YOUR FUTURE CONTENT HERE 📝</div>
+        <div class="articles-grid">
+          
+          <!-- AJOUTEZ VOTRE CONTENU FUTUR ICI -->
+          <div class="content-placeholder">
+            📝 ZONE DE CONTENU PRINCIPAL<br>
+            Ajoutez vos articles, textes, images, etc. dans cette section<br>
+            Vous pouvez utiliser les classes .article-cover, .content-section h1/h2/p
+          </div>
+          
+          <!-- Exemple d'article (vous pouvez dupliquer cette structure) -->
+          <!--
+          <a href="votre-lien" class="article-cover">
+            <div class="article-meta">
+              <span>Date de publication</span>
+            </div>
+            <div class="article-image">
+              <img src="votre-image.jpg" alt="Description">
+            </div>
+            <div class="article-title">
+              <h2>Titre de votre article</h2>
+            </div>
+          </a>
+          -->
+          
+        </div>
       </div>
     </div>
+    <!-- ================================================================= -->
 
     <div class="toast" id="copyToast">
       Copied to clipboard ✓
     </div>
 
+    <!-- Footer maintenant correctement positionné en bas -->
     <div class="footer">
       <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord'"></i>
       <i class="fab fa-instagram social-icon instagram" onclick="window.open('https://instagram.com/zakmc_1', '_blank')"></i>
@@ -683,38 +894,117 @@
       <i class="fab fa-twitch social-icon twitch" onclick="window.open('https://twitch.tv/zakmc_', '_blank')"></i>
       <i class="fab fa-pinterest social-icon pinterest" onclick="window.open('https://pinterest.com/Minecraft&Chill', '_blank')"></i>
     </div>
+
   </div>
 
   <script>
+    // Base de données des pages pour la recherche
+    const pagesDatabase = [
+      {
+        title: "How to join the server",
+        url: "read1",
+        description: "Complete guide to join the MineRuns server"
+      },
+      {
+        title: "Server hosting guide",
+        url: "read2",
+        description: "Learn everything about server hosting and management"
+      },
+      {
+        title: "Available games list",
+        url: "read3",
+        description: "Discover all games available on MineRuns server"
+      },
+      {
+        title: "Lobbys overview",
+        url: "read4",
+        description: "Complete list of all server lobbys and their features"
+      },
+      {
+        title: "Social platforms",
+        url: "read5",
+        description: "Find all social media links for MineRuns and ZakMC"
+      },
+      {
+        title: "MineRuns story",
+        url: "read6",
+        description: "Learn about the history and story behind MineRuns"
+      },
+      {
+        title: "Game section",
+        url: "game",
+        description: "Access gaming features and multiplayer options"
+      },
+      {
+        title: "Explore section",
+        url: "explore",
+        description: "Explore server worlds and discover new content"
+      },
+      {
+        title: "News section",
+        url: "news",
+        description: "Latest news and updates from MineRuns server"
+      },
+      {
+        title: "Stats section",
+        url: "stats",
+        description: "View server statistics and player information"
+      },
+      {
+        title: "Login page",
+        url: "login",
+        description: "Sign in to your MineRuns account"
+      },
+      {
+        title: "Discord server",
+        url: "discord",
+        description: "Join our Discord community"
+      },
+      {
+        title: "Home page",
+        url: "home",
+        description: "MineRuns main homepage"
+      }
+    ];
+
+    // Variables globales pour la gestion du chargement
+    let loadingComplete = false;
+
     // Ajout du code JavaScript pour la barre de chargement
     window.addEventListener('load', () => {
       const loadingBar = document.getElementById('loadingBar');
       const loadingScreen = document.getElementById('loadingScreen');
       const mainSite = document.getElementById('mainSite');
 
-      // La transition CSS gère l'animation sur 3s.
-      // On définit la largeur de la barre à 100% après un court délai pour que la transition s'active.
+      // Animation de la barre de chargement
       setTimeout(() => {
         loadingBar.style.width = '100%';
-      }, 50);
+      }, 100);
 
-      // Une fois la barre remplie (après 3 secondes), on cache l'écran de chargement et on affiche le site principal.
+      // Transition vers le site principal après le chargement
       setTimeout(() => {
         loadingScreen.classList.add('fade-out');
         mainSite.classList.add('show');
+        loadingComplete = true;
       }, 3000);
     });
 
     // Création d'objets Audio avec un volume réduit
-    const windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
-    windSound.volume = 0.3; // Volume à 30%
-
-    const buttonPressSound = new Audio('button-press-382713.mp3');
-    buttonPressSound.volume = 0.5; // Volume à 50%
+    let windSound, buttonPressSound;
+    
+    try {
+      windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
+      windSound.volume = 0.3;
+      
+      buttonPressSound = new Audio('button-press-382713.mp3');
+      buttonPressSound.volume = 0.5;
+    } catch (e) {
+      console.log('Fichiers audio non trouvés, sons désactivés');
+    }
 
     // Fonction pour jouer le son de vent (au survol)
     function playWindSound() {
-      if (windSound.paused) {
+      if (windSound && windSound.paused) {
         windSound.currentTime = 0;
         windSound.play().catch(e => console.error("Erreur de lecture du son de vent :", e));
       }
@@ -722,8 +1012,10 @@
 
     // Fonction pour jouer le son de clic (au clic)
     function playClickSound() {
-      buttonPressSound.currentTime = 0;
-      buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
+      if (buttonPressSound) {
+        buttonPressSound.currentTime = 0;
+        buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
+      }
     }
 
     // Éléments du DOM
@@ -735,8 +1027,69 @@
     const mainContent = document.querySelector('.main-content');
     const searchIcon = document.getElementById('searchIcon');
     const searchBar = document.getElementById('searchBar');
+    const searchResults = document.getElementById('searchResults');
 
-    // Gestion du menu
+    // Fonction de recherche
+    function searchPages(query) {
+      if (!query.trim()) {
+        searchResults.classList.remove('show');
+        return;
+      }
+
+      const results = pagesDatabase.filter(page => 
+        page.title.toLowerCase().includes(query.toLowerCase()) ||
+        page.description.toLowerCase().includes(query.toLowerCase())
+      );
+
+      displaySearchResults(results, query);
+    }
+
+    // Afficher les résultats de recherche
+    function displaySearchResults(results, query) {
+      searchResults.innerHTML = '';
+
+      if (results.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">Aucun résultat trouvé</div>';
+      } else {
+        results.forEach(result => {
+          const item = document.createElement('div');
+          item.className = 'search-result-item';
+          item.innerHTML = `
+            <div class="page-title">${result.title}</div>
+            <div class="page-description">${result.description}</div>
+          `;
+          item.addEventListener('click', () => {
+            window.location.href = result.url;
+            searchResults.classList.remove('show');
+            searchBar.value = '';
+            searchBar.classList.remove('active');
+          });
+          searchResults.appendChild(item);
+        });
+      }
+
+      searchResults.classList.add('show');
+    }
+
+    // Event listeners pour la recherche
+    searchBar.addEventListener('input', (e) => {
+      searchPages(e.target.value);
+    });
+
+    searchBar.addEventListener('blur', () => {
+      // Délai pour permettre le clic sur les résultats
+      setTimeout(() => {
+        searchResults.classList.remove('show');
+      }, 200);
+    });
+
+    searchBar.addEventListener('focus', () => {
+      if (searchBar.value.trim()) {
+        searchPages(searchBar.value);
+      }
+    });
+
+    // Gestion du menu contextuel
     document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
       const contextMenu = document.getElementById('contextMenu');
@@ -755,19 +1108,28 @@
     function closeTab() {
       window.close();
     }
+    
     function closeWindow() {
       window.close();
     }
+    
     function addToBookmarks() {
-      alert("Ajouté aux favoris !");
+      if (window.external && ('AddFavorite' in window.external)) {
+        window.external.AddFavorite(window.location.href, document.title);
+      } else {
+        showToast('Ajouté aux favoris !');
+      }
     }
+    
     function copyAddress() {
       navigator.clipboard.writeText(window.location.href).then(() => {
-        showToast('Copied to clipboard ✓');
+        showToast('Adresse copiée !');
       }).catch(err => {
         console.error('Erreur de copie:', err);
+        showToast('Erreur lors de la copie');
       });
     }
+    
     function refreshPage() {
       window.location.reload();
     }
@@ -782,10 +1144,12 @@
       }, 3000);
     }
 
-    // Correction de la fonction du bouton de la flèche
+    // Fonction du bouton de la flèche (sidebar toggle)
     toggleArrow.addEventListener('click', () => {
       playClickSound();
       sidebar.classList.toggle('collapsed');
+      toggleArrow.classList.toggle('rotate');
+      
       if (sidebar.classList.contains('collapsed')) {
         mainContent.style.marginLeft = '0';
       } else {
@@ -793,19 +1157,22 @@
       }
     });
 
-    // Correction de la fonction du bouton de la maison
+    // Fonction du bouton de la maison (secondary sidebar)
     homeButton.addEventListener('click', () => {
       playClickSound();
       secondarySidebar.classList.toggle('active');
       overlay.classList.toggle('active');
     });
 
-    // Fonctionnalité de la recherche, qui est déjà correcte
+    // Fonctionnalité de la recherche
     searchIcon.addEventListener('click', () => {
       playClickSound();
       searchBar.classList.toggle('active');
       if (searchBar.classList.contains('active')) {
         searchBar.focus();
+      } else {
+        searchResults.classList.remove('show');
+        searchBar.value = '';
       }
     });
 
@@ -818,7 +1185,31 @@
     // Ajout des sons de survol pour tous les éléments de la sidebar
     document.querySelectorAll('.sidebar-section').forEach(item => {
       item.addEventListener('mouseenter', playWindSound);
+      item.addEventListener('click', playClickSound);
     });
+
+    // Fermer la recherche avec Echap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchResults.classList.remove('show');
+        searchBar.classList.remove('active');
+        searchBar.value = '';
+      }
+    });
+
+    // Gestion responsive de la sidebar
+    function handleResize() {
+      if (window.innerWidth <= 768) {
+        if (!sidebar.classList.contains('collapsed')) {
+          sidebar.classList.add('collapsed');
+          toggleArrow.classList.add('rotate');
+          mainContent.style.marginLeft = '60px';
+        }
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Appel initial
   </script>
 </body>
 </html>
