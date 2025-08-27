@@ -689,6 +689,71 @@
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
+    /* IP Bar Section */
+    .ip-bar-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 40px;
+      justify-content: center;
+    }
+
+    .ip-button {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 50%;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ip-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+    }
+
+    .ip-bar {
+      background: rgba(26, 26, 26, 0.95);
+      border: 2px solid #a020f0;
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: #a020f0;
+      text-align: center;
+      min-width: 300px;
+    }
+
+    .copy-button {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
+    }
+
+    .copy-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .loading-logo {
@@ -737,6 +802,27 @@
         top: 15px;
         left: 15px;
         font-size: 16px;
+      }
+
+      .ip-bar-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .ip-bar {
+        min-width: 250px;
+        font-size: 16px;
+      }
+
+      .ip-button {
+        width: 50px;
+        height: 50px;
+        font-size: 14px;
+      }
+
+      .copy-button {
+        padding: 10px 20px;
+        font-size: 14px;
       }
     }
   </style>
@@ -834,85 +920,92 @@
 
     <div class="main-content">
       <div class="content-section">
+        <div class="ip-bar-container">
+          <button class="ip-button" onclick="window.location.href='read2.html'">IP:</button>
+          <div class="ip-bar">minerunsmc.falixsrv.me</div>
+          <button class="copy-button" onclick="copyIpAddress()">COPY</button>
+        </div>
         <div class="articles-grid">
           <!-- Article Cover 1 -->
-<a href="read1" class="article-cover">
-  <div class="article-meta">
-    <span style="color:white;">5 min • 1,200 mots</span>
-  </div>
-  <div class="article-image">
-    <img src="article1.png" alt="Article 1">
-  </div>
-  <div class="article-title">
-    <h2 style="color:white;">Learn how to join the server !</h2>
-  </div>
-</a>
+          <a href="read1" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">5 min • 1,200 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article1.png" alt="Article 1">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">Learn how to join the server !</h2>
+            </div>
+          </a>
 
-<!-- Article Cover 2 -->
-<a href="read2" class="article-cover">
-  <div class="article-meta">
-    <span style="color:white;">8 min • 1,800 mots</span>
-  </div>
-  <div class="article-image">
-    <img src="article2.png" alt="Article 2">
-  </div>
-  <div class="article-title">
-    <h2 style="color:white;">Learn more about server hosting.</h2>
-  </div>
-</a>
+          <!-- Article Cover 2 -->
+          <a href="read2" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">8 min • 1,800 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article2.png" alt="Article 2">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">Learn more about server hosting.</h2>
+            </div>
+          </a>
 
-<!-- Article Cover 3 -->
-<a href="read3" class="article-cover">
-  <div class="article-meta">
-    <span style="color:white;">3 min • 800 mots</span>
-  </div>
-  <div class="article-image">
-    <img src="article3.png" alt="Article 3">
-  </div>
-  <div class="article-title">
-    <h2 style="color:white;">List of availables games.</h2>
-  </div>
-</a>
+          <!-- Article Cover 3 -->
+          <a href="read3" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">3 min • 800 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article3.png" alt="Article 3">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">List of availables games.</h2>
+            </div>
+          </a>
 
-<!-- Article Cover 4 -->
-<a href="read4" class="article-cover">
-  <div class="article-meta">
-    <span style="color:white;">4 min • 1,000 mots</span>
-  </div>
-  <div class="article-image">
-    <img src="article4.png" alt="Article 4">
-  </div>
-  <div class="article-title">
-    <h2 style="color:white;">List of all lobbys.</h2>
-  </div>
-</a>
+          <!-- Article Cover 4 -->
+          <a href="read4" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">4 min • 1,000 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article4.png" alt="Article 4">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">List of all lobbys.</h2>
+            </div>
+          </a>
 
-<!-- Article Cover 5 -->
-<a href="read5" class="article-cover">
-  <div class="article-meta">
-    <span style="color:white;">2 min • 500 mots</span>
-  </div>
-  <div class="article-image">
-    <img src="article5.png" alt="Article 5">
-  </div>
-  <div class="article-title">
-    <h2 style="color:white;">See socials plateforms of the server and ZakMC.</h2>
-  </div>
-</a>
+          <!-- Article Cover 5 -->
+          <a href="read5" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">2 min • 500 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article5.png" alt="Article 5">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">See socials plateforms of the server and ZakMC.</h2>
+            </div>
+          </a>
 
-<!-- Article Cover 6 -->
-<a href="read6" class="article-cover">
-  <div class="article-meta">
-    <span style="color:white;">6 min • 1,500 mots</span>
-  </div>
-  <div class="article-image">
-    <img src="article6.png" alt="Article 6">
-  </div>
-  <div class="article-title">
-    <h2 style="color:white;">Learn more about story of MineRuns.</h2>
-  </div>
-</a>
-
+          <!-- Article Cover 6 -->
+          <a href="read6" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">6 min • 1,500 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article6.png" alt="Article 6">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">Learn more about story of MineRuns.</h2>
+            </div>
+          </a>
+        </div>
+      </div>
+    </div>
 
     <div class="toast" id="copyToast">
       Copied to clipboard ✓
@@ -1153,6 +1246,14 @@
       });
     }
     
+    function copyIpAddress() {
+      navigator.clipboard.writeText('minerunsmc.falixsrv.me').then(() => {
+        showToast('Copied to clipboard ✓');
+      }).catch(err => {
+        console.error('Erreur de copie:', err);
+      });
+    }
+    
     function refreshPage() {
       window.location.reload();
     }
@@ -1164,7 +1265,7 @@
       toast.classList.add('show');
       setTimeout(() => {
         toast.classList.remove('show');
-      }, 3000);
+      }, 2000);
     }
 
     // Correction de la fonction du bouton de la flèche
