@@ -1,0 +1,1215 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MineRuns</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    @font-face {
+      font-family: 'SKCuber';
+      src: url('fonts/SKCuber-Expanded.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      user-select: none;
+      cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect x="14" y="2" width="4" height="4" fill="%23E1F5FE"/><rect x="14" y="6" width="4" height="4" fill="%238DD3F7"/><rect x="14" y="10" width="4" height="4" fill="%234FC3F7"/><rect x="10" y="14" width="12" height="4" fill="%231976D2"/><rect x="14" y="18" width="4" height="4" fill="%230D47A1"/><rect x="14" y="22" width="4" height="8" fill="%23795548"/></svg>') 16 16, auto !important;
+    }
+
+    html, body {
+      height: 100%;
+    }
+
+    /* Rendre seulement le contenu sélectionnable */
+    .content-section h1,
+    .content-section h2,
+    .content-section p {
+      user-select: text;
+    }
+
+    /* Custom Context Menu */
+    .context-menu {
+      position: fixed;
+      background: #2a2a2a;
+      border: 1px solid #444;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+      backdrop-filter: blur(10px);
+      z-index: 10000;
+      opacity: 0;
+      visibility: hidden;
+      transform: scale(0.9);
+      transition: all 0.2s ease;
+      min-width: 200px;
+      overflow: hidden;
+    }
+
+    .context-menu.show {
+      opacity: 1;
+      visibility: visible;
+      transform: scale(1);
+    }
+
+    .context-menu-item {
+      padding: 12px 18px;
+      color: white;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .context-menu-item:last-child {
+      border-bottom: none;
+    }
+
+    .context-menu-item:hover {
+      background: linear-gradient(135deg, rgba(160, 32, 240, 0.3), rgba(233, 30, 99, 0.3));
+      color: white;
+    }
+
+    .context-menu-item i {
+      font-size: 14px;
+      width: 16px;
+    }
+
+    /* Menu de recherche */
+    .search-results {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 280px;
+      background: rgba(26, 26, 26, 0.95);
+      border: 1px solid #a020f0;
+      border-radius: 12px;
+      margin-top: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 10001;
+    }
+
+    .search-results.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .search-result-item {
+      padding: 12px 16px;
+      color: white;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover {
+      background: linear-gradient(135deg, rgba(160, 32, 240, 0.3), rgba(233, 30, 99, 0.3));
+    }
+
+    .search-result-item .page-title {
+      font-weight: 700;
+      color: #a020f0;
+    }
+
+    .search-result-item .page-description {
+      font-size: 12px;
+      color: #ccc;
+      margin-top: 4px;
+    }
+
+    .no-results {
+      padding: 16px;
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      font-family: 'League Spartan', sans-serif;
+    }
+
+    /* ÉCRAN DE CHARGEMENT */
+    .loading-screen {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: #000000;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      z-index: 99999;
+      opacity: 1;
+      visibility: visible;
+      transition: opacity 0.8s ease, visibility 0.8s ease;
+    }
+
+    .loading-screen.fade-out {
+      opacity: 0;
+      visibility: hidden;
+    }
+
+    .zaklab-label {
+      position: absolute;
+      top: 30px;
+      left: 30px;
+      font-family: 'SKCuber', 'League Spartan', sans-serif;
+      font-size: 18px;
+      color: #a020f0;
+      font-weight: normal;
+      z-index: 100000;
+    }
+
+    .loading-logo {
+      font-family: 'SKCuber', 'League Spartan', sans-serif;
+      font-size: 56px;
+      color: #a020f0;
+      margin-bottom: 50px;
+      font-weight: normal;
+      text-align: center;
+    }
+
+    .loading-bar-container {
+      width: 450px;
+      height: 24px;
+      background-color: #1a1a1a;
+      border: 3px solid #333333;
+      border-radius: 4px;
+      position: relative;
+      overflow: hidden;
+      box-shadow: inset 0 2px 8px rgba(0,0,0,0.3);
+    }
+
+    .loading-bar {
+      width: 0%;
+      height: 100%;
+      background: linear-gradient(90deg, #a020f0 0%, #8a1ad1 50%, #a020f0 100%);
+      transition: width 2.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+      position: relative;
+      border-radius: 1px;
+    }
+
+    .loading-bar::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.2) 50%, transparent 100%);
+      animation: shimmer 1.5s infinite;
+    }
+
+    @keyframes shimmer {
+      0% { transform: translateX(-100%); }
+      100% { transform: translateX(100%); }
+    }
+
+    /* SITE PRINCIPAL (caché au début) */
+    .main-site {
+      opacity: 0;
+      visibility: hidden;
+      transition: opacity 0.8s ease 0.2s, visibility 0.8s ease 0.2s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .main-site.show {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    body {
+      font-family: 'League Spartan', sans-serif;
+      background-color: #0a0a0a;
+      color: white;
+      overflow-x: hidden;
+    }
+
+    /* Logo et flèche totalement statiques */
+    .static-header {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 160px;
+      z-index: 1003;
+    }
+
+    .logo {
+      font-family: 'SKCuber', 'League Spartan', sans-serif;
+      font-size: 28px;
+      font-weight: bold;
+      color: #a020f0;
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .toggle-arrow {
+      cursor: pointer;
+      color: #a020f0;
+      font-size: 20px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      transition: transform 0.3s ease;
+    }
+
+    .toggle-arrow.rotate {
+      transform: rotate(90deg);
+    }
+
+    /* Sidebar principale */
+    .sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 200px;
+      height: 100vh;
+      background-color: #0a0a0a;
+      z-index: 1000;
+      transition: width 0.3s ease;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .sidebar.collapsed {
+      width: 0px;
+      overflow: hidden;
+    }
+
+    .sidebar-header {
+      height: 100px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .sidebar-content {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding: 0;
+      gap: 5px;
+      transition: opacity 0.3s ease;
+    }
+
+    .sidebar.collapsed .sidebar-content,
+    .sidebar.collapsed .sidebar-footer {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .sidebar-section {
+      padding: 15px 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      margin: 0 10px;
+      border-radius: 12px;
+      position: relative;
+      transition: all 0.3s ease;
+    }
+
+    .sidebar-section:hover {
+      background: rgba(160, 32, 240, 0.1);
+      border: 1px solid #a020f0;
+    }
+
+    .sidebar-section span {
+      font-size: 14px;
+      font-weight: 700;
+      color: #a020f0;
+    }
+
+    .sidebar-section .arrow {
+      color: #a020f0;
+      font-size: 12px;
+      opacity: 0;
+      transition: opacity 0.3s ease;
+      margin-left: auto;
+    }
+
+    .sidebar-section:hover .arrow {
+      opacity: 1;
+    }
+
+    .sidebar-footer {
+      padding: 20px;
+      display: flex;
+      justify-content: flex-end;
+      align-items: flex-end;
+      height: 80px;
+      transition: opacity 0.3s ease;
+    }
+
+    .home-button {
+      background: none;
+      border: none;
+      color: #a020f0;
+      font-size: 22px;
+      font-weight: 800;
+      cursor: pointer;
+    }
+
+    /* Sidebar secondaire */
+    .secondary-sidebar {
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 200px;
+      height: 100vh;
+      background-color: #0a0a0a;
+      z-index: 1001;
+      transform: translateX(-100%);
+      transition: transform 0.3s ease;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      padding-top: 0;
+    }
+
+    .secondary-sidebar.active {
+      transform: translateX(0);
+    }
+
+    .secondary-sidebar .sidebar-section {
+      margin: 5px 10px;
+      justify-content: flex-start;
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 999;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+    }
+
+    .overlay.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    /* Mini-header */
+    .mini-header {
+      position: fixed;
+      top: 25px;
+      right: 25px;
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      z-index: 1002;
+    }
+
+    .search-container {
+      position: relative;
+    }
+
+    .search-icon {
+      cursor: pointer;
+      color: #a020f0;
+      font-size: 20px;
+      padding: 8px;
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .search-icon:hover {
+      background: rgba(160, 32, 240, 0.1);
+      color: white;
+    }
+
+    .search-bar {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 280px;
+      padding: 12px 18px;
+      background: rgba(26, 26, 26, 0.95);
+      border: 1px solid #a020f0;
+      border-radius: 25px;
+      color: white;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 400;
+      outline: none;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .search-bar.active {
+      opacity: 1;
+      visibility: visible;
+    }
+
+    .login-btn {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      border: none;
+      padding: 12px 26px;
+      border-radius: 25px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
+    }
+
+    .login-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+    }
+
+    .mini-header.logged-in .login-btn {
+      display: none;
+    }
+
+    .mini-header.logged-in .search-container {
+      order: 2;
+    }
+
+    /* Contenu principal avec transition - STRUCTURE CORRIGÉE */
+    .main-content {
+      margin-left: 200px;
+      padding: 80px 40px 0 40px; /* Suppression du padding-bottom */
+      min-height: calc(100vh - 80px); /* Hauteur minimale pour pousser le footer */
+      transition: margin-left 0.3s ease;
+      flex: 1; /* Permet au contenu de s'étendre */
+    }
+
+    .sidebar.collapsed ~ .main-content {
+      margin-left: 0;
+    }
+
+    .content-section {
+      max-width: 900px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: 60vh;
+      flex-direction: column;
+      gap: 40px;
+    }
+
+    /* ==================== ZONE DE CONTENU FUTUR ==================== */
+    /* 
+       Ajoutez votre contenu principal dans .content-section > .articles-grid 
+       ou créez de nouvelles sections dans .content-section
+    */
+    .articles-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 40px;
+      width: 100%;
+      max-width: 800px;
+    }
+
+    /* Placeholder pour le contenu futur */
+    .content-placeholder {
+      color: #888;
+      font-size: 14px;
+      background: rgba(160, 32, 240, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px dashed #a020f0;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    /* Articles Section */
+    .article-cover {
+      display: block;
+      text-decoration: none;
+      border-radius: 20px;
+      overflow: hidden;
+      border: 3px solid #8B5CF6;
+      box-shadow: 0 8px 32px rgba(139, 92, 246, 0.4);
+      transition: all 0.3s ease;
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      width: 100%;
+    }
+
+    .article-cover:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 40px rgba(139, 92, 246, 0.6);
+    }
+
+    .article-meta {
+      background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF);
+      padding: 15px 25px;
+    }
+
+    .article-meta span {
+      color: #E5E7EB;
+      font-style: italic;
+      font-size: 14px;
+      font-weight: 500;
+    }
+
+    .article-image {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .article-image img {
+      width: 100%;
+      height: 400px;
+      display: block;
+      object-fit: cover;
+      object-position: center;
+    }
+
+    .article-title {
+      background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF);
+      padding: 30px 25px;
+    }
+
+    .article-title h2 {
+      color: white;
+      font-family: 'League Spartan', Arial, sans-serif;
+      font-weight: 700;
+      font-size: 28px;
+      margin: 0;
+      line-height: 1.3;
+      text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+    }
+
+    .empty-message {
+      font-size: 24px;
+      color: #666;
+      font-weight: 400;
+      font-style: italic;
+      text-align: center;
+    }
+
+    .content-section h1 {
+      font-size: 36px;
+      margin-bottom: 25px;
+      color: #a020f0;
+      font-weight: 700;
+    }
+
+    .content-section h2 {
+      font-size: 26px;
+      margin: 35px 0 18px 0;
+      color: #a020f0;
+      font-weight: 700;
+    }
+
+    .content-section p {
+      line-height: 1.7;
+      margin-bottom: 18px;
+      color: #e0e0e0;
+      font-weight: 400;
+      font-family: 'Open Sans', sans-serif;
+      font-size: 16px;
+    }
+    /* ================================================================= */
+
+    /* Toast de confirmation */
+    .toast {
+      position: fixed;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      background: linear-gradient(135deg, #22c55e, #16a34a);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      opacity: 0;
+      visibility: hidden;
+      transition: all 0.3s ease;
+      z-index: 10000;
+      box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3);
+    }
+
+    .toast.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateX(-50%) translateY(-10px);
+    }
+
+    /* Footer moderne - CORRIGÉ POUR ÊTRE EN BAS */
+    .footer {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      padding: 25px 0;
+      display: flex;
+      justify-content: center;
+      gap: 25px;
+      margin-top: auto; /* Pousse le footer vers le bas */
+      width: 100%;
+    }
+
+    .social-icon {
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      padding: 12px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.1);
+      width: 48px;
+      height: 48px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      backdrop-filter: blur(10px);
+    }
+
+    .social-icon:hover {
+      transform: translateY(-3px) scale(1.1);
+      background: rgba(255, 255, 255, 0.2);
+      box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+      .loading-logo {
+        font-size: 42px;
+      }
+
+      .loading-bar-container {
+        width: 320px;
+        height: 20px;
+      }
+
+      .sidebar {
+        width: 60px;
+      }
+
+      .main-content {
+        margin-left: 60px;
+        padding: 80px 20px 0 20px;
+      }
+
+      .mini-header {
+        top: 20px;
+        right: 20px;
+        gap: 15px;
+      }
+
+      .search-bar {
+        width: 220px;
+      }
+
+      .search-results {
+        width: 220px;
+      }
+
+      .static-header {
+        top: 10px;
+        left: 10px;
+        width: 140px;
+      }
+
+      .context-menu {
+        min-width: 180px;
+      }
+
+      .zaklab-label {
+        top: 15px;
+        left: 15px;
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="context-menu" id="contextMenu">
+    <div class="context-menu-item" onclick="closeTab()">
+      <i class="fas fa-times"></i>
+      Close Tab
+    </div>
+    <div class="context-menu-item" onclick="closeWindow()">
+      <i class="fas fa-window-close"></i>
+      Close Window
+    </div>
+    <div class="context-menu-item" onclick="addToBookmarks()">
+      <i class="fas fa-bookmark"></i>
+      Add to Bookmarks
+    </div>
+    <div class="context-menu-item" onclick="copyAddress()">
+      <i class="fas fa-copy"></i>
+      Copy Address
+    </div>
+    <div class="context-menu-item" onclick="refreshPage()">
+      <i class="fas fa-redo"></i>
+      Refresh
+    </div>
+  </div>
+
+  <div class="loading-screen" id="loadingScreen">
+    <div class="zaklab-label">ZAKLAB</div>
+    <div class="loading-logo">MineRuns</div>
+    <div class="loading-bar-container">
+      <div class="loading-bar" id="loadingBar"></div>
+    </div>
+  </div>
+
+  <div class="main-site" id="mainSite">
+    <div class="overlay" id="overlay"></div>
+
+    <div class="static-header">
+      <a href="home" class="logo">-M-</a>
+      <div class="toggle-arrow" id="toggleArrow">></div>
+    </div>
+
+    <div class="sidebar" id="sidebar">
+      <div class="sidebar-header"></div>
+      <div class="sidebar-content">
+        <div class="sidebar-section" onclick="window.location.href='game'" onmouseenter="playWindSound()">
+          <span>GAME</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='explore'" onmouseenter="playWindSound()">
+          <span>EXPLORE</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='news'" onmouseenter="playWindSound()">
+          <span>NEWS</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='stats'" onmouseenter="playWindSound()">
+          <span>STATS</span>
+          <div class="arrow">></div>
+        </div>
+      </div>
+      <div class="sidebar-footer">
+        <button class="home-button" id="homeButton">⌂</button>
+      </div>
+    </div>
+
+    <div class="secondary-sidebar" id="secondarySidebar">
+      <div class="sidebar-content">
+        <div class="sidebar-section" onclick="window.location.href='https://ZakLabHub.github.io/UseFull/'" onmouseenter="playWindSound()">
+          <span>USEFULL</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='https://ZakLabHub.github.io/ZakLab/'" onmouseenter="playWindSound()">
+          <span>ZAKLAB</span>
+          <div class="arrow">></div>
+        </div>
+        <div class="sidebar-section" onclick="window.location.href='https://ZakLabHub.github.io/MapMC/'" onmouseenter="playWindSound()">
+          <span>MAPMC</span>
+          <div class="arrow">></div>
+        </div>
+      </div>
+    </div>
+
+    <div class="mini-header" id="miniHeader">
+      <button class="login-btn" onclick="window.location.href='login'">Login</button>
+      <div class="search-container">
+        <div class="search-icon" id="searchIcon">⌕</div>
+        <input type="text" class="search-bar" id="searchBar" placeholder="Search pages...">
+        <div class="search-results" id="searchResults"></div>
+      </div>
+    </div>
+
+    <!-- ==================== ZONE CONTENU PRINCIPAL ==================== -->
+    <div class="main-content">
+      <div class="content-section">
+        <div class="articles-grid">
+          
+          <!-- AJOUTEZ VOTRE CONTENU FUTUR ICI -->
+          <div class="content-placeholder">
+            📝 ZONE DE CONTENU PRINCIPAL<br>
+            Ajoutez vos articles, textes, images, etc. dans cette section<br>
+            Vous pouvez utiliser les classes .article-cover, .content-section h1/h2/p
+          </div>
+          
+          <!-- Exemple d'article (vous pouvez dupliquer cette structure) -->
+          <!--
+          <a href="votre-lien" class="article-cover">
+            <div class="article-meta">
+              <span>Date de publication</span>
+            </div>
+            <div class="article-image">
+              <img src="votre-image.jpg" alt="Description">
+            </div>
+            <div class="article-title">
+              <h2>Titre de votre article</h2>
+            </div>
+          </a>
+          -->
+          
+        </div>
+      </div>
+    </div>
+    <!-- ================================================================= -->
+
+    <div class="toast" id="copyToast">
+      Copied to clipboard ✓
+    </div>
+
+    <!-- Footer maintenant correctement positionné en bas -->
+    <div class="footer">
+      <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord'"></i>
+      <i class="fab fa-instagram social-icon instagram" onclick="window.open('https://instagram.com/zakmc_1', '_blank')"></i>
+      <i class="fab fa-youtube social-icon youtube" onclick="window.open('https://youtube.com/@ZakMC_1', '_blank')"></i>
+      <i class="fab fa-twitch social-icon twitch" onclick="window.open('https://twitch.tv/zakmc_', '_blank')"></i>
+      <i class="fab fa-pinterest social-icon pinterest" onclick="window.open('https://pinterest.com/Minecraft&Chill', '_blank')"></i>
+    </div>
+
+  </div>
+
+  <script>
+    // Base de données des pages pour la recherche
+    const pagesDatabase = [
+      {
+        title: "How to join the server",
+        url: "read1",
+        description: "Complete guide to join the MineRuns server"
+      },
+      {
+        title: "Server hosting guide",
+        url: "read2",
+        description: "Learn everything about server hosting and management"
+      },
+      {
+        title: "Available games list",
+        url: "read3",
+        description: "Discover all games available on MineRuns server"
+      },
+      {
+        title: "Lobbys overview",
+        url: "read4",
+        description: "Complete list of all server lobbys and their features"
+      },
+      {
+        title: "Social platforms",
+        url: "read5",
+        description: "Find all social media links for MineRuns and ZakMC"
+      },
+      {
+        title: "MineRuns story",
+        url: "read6",
+        description: "Learn about the history and story behind MineRuns"
+      },
+      {
+        title: "Game section",
+        url: "game",
+        description: "Access gaming features and multiplayer options"
+      },
+      {
+        title: "Explore section",
+        url: "explore",
+        description: "Explore server worlds and discover new content"
+      },
+      {
+        title: "News section",
+        url: "news",
+        description: "Latest news and updates from MineRuns server"
+      },
+      {
+        title: "Stats section",
+        url: "stats",
+        description: "View server statistics and player information"
+      },
+      {
+        title: "Login page",
+        url: "login",
+        description: "Sign in to your MineRuns account"
+      },
+      {
+        title: "Discord server",
+        url: "discord",
+        description: "Join our Discord community"
+      },
+      {
+        title: "Home page",
+        url: "home",
+        description: "MineRuns main homepage"
+      }
+    ];
+
+    // Variables globales pour la gestion du chargement
+    let loadingComplete = false;
+
+    // Ajout du code JavaScript pour la barre de chargement
+    window.addEventListener('load', () => {
+      const loadingBar = document.getElementById('loadingBar');
+      const loadingScreen = document.getElementById('loadingScreen');
+      const mainSite = document.getElementById('mainSite');
+
+      // Animation de la barre de chargement
+      setTimeout(() => {
+        loadingBar.style.width = '100%';
+      }, 100);
+
+      // Transition vers le site principal après le chargement
+      setTimeout(() => {
+        loadingScreen.classList.add('fade-out');
+        mainSite.classList.add('show');
+        loadingComplete = true;
+      }, 3000);
+    });
+
+    // Création d'objets Audio avec un volume réduit
+    let windSound, buttonPressSound;
+    
+    try {
+      windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
+      windSound.volume = 0.3;
+      
+      buttonPressSound = new Audio('button-press-382713.mp3');
+      buttonPressSound.volume = 0.5;
+    } catch (e) {
+      console.log('Fichiers audio non trouvés, sons désactivés');
+    }
+
+    // Fonction pour jouer le son de vent (au survol)
+    function playWindSound() {
+      if (windSound && windSound.paused) {
+        windSound.currentTime = 0;
+        windSound.play().catch(e => console.error("Erreur de lecture du son de vent :", e));
+      }
+    }
+
+    // Fonction pour jouer le son de clic (au clic)
+    function playClickSound() {
+      if (buttonPressSound) {
+        buttonPressSound.currentTime = 0;
+        buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
+      }
+    }
+
+    // Éléments du DOM
+    const toggleArrow = document.getElementById('toggleArrow');
+    const homeButton = document.getElementById('homeButton');
+    const sidebar = document.getElementById('sidebar');
+    const secondarySidebar = document.getElementById('secondarySidebar');
+    const overlay = document.getElementById('overlay');
+    const mainContent = document.querySelector('.main-content');
+    const searchIcon = document.getElementById('searchIcon');
+    const searchBar = document.getElementById('searchBar');
+    const searchResults = document.getElementById('searchResults');
+
+    // Fonction de recherche
+    function searchPages(query) {
+      if (!query.trim()) {
+        searchResults.classList.remove('show');
+        return;
+      }
+
+      const results = pagesDatabase.filter(page => 
+        page.title.toLowerCase().includes(query.toLowerCase()) ||
+        page.description.toLowerCase().includes(query.toLowerCase())
+      );
+
+      displaySearchResults(results, query);
+    }
+
+    // Afficher les résultats de recherche
+    function displaySearchResults(results, query) {
+      searchResults.innerHTML = '';
+
+      if (results.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">Aucun résultat trouvé</div>';
+      } else {
+        results.forEach(result => {
+          const item = document.createElement('div');
+          item.className = 'search-result-item';
+          item.innerHTML = `
+            <div class="page-title">${result.title}</div>
+            <div class="page-description">${result.description}</div>
+          `;
+          item.addEventListener('click', () => {
+            window.location.href = result.url;
+            searchResults.classList.remove('show');
+            searchBar.value = '';
+            searchBar.classList.remove('active');
+          });
+          searchResults.appendChild(item);
+        });
+      }
+
+      searchResults.classList.add('show');
+    }
+
+    // Event listeners pour la recherche
+    searchBar.addEventListener('input', (e) => {
+      searchPages(e.target.value);
+    });
+
+    searchBar.addEventListener('blur', () => {
+      // Délai pour permettre le clic sur les résultats
+      setTimeout(() => {
+        searchResults.classList.remove('show');
+      }, 200);
+    });
+
+    searchBar.addEventListener('focus', () => {
+      if (searchBar.value.trim()) {
+        searchPages(searchBar.value);
+      }
+    });
+
+    // Gestion du menu contextuel
+    document.addEventListener('contextmenu', function(e) {
+      e.preventDefault();
+      const contextMenu = document.getElementById('contextMenu');
+      contextMenu.style.top = `${e.clientY}px`;
+      contextMenu.style.left = `${e.clientX}px`;
+      contextMenu.classList.add('show');
+    });
+
+    document.addEventListener('click', function(e) {
+      const contextMenu = document.getElementById('contextMenu');
+      if (contextMenu.classList.contains('show')) {
+        contextMenu.classList.remove('show');
+      }
+    });
+
+    function closeTab() {
+      window.close();
+    }
+    
+    function closeWindow() {
+      window.close();
+    }
+    
+    function addToBookmarks() {
+      if (window.external && ('AddFavorite' in window.external)) {
+        window.external.AddFavorite(window.location.href, document.title);
+      } else {
+        showToast('Ajouté aux favoris !');
+      }
+    }
+    
+    function copyAddress() {
+      navigator.clipboard.writeText(window.location.href).then(() => {
+        showToast('Adresse copiée !');
+      }).catch(err => {
+        console.error('Erreur de copie:', err);
+        showToast('Erreur lors de la copie');
+      });
+    }
+    
+    function refreshPage() {
+      window.location.reload();
+    }
+
+    // Fonction pour afficher un toast
+    function showToast(message) {
+      const toast = document.getElementById('copyToast');
+      toast.textContent = message;
+      toast.classList.add('show');
+      setTimeout(() => {
+        toast.classList.remove('show');
+      }, 3000);
+    }
+
+    // Fonction du bouton de la flèche (sidebar toggle)
+    toggleArrow.addEventListener('click', () => {
+      playClickSound();
+      sidebar.classList.toggle('collapsed');
+      toggleArrow.classList.toggle('rotate');
+      
+      if (sidebar.classList.contains('collapsed')) {
+        mainContent.style.marginLeft = '0';
+      } else {
+        mainContent.style.marginLeft = '200px';
+      }
+    });
+
+    // Fonction du bouton de la maison (secondary sidebar)
+    homeButton.addEventListener('click', () => {
+      playClickSound();
+      secondarySidebar.classList.toggle('active');
+      overlay.classList.toggle('active');
+    });
+
+    // Fonctionnalité de la recherche
+    searchIcon.addEventListener('click', () => {
+      playClickSound();
+      searchBar.classList.toggle('active');
+      if (searchBar.classList.contains('active')) {
+        searchBar.focus();
+      } else {
+        searchResults.classList.remove('show');
+        searchBar.value = '';
+      }
+    });
+
+    // Fermer les sidebars en cliquant sur l'overlay
+    overlay.addEventListener('click', () => {
+      secondarySidebar.classList.remove('active');
+      overlay.classList.remove('active');
+    });
+
+    // Ajout des sons de survol pour tous les éléments de la sidebar
+    document.querySelectorAll('.sidebar-section').forEach(item => {
+      item.addEventListener('mouseenter', playWindSound);
+      item.addEventListener('click', playClickSound);
+    });
+
+    // Fermer la recherche avec Echap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchResults.classList.remove('show');
+        searchBar.classList.remove('active');
+        searchBar.value = '';
+      }
+    });
+
+    // Gestion responsive de la sidebar
+    function handleResize() {
+      if (window.innerWidth <= 768) {
+        if (!sidebar.classList.contains('collapsed')) {
+          sidebar.classList.add('collapsed');
+          toggleArrow.classList.add('rotate');
+          mainContent.style.marginLeft = '60px';
+        }
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Appel initial
+  </script>
+</body>
+</html>
