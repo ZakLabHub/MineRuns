@@ -83,6 +83,70 @@
       width: 16px;
     }
 
+    /* Menu de recherche */
+    .search-results {
+      position: absolute;
+      top: 100%;
+      right: 0;
+      width: 280px;
+      background: rgba(26, 26, 26, 0.95);
+      border: 1px solid #a020f0;
+      border-radius: 12px;
+      margin-top: 8px;
+      max-height: 300px;
+      overflow-y: auto;
+      backdrop-filter: blur(10px);
+      opacity: 0;
+      visibility: hidden;
+      transform: translateY(-10px);
+      transition: all 0.3s ease;
+      z-index: 10001;
+    }
+
+    .search-results.show {
+      opacity: 1;
+      visibility: visible;
+      transform: translateY(0);
+    }
+
+    .search-result-item {
+      padding: 12px 16px;
+      color: white;
+      cursor: pointer;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+      transition: all 0.2s ease;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 500;
+      font-size: 14px;
+    }
+
+    .search-result-item:last-child {
+      border-bottom: none;
+    }
+
+    .search-result-item:hover {
+      background: linear-gradient(135deg, rgba(160, 32, 240, 0.3), rgba(233, 30, 99, 0.3));
+    }
+
+    .search-result-item .page-title {
+      font-weight: 700;
+      color: #a020f0;
+    }
+
+    .search-result-item .page-description {
+      font-size: 12px;
+      color: #ccc;
+      margin-top: 4px;
+    }
+
+    .no-results {
+      padding: 16px;
+      text-align: center;
+      color: #666;
+      font-style: italic;
+      font-family: 'League Spartan', sans-serif;
+    }
+
     /* ÉCRAN DE CHARGEMENT */
     .loading-screen {
       position: fixed;
@@ -421,7 +485,7 @@
     }
 
     .sidebar.collapsed ~ .main-content {
-      margin-left: 200px;
+      margin-left: 0px;
     }
 
     .content-section {
@@ -613,6 +677,10 @@
         width: 220px;
       }
 
+      .search-results {
+        width: 220px;
+      }
+
       .static-header {
         top: 10px;
         left: 10px;
@@ -726,6 +794,7 @@
       <div class="search-container">
         <div class="search-icon" id="searchIcon">⌕</div>
         <input type="text" class="search-bar" id="searchBar" placeholder="Search pages...">
+        <div class="search-results" id="searchResults"></div>
       </div>
     </div>
 
@@ -770,35 +839,113 @@
   </div>
 
   <script>
+    // Base de données des pages pour la recherche
+    const pagesDatabase = [
+      {
+        title: "How to join the server",
+        url: "read1",
+        description: "Complete guide to join the MineRuns server"
+      },
+      {
+        title: "Server hosting guide",
+        url: "read2",
+        description: "Learn everything about server hosting and management"
+      },
+      {
+        title: "Available games list",
+        url: "read3",
+        description: "Discover all games available on MineRuns server"
+      },
+      {
+        title: "Lobbys overview",
+        url: "read4",
+        description: "Complete list of all server lobbys and their features"
+      },
+      {
+        title: "Social platforms",
+        url: "read5",
+        description: "Find all social media links for MineRuns and ZakMC"
+      },
+      {
+        title: "MineRuns story",
+        url: "read6",
+        description: "Learn about the history and story behind MineRuns"
+      },
+      {
+        title: "Game section",
+        url: "game",
+        description: "Access gaming features and multiplayer options"
+      },
+      {
+        title: "Explore section",
+        url: "explore",
+        description: "Explore server worlds and discover new content"
+      },
+      {
+        title: "News section",
+        url: "news",
+        description: "Latest news and updates from MineRuns server"
+      },
+      {
+        title: "Stats section",
+        url: "stats",
+        description: "View server statistics and player information"
+      },
+      {
+        title: "Login page",
+        url: "login",
+        description: "Sign in to your MineRuns account"
+      },
+      {
+        title: "Discord server",
+        url: "discord",
+        description: "Join our Discord community"
+      },
+      {
+        title: "Home page",
+        url: "home",
+        description: "MineRuns main homepage"
+      }
+    ];
+
+    // Variables globales pour la gestion du chargement
+    let loadingComplete = false;
+
     // Ajout du code JavaScript pour la barre de chargement
     window.addEventListener('load', () => {
       const loadingBar = document.getElementById('loadingBar');
       const loadingScreen = document.getElementById('loadingScreen');
       const mainSite = document.getElementById('mainSite');
 
-      // La transition CSS gère l'animation sur 3s.
-      // On définit la largeur de la barre à 100% après un court délai pour que la transition s'active.
+      // Animation de la barre de chargement
       setTimeout(() => {
         loadingBar.style.width = '100%';
-      }, 50);
+      }, 100);
 
-      // Une fois la barre remplie (après 3 secondes), on cache l'écran de chargement et on affiche le site principal.
+      // Transition vers le site principal après le chargement
       setTimeout(() => {
         loadingScreen.classList.add('fade-out');
         mainSite.classList.add('show');
+        loadingComplete = true;
       }, 3000);
     });
 
     // Création d'objets Audio avec un volume réduit
-    const windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
-    windSound.volume = 0.3; // Volume à 30%
-
-    const buttonPressSound = new Audio('button-press-382713.mp3');
-    buttonPressSound.volume = 0.5; // Volume à 50%
+    let windSound, buttonPressSound;
+    
+    try {
+      windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
+      windSound.volume = 0.3;
+      
+      buttonPressSound = new Audio('button-press-382713.mp3');
+      buttonPressSound.volume = 0.5;
+    } catch (e) {
+      console.log('Fichiers audio non trouvés, sons désactivés');
+    }
 
     // Fonction pour jouer le son de vent (au survol)
     function playWindSound() {
-      if (windSound.paused) {
+      if (windSound && windSound.paused) {
         windSound.currentTime = 0;
         windSound.play().catch(e => console.error("Erreur de lecture du son de vent :", e));
       }
@@ -806,8 +953,10 @@
 
     // Fonction pour jouer le son de clic (au clic)
     function playClickSound() {
-      buttonPressSound.currentTime = 0;
-      buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
+      if (buttonPressSound) {
+        buttonPressSound.currentTime = 0;
+        buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
+      }
     }
 
     // Éléments du DOM
@@ -819,8 +968,69 @@
     const mainContent = document.querySelector('.main-content');
     const searchIcon = document.getElementById('searchIcon');
     const searchBar = document.getElementById('searchBar');
+    const searchResults = document.getElementById('searchResults');
 
-    // Gestion du menu
+    // Fonction de recherche
+    function searchPages(query) {
+      if (!query.trim()) {
+        searchResults.classList.remove('show');
+        return;
+      }
+
+      const results = pagesDatabase.filter(page => 
+        page.title.toLowerCase().includes(query.toLowerCase()) ||
+        page.description.toLowerCase().includes(query.toLowerCase())
+      );
+
+      displaySearchResults(results, query);
+    }
+
+    // Afficher les résultats de recherche
+    function displaySearchResults(results, query) {
+      searchResults.innerHTML = '';
+
+      if (results.length === 0) {
+        searchResults.innerHTML = '<div class="no-results">No results found</div>';
+      } else {
+        results.forEach(result => {
+          const item = document.createElement('div');
+          item.className = 'search-result-item';
+          item.innerHTML = `
+            <div class="page-title">${result.title}</div>
+            <div class="page-description">${result.description}</div>
+          `;
+          item.addEventListener('click', () => {
+            window.location.href = result.url;
+            searchResults.classList.remove('show');
+            searchBar.value = '';
+            searchBar.classList.remove('active');
+          });
+          searchResults.appendChild(item);
+        });
+      }
+
+      searchResults.classList.add('show');
+    }
+
+    // Event listeners pour la recherche
+    searchBar.addEventListener('input', (e) => {
+      searchPages(e.target.value);
+    });
+
+    searchBar.addEventListener('blur', () => {
+      // Délai pour permettre le clic sur les résultats
+      setTimeout(() => {
+        searchResults.classList.remove('show');
+      }, 200);
+    });
+
+    searchBar.addEventListener('focus', () => {
+      if (searchBar.value.trim()) {
+        searchPages(searchBar.value);
+      }
+    });
+
+    // Gestion du menu contextuel
     document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
       const contextMenu = document.getElementById('contextMenu');
@@ -839,19 +1049,28 @@
     function closeTab() {
       window.close();
     }
+    
     function closeWindow() {
       window.close();
     }
+    
     function addToBookmarks() {
-      alert("Ajouté aux favoris !");
+      if (window.external && ('AddFavorite' in window.external)) {
+        window.external.AddFavorite(window.location.href, document.title);
+      } else {
+        showToast('Added to bookmarks!');
+      }
     }
+    
     function copyAddress() {
       navigator.clipboard.writeText(window.location.href).then(() => {
-        showToast('Copied to clipboard ✓');
+        showToast('Copied to clipboard!');
       }).catch(err => {
-        console.error('Erreur de copie:', err);
+        console.error('Copy error:', err);
+        showToast('Error copying address');
       });
     }
+    
     function refreshPage() {
       window.location.reload();
     }
@@ -866,10 +1085,12 @@
       }, 3000);
     }
 
-    // Correction de la fonction du bouton de la flèche
+    // Fonction du bouton de la flèche (sidebar toggle)
     toggleArrow.addEventListener('click', () => {
       playClickSound();
       sidebar.classList.toggle('collapsed');
+      toggleArrow.classList.toggle('rotate');
+      
       if (sidebar.classList.contains('collapsed')) {
         mainContent.style.marginLeft = '0';
       } else {
@@ -877,19 +1098,22 @@
       }
     });
 
-    // Correction de la fonction du bouton de la maison
+    // Fonction du bouton de la maison (secondary sidebar)
     homeButton.addEventListener('click', () => {
       playClickSound();
       secondarySidebar.classList.toggle('active');
       overlay.classList.toggle('active');
     });
 
-    // Fonctionnalité de la recherche, qui est déjà correcte
+    // Fonctionnalité de la recherche
     searchIcon.addEventListener('click', () => {
       playClickSound();
       searchBar.classList.toggle('active');
       if (searchBar.classList.contains('active')) {
         searchBar.focus();
+      } else {
+        searchResults.classList.remove('show');
+        searchBar.value = '';
       }
     });
 
@@ -902,7 +1126,31 @@
     // Ajout des sons de survol pour tous les éléments de la sidebar
     document.querySelectorAll('.sidebar-section').forEach(item => {
       item.addEventListener('mouseenter', playWindSound);
+      item.addEventListener('click', playClickSound);
     });
+
+    // Fermer la recherche avec Echap
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') {
+        searchResults.classList.remove('show');
+        searchBar.classList.remove('active');
+        searchBar.value = '';
+      }
+    });
+
+    // Gestion responsive de la sidebar
+    function handleResize() {
+      if (window.innerWidth <= 768) {
+        if (!sidebar.classList.contains('collapsed')) {
+          sidebar.classList.add('collapsed');
+          toggleArrow.classList.add('rotate');
+          mainContent.style.marginLeft = '60px';
+        }
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Appel initial
   </script>
 </body>
 </html>
