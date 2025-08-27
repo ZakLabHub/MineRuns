@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,6 +23,10 @@
       box-sizing: border-box;
       user-select: none;
       cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect x="14" y="2" width="4" height="4" fill="%23E1F5FE"/><rect x="14" y="6" width="4" height="4" fill="%238DD3F7"/><rect x="14" y="10" width="4" height="4" fill="%234FC3F7"/><rect x="10" y="14" width="12" height="4" fill="%231976D2"/><rect x="14" y="18" width="4" height="4" fill="%230D47A1"/><rect x="14" y="22" width="4" height="8" fill="%23795548"/></svg>') 16 16, auto !important;
+    }
+
+    html, body {
+      height: 100%;
     }
 
     /* Rendre seulement le contenu sélectionnable */
@@ -231,6 +235,9 @@
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.8s ease 0.2s, visibility 0.8s ease 0.2s;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
     }
 
     .main-site.show {
@@ -501,16 +508,17 @@
       order: 2;
     }
 
-    /* Contenu principal avec transition */
+    /* Contenu principal avec transition - STRUCTURE CORRIGÉE */
     .main-content {
       margin-left: 200px;
-      padding: 80px 40px 80px 40px;
-      min-height: 100vh;
+      padding: 80px 40px 0 40px; /* Suppression du padding-bottom */
+      min-height: calc(100vh - 80px); /* Hauteur minimale pour pousser le footer */
       transition: margin-left 0.3s ease;
+      flex: 1; /* Permet au contenu de s'étendre */
     }
 
     .sidebar.collapsed ~ .main-content {
-      margin-left: 200px;
+      margin-left: 0;
     }
 
     .content-section {
@@ -524,7 +532,11 @@
       gap: 40px;
     }
 
-    /* Articles Section */
+    /* ==================== ZONE DE CONTENU FUTUR ==================== */
+    /* 
+       Ajoutez votre contenu principal dans .content-section > .articles-grid 
+       ou créez de nouvelles sections dans .content-section
+    */
     .articles-grid {
       display: flex;
       flex-direction: column;
@@ -533,6 +545,20 @@
       max-width: 800px;
     }
 
+    /* Placeholder pour le contenu futur */
+    .content-placeholder {
+      color: #888;
+      font-size: 14px;
+      background: rgba(160, 32, 240, 0.1);
+      padding: 20px;
+      border-radius: 10px;
+      border: 2px dashed #a020f0;
+      font-family: 'Courier New', monospace;
+      text-align: center;
+      margin: 40px 0;
+    }
+
+    /* Articles Section */
     .article-cover {
       display: block;
       text-decoration: none;
@@ -598,16 +624,6 @@
       text-align: center;
     }
 
-    .content-placeholder {
-      color: #888;
-      font-size: 14px;
-      background: rgba(160, 32, 240, 0.1);
-      padding: 15px 25px;
-      border-radius: 10px;
-      border: 1px dashed #a020f0;
-      font-family: 'Courier New', monospace;
-    }
-
     .content-section h1 {
       font-size: 36px;
       margin-bottom: 25px;
@@ -630,6 +646,7 @@
       font-family: 'Open Sans', sans-serif;
       font-size: 16px;
     }
+    /* ================================================================= */
 
     /* Toast de confirmation */
     .toast {
@@ -657,14 +674,15 @@
       transform: translateX(-50%) translateY(-10px);
     }
 
-    /* Footer moderne */
+    /* Footer moderne - CORRIGÉ POUR ÊTRE EN BAS */
     .footer {
       background: linear-gradient(135deg, #a020f0, #8a1ad1);
       padding: 25px 0;
       display: flex;
       justify-content: center;
       gap: 25px;
-      margin-top: 60px;
+      margin-top: auto; /* Pousse le footer vers le bas */
+      width: 100%;
     }
 
     .social-icon {
@@ -706,7 +724,7 @@
 
       .main-content {
         margin-left: 60px;
-        padding: 80px 20px 80px 20px;
+        padding: 80px 20px 0 20px;
       }
 
       .mini-header {
@@ -832,14 +850,43 @@
       </div>
     </div>
 
+    <!-- ==================== ZONE CONTENU PRINCIPAL ==================== -->
     <div class="main-content">
       <div class="content-section">
         <div class="articles-grid">
-         
+          
+          <!-- AJOUTEZ VOTRE CONTENU FUTUR ICI -->
+          <div class="content-placeholder">
+            📝 ZONE DE CONTENU PRINCIPAL<br>
+            Ajoutez vos articles, textes, images, etc. dans cette section<br>
+            Vous pouvez utiliser les classes .article-cover, .content-section h1/h2/p
+          </div>
+          
+          <!-- Exemple d'article (vous pouvez dupliquer cette structure) -->
+          <!--
+          <a href="votre-lien" class="article-cover">
+            <div class="article-meta">
+              <span>Date de publication</span>
+            </div>
+            <div class="article-image">
+              <img src="votre-image.jpg" alt="Description">
+            </div>
+            <div class="article-title">
+              <h2>Titre de votre article</h2>
+            </div>
+          </a>
+          -->
+          
+        </div>
+      </div>
+    </div>
+    <!-- ================================================================= -->
+
     <div class="toast" id="copyToast">
       Copied to clipboard ✓
     </div>
 
+    <!-- Footer maintenant correctement positionné en bas -->
     <div class="footer">
       <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord'"></i>
       <i class="fab fa-instagram social-icon instagram" onclick="window.open('https://instagram.com/zakmc_1', '_blank')"></i>
@@ -847,6 +894,7 @@
       <i class="fab fa-twitch social-icon twitch" onclick="window.open('https://twitch.tv/zakmc_', '_blank')"></i>
       <i class="fab fa-pinterest social-icon pinterest" onclick="window.open('https://pinterest.com/Minecraft&Chill', '_blank')"></i>
     </div>
+
   </div>
 
   <script>
@@ -928,16 +976,16 @@
       const loadingScreen = document.getElementById('loadingScreen');
       const mainSite = document.getElementById('mainSite');
 
-      // La transition CSS gère l'animation sur 3s.
-      // On définit la largeur de la barre à 100% après un court délai pour que la transition s'active.
+      // Animation de la barre de chargement
       setTimeout(() => {
         loadingBar.style.width = '100%';
-      }, 50);
+      }, 100);
 
-      // Une fois la barre remplie (après 3 secondes), on cache l'écran de chargement et on affiche le site principal.
+      // Transition vers le site principal après le chargement
       setTimeout(() => {
         loadingScreen.classList.add('fade-out');
         mainSite.classList.add('show');
+        loadingComplete = true;
       }, 3000);
     });
 
@@ -956,7 +1004,7 @@
 
     // Fonction pour jouer le son de vent (au survol)
     function playWindSound() {
-      if (windSound.paused) {
+      if (windSound && windSound.paused) {
         windSound.currentTime = 0;
         windSound.play().catch(e => console.error("Erreur de lecture du son de vent :", e));
       }
@@ -964,8 +1012,10 @@
 
     // Fonction pour jouer le son de clic (au clic)
     function playClickSound() {
-      buttonPressSound.currentTime = 0;
-      buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
+      if (buttonPressSound) {
+        buttonPressSound.currentTime = 0;
+        buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
+      }
     }
 
     // Éléments du DOM
@@ -1064,14 +1114,19 @@
     }
     
     function addToBookmarks() {
-      alert("Ajouté aux favoris !");
+      if (window.external && ('AddFavorite' in window.external)) {
+        window.external.AddFavorite(window.location.href, document.title);
+      } else {
+        showToast('Ajouté aux favoris !');
+      }
     }
     
     function copyAddress() {
       navigator.clipboard.writeText(window.location.href).then(() => {
-        showToast('Copied to clipboard ✓');
+        showToast('Adresse copiée !');
       }).catch(err => {
         console.error('Erreur de copie:', err);
+        showToast('Erreur lors de la copie');
       });
     }
     
@@ -1089,10 +1144,12 @@
       }, 3000);
     }
 
-    // Correction de la fonction du bouton de la flèche
+    // Fonction du bouton de la flèche (sidebar toggle)
     toggleArrow.addEventListener('click', () => {
       playClickSound();
       sidebar.classList.toggle('collapsed');
+      toggleArrow.classList.toggle('rotate');
+      
       if (sidebar.classList.contains('collapsed')) {
         mainContent.style.marginLeft = '0';
       } else {
@@ -1100,19 +1157,22 @@
       }
     });
 
-    // Correction de la fonction du bouton de la maison
+    // Fonction du bouton de la maison (secondary sidebar)
     homeButton.addEventListener('click', () => {
       playClickSound();
       secondarySidebar.classList.toggle('active');
       overlay.classList.toggle('active');
     });
 
-    // Fonctionnalité de la recherche, qui est déjà correcte
+    // Fonctionnalité de la recherche
     searchIcon.addEventListener('click', () => {
       playClickSound();
       searchBar.classList.toggle('active');
       if (searchBar.classList.contains('active')) {
         searchBar.focus();
+      } else {
+        searchResults.classList.remove('show');
+        searchBar.value = '';
       }
     });
 
@@ -1125,6 +1185,7 @@
     // Ajout des sons de survol pour tous les éléments de la sidebar
     document.querySelectorAll('.sidebar-section').forEach(item => {
       item.addEventListener('mouseenter', playWindSound);
+      item.addEventListener('click', playClickSound);
     });
 
     // Fermer la recherche avec Echap
@@ -1135,6 +1196,20 @@
         searchBar.value = '';
       }
     });
+
+    // Gestion responsive de la sidebar
+    function handleResize() {
+      if (window.innerWidth <= 768) {
+        if (!sidebar.classList.contains('collapsed')) {
+          sidebar.classList.add('collapsed');
+          toggleArrow.classList.add('rotate');
+          mainContent.style.marginLeft = '60px';
+        }
+      }
+    }
+
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Appel initial
   </script>
 </body>
 </html>
