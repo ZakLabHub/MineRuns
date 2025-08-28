@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MineRuns</title>
+  <title>MineRuns - Games</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap" rel="stylesheet">
@@ -29,14 +29,12 @@
       height: 100%;
     }
 
-    /* Rendre seulement le contenu sélectionnable */
     .content-section h1,
     .content-section h2,
     .content-section p {
       user-select: text;
     }
 
-    /* Custom Context Menu */
     .context-menu {
       position: fixed;
       background: #2a2a2a;
@@ -87,7 +85,6 @@
       width: 16px;
     }
 
-    /* Menu de recherche */
     .search-results {
       position: absolute;
       top: 100%;
@@ -151,7 +148,6 @@
       font-family: 'League Spartan', sans-serif;
     }
 
-    /* ÉCRAN DE CHARGEMENT */
     .loading-screen {
       position: fixed;
       top: 0;
@@ -230,7 +226,6 @@
       100% { transform: translateX(100%); }
     }
 
-    /* SITE PRINCIPAL (caché au début) */
     .main-site {
       opacity: 0;
       visibility: hidden;
@@ -252,7 +247,6 @@
       overflow-x: hidden;
     }
 
-    /* Logo et flèche totalement statiques */
     .static-header {
       position: fixed;
       top: 20px;
@@ -286,7 +280,6 @@
       transform: rotate(90deg);
     }
 
-    /* Sidebar principale */
     .sidebar {
       position: fixed;
       left: 0;
@@ -383,7 +376,6 @@
       cursor: pointer;
     }
 
-    /* Sidebar secondaire */
     .secondary-sidebar {
       position: fixed;
       left: 0;
@@ -409,7 +401,6 @@
       justify-content: flex-start;
     }
 
-    /* Overlay */
     .overlay {
       position: fixed;
       top: 0;
@@ -428,7 +419,6 @@
       visibility: visible;
     }
 
-    /* Mini-header */
     .mini-header {
       position: fixed;
       top: 25px;
@@ -508,13 +498,12 @@
       order: 2;
     }
 
-    /* Contenu principal avec transition - STRUCTURE CORRIGÉE */
     .main-content {
       margin-left: 200px;
-      padding: 80px 40px 0 40px; /* Suppression du padding-bottom */
-      min-height: calc(100vh - 80px); /* Hauteur minimale pour pousser le footer */
+      padding: 80px 40px 0 40px;
+      min-height: calc(100vh - 80px);
       transition: margin-left 0.3s ease;
-      flex: 1; /* Permet au contenu de s'étendre */
+      flex: 1;
     }
 
     .sidebar.collapsed ~ .main-content {
@@ -522,7 +511,6 @@
     }
 
     .content-section {
-      max-width: 900px;
       margin: 0 auto;
       display: flex;
       align-items: center;
@@ -530,37 +518,22 @@
       min-height: 60vh;
       flex-direction: column;
       gap: 40px;
+      padding-bottom: 60px;
     }
 
-    /* ==================== ZONE DE CONTENU FUTUR ==================== */
-    /* 
-       Ajoutez votre contenu principal dans .content-section > .articles-grid 
-       ou créez de nouvelles sections dans .content-section
-    */
     .articles-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      grid-template-rows: repeat(20, auto);
+      gap: 20px;
+      width: 100%;
+      align-content: start;
+      justify-content: space-between;
+    }
+
+    .article-cover {
       display: flex;
       flex-direction: column;
-      gap: 40px;
-      width: 100%;
-      max-width: 800px;
-    }
-
-    /* Placeholder pour le contenu futur */
-    .content-placeholder {
-      color: #888;
-      font-size: 14px;
-      background: rgba(160, 32, 240, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-      border: 2px dashed #a020f0;
-      font-family: 'Courier New', monospace;
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    /* Articles Section */
-    .article-cover {
-      display: block;
       text-decoration: none;
       border-radius: 20px;
       overflow: hidden;
@@ -578,41 +551,44 @@
 
     .article-meta {
       background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF);
-      padding: 15px 25px;
+      padding: 8px 20px;
+      font-size: 12px;
     }
 
     .article-meta span {
       color: #E5E7EB;
       font-style: italic;
-      font-size: 14px;
       font-weight: 500;
     }
 
     .article-image {
       position: relative;
       overflow: hidden;
+      margin: 0;
     }
 
     .article-image img {
       width: 100%;
-      height: 400px;
+      height: 180px;
       display: block;
       object-fit: cover;
       object-position: center;
+      margin: 0;
     }
 
     .article-title {
       background: linear-gradient(135deg, #8B5CF6, #A855F7, #D946EF);
-      padding: 30px 25px;
+      padding: 15px 20px;
+      margin-top: 0;
     }
 
     .article-title h2 {
       color: white;
       font-family: 'League Spartan', Arial, sans-serif;
       font-weight: 700;
-      font-size: 28px;
+      font-size: 22px;
       margin: 0;
-      line-height: 1.3;
+      line-height: 1.2;
       text-shadow: 0 2px 4px rgba(0,0,0,0.3);
     }
 
@@ -646,9 +622,7 @@
       font-family: 'Open Sans', sans-serif;
       font-size: 16px;
     }
-    /* ================================================================= */
 
-    /* Toast de confirmation */
     .toast {
       position: fixed;
       bottom: 30px;
@@ -674,14 +648,13 @@
       transform: translateX(-50%) translateY(-10px);
     }
 
-    /* Footer moderne - CORRIGÉ POUR ÊTRE EN BAS */
     .footer {
       background: linear-gradient(135deg, #a020f0, #8a1ad1);
       padding: 25px 0;
       display: flex;
       justify-content: center;
       gap: 25px;
-      margin-top: auto; /* Pousse le footer vers le bas */
+      margin-top: auto;
       width: 100%;
     }
 
@@ -707,7 +680,6 @@
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .loading-logo {
         font-size: 42px;
@@ -755,6 +727,19 @@
         top: 15px;
         left: 15px;
         font-size: 16px;
+      }
+
+      .articles-grid {
+        grid-template-columns: 1fr;
+        grid-template-rows: repeat(40, auto);
+      }
+
+      .article-image img {
+        height: 200px;
+      }
+
+      .content-section {
+        padding-bottom: 40px;
       }
     }
   </style>
@@ -850,43 +835,538 @@
       </div>
     </div>
 
-    <!-- ==================== ZONE CONTENU PRINCIPAL ==================== -->
     <div class="main-content">
       <div class="content-section">
+        <h1>Games Section</h1>
+        <p style="color: white; font-weight: 700; font-size: 18px;">Discover all the games on the server!</p>
         <div class="articles-grid">
-          
-          <!-- AJOUTEZ VOTRE CONTENU FUTUR ICI -->
-          <div class="content-placeholder">
-            📝 ZONE DE CONTENU PRINCIPAL<br>
-            Ajoutez vos articles, textes, images, etc. dans cette section<br>
-            Vous pouvez utiliser les classes .article-cover, .content-section h1/h2/p
-          </div>
-          
-          <!-- Exemple d'article (vous pouvez dupliquer cette structure) -->
-          <!--
-          <a href="votre-lien" class="article-cover">
+          <!-- Article Cover 1 -->
+          <a href="game[1]" class="article-cover">
             <div class="article-meta">
-              <span>Date de publication</span>
+              <span style="color:white;">[5 min • 1200 mots]</span>
             </div>
             <div class="article-image">
-              <img src="votre-image.jpg" alt="Description">
+              <img src="game1.png" alt="Game 1">
             </div>
             <div class="article-title">
-              <h2>Titre de votre article</h2>
+              <h2 style="color:white;">[Game Title 1]</h2>
             </div>
           </a>
-          -->
-          
+
+          <!-- Article Cover 2 -->
+          <a href="game[2]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game2.png" alt="Game 2">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 2]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 3 -->
+          <a href="game[3]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game3.png" alt="Game 3">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 3]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 4 -->
+          <a href="game[4]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game4.png" alt="Game 4">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 4]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 5 -->
+          <a href="game[5]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game5.png" alt="Game 5">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 5]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 6 -->
+          <a href="game[6]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game6.png" alt="Game 6">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 6]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 7 -->
+          <a href="game[7]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game7.png" alt="Game 7">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 7]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 8 -->
+          <a href="game[8]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game8.png" alt="Game 8">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 8]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 9 -->
+          <a href="game[9]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game9.png" alt="Game 9">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 9]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 10 -->
+          <a href="game[10]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game10.png" alt="Game 10">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 10]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 11 -->
+          <a href="game[11]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game11.png" alt="Game 11">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 11]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 12 -->
+          <a href="game[12]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game12.png" alt="Game 12">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 12]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 13 -->
+          <a href="game[13]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game13.png" alt="Game 13">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 13]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 14 -->
+          <a href="game[14]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game14.png" alt="Game 14">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 14]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 15 -->
+          <a href="game[15]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game15.png" alt="Game 15">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 15]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 16 -->
+          <a href="game[16]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game16.png" alt="Game 16">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 16]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 17 -->
+          <a href="game[17]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game17.png" alt="Game 17">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 17]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 18 -->
+          <a href="game[18]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game18.png" alt="Game 18">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 18]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 19 -->
+          <a href="game[19]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game19.png" alt="Game 19">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 19]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 20 -->
+          <a href="game[20]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game20.png" alt="Game 20">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 20]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 21 -->
+          <a href="game[21]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game21.png" alt="Game 21">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 21]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 22 -->
+          <a href="game[22]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game22.png" alt="Game 22">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 22]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 23 -->
+          <a href="game[23]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game23.png" alt="Game 23">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 23]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 24 -->
+          <a href="game[24]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game24.png" alt="Game 24">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 24]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 25 -->
+          <a href="game[25]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game25.png" alt="Game 25">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 25]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 26 -->
+          <a href="game[26]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game26.png" alt="Game 26">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 26]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 27 -->
+          <a href="game[27]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game27.png" alt="Game 27">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 27]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 28 -->
+          <a href="game[28]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game28.png" alt="Game 28">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 28]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 29 -->
+          <a href="game[29]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game29.png" alt="Game 29">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 29]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 30 -->
+          <a href="game[30]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game30.png" alt="Game 30">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 30]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 31 -->
+          <a href="game[31]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game31.png" alt="Game 31">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 31]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 32 -->
+          <a href="game[32]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game32.png" alt="Game 32">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 32]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 33 -->
+          <a href="game[33]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game33.png" alt="Game 33">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 33]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 34 -->
+          <a href="game[34]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game34.png" alt="Game 34">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 34]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 35 -->
+          <a href="game[35]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game35.png" alt="Game 35">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 35]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 36 -->
+          <a href="game[36]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game36.png" alt="Game 36">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 36]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 37 -->
+          <a href="game[37]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game37.png" alt="Game 37">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 37]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 38 -->
+          <a href="game[38]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game38.png" alt="Game 38">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 38]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 39 -->
+          <a href="game[39]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game39.png" alt="Game 39">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 39]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 40 -->
+          <a href="game[40]" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[5 min • 1200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="game40.png" alt="Game 40">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Game Title 40]</h2>
+            </div>
+          </a>
         </div>
       </div>
     </div>
-    <!-- ================================================================= -->
 
     <div class="toast" id="copyToast">
       Copied to clipboard ✓
     </div>
 
-    <!-- Footer maintenant correctement positionné en bas -->
     <div class="footer">
       <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord'"></i>
       <i class="fab fa-instagram social-icon instagram" onclick="window.open('https://instagram.com/zakmc_1', '_blank')"></i>
@@ -894,7 +1374,6 @@
       <i class="fab fa-twitch social-icon twitch" onclick="window.open('https://twitch.tv/zakmc_', '_blank')"></i>
       <i class="fab fa-pinterest social-icon pinterest" onclick="window.open('https://pinterest.com/Minecraft&Chill', '_blank')"></i>
     </div>
-
   </div>
 
   <script>
@@ -1033,24 +1512,220 @@
         title: "Home page",
         url: "home",
         description: "MineRuns main homepage"
+      },
+      {
+        title: "[Game Title 1]",
+        url: "game[1]",
+        description: "Discover details about Game 1 on MineRuns"
+      },
+      {
+        title: "[Game Title 2]",
+        url: "game[2]",
+        description: "Discover details about Game 2 on MineRuns"
+      },
+      {
+        title: "[Game Title 3]",
+        url: "game[3]",
+        description: "Discover details about Game 3 on MineRuns"
+      },
+      {
+        title: "[Game Title 4]",
+        url: "game[4]",
+        description: "Discover details about Game 4 on MineRuns"
+      },
+      {
+        title: "[Game Title 5]",
+        url: "game[5]",
+        description: "Discover details about Game 5 on MineRuns"
+      },
+      {
+        title: "[Game Title 6]",
+        url: "game[6]",
+        description: "Discover details about Game 6 on MineRuns"
+      },
+      {
+        title: "[Game Title 7]",
+        url: "game[7]",
+        description: "Discover details about Game 7 on MineRuns"
+      },
+      {
+        title: "[Game Title 8]",
+        url: "game[8]",
+        description: "Discover details about Game 8 on MineRuns"
+      },
+      {
+        title: "[Game Title 9]",
+        url: "game[9]",
+        description: "Discover details about Game 9 on MineRuns"
+      },
+      {
+        title: "[Game Title 10]",
+        url: "game[10]",
+        description: "Discover details about Game 10 on MineRuns"
+      },
+      {
+        title: "[Game Title 11]",
+        url: "game[11]",
+        description: "Discover details about Game 11 on MineRuns"
+      },
+      {
+        title: "[Game Title 12]",
+        url: "game[12]",
+        description: "Discover details about Game 12 on MineRuns"
+      },
+      {
+        title: "[Game Title 13]",
+        url: "game[13]",
+        description: "Discover details about Game 13 on MineRuns"
+      },
+      {
+        title: "[Game Title 14]",
+        url: "game[14]",
+        description: "Discover details about Game 14 on MineRuns"
+      },
+      {
+        title: "[Game Title 15]",
+        url: "game[15]",
+        description: "Discover details about Game 15 on MineRuns"
+      },
+      {
+        title: "[Game Title 16]",
+        url: "game[16]",
+        description: "Discover details about Game 16 on MineRuns"
+      },
+      {
+        title: "[Game Title 17]",
+        url: "game[17]",
+        description: "Discover details about Game 17 on MineRuns"
+      },
+      {
+        title: "[Game Title 18]",
+        url: "game[18]",
+        description: "Discover details about Game 18 on MineRuns"
+      },
+      {
+        title: "[Game Title 19]",
+        url: "game[19]",
+        description: "Discover details about Game 19 on MineRuns"
+      },
+      {
+        title: "[Game Title 20]",
+        url: "game[20]",
+        description: "Discover details about Game 20 on MineRuns"
+      },
+      {
+        title: "[Game Title 21]",
+        url: "game[21]",
+        description: "Discover details about Game 21 on MineRuns"
+      },
+      {
+        title: "[Game Title 22]",
+        url: "game[22]",
+        description: "Discover details about Game 22 on MineRuns"
+      },
+      {
+        title: "[Game Title 23]",
+        url: "game[23]",
+        description: "Discover details about Game 23 on MineRuns"
+      },
+      {
+        title: "[Game Title 24]",
+        url: "game[24]",
+        description: "Discover details about Game 24 on MineRuns"
+      },
+      {
+        title: "[Game Title 25]",
+        url: "game[25]",
+        description: "Discover details about Game 25 on MineRuns"
+      },
+      {
+        title: "[Game Title 26]",
+        url: "game[26]",
+        description: "Discover details about Game 26 on MineRuns"
+      },
+      {
+        title: "[Game Title 27]",
+        url: "game[27]",
+        description: "Discover details about Game 27 on MineRuns"
+      },
+      {
+        title: "[Game Title 28]",
+        url: "game[28]",
+        description: "Discover details about Game 28 on MineRuns"
+      },
+      {
+        title: "[Game Title 29]",
+        url: "game[29]",
+        description: "Discover details about Game 29 on MineRuns"
+      },
+      {
+        title: "[Game Title 30]",
+        url: "game[30]",
+        description: "Discover details about Game 30 on MineRuns"
+      },
+      {
+        title: "[Game Title 31]",
+        url: "game[31]",
+        description: "Discover details about Game 31 on MineRuns"
+      },
+      {
+        title: "[Game Title 32]",
+        url: "game[32]",
+        description: "Discover details about Game 32 on MineRuns"
+      },
+      {
+        title: "[Game Title 33]",
+        url: "game[33]",
+        description: "Discover details about Game 33 on MineRuns"
+      },
+      {
+        title: "[Game Title 34]",
+        url: "game[34]",
+        description: "Discover details about Game 34 on MineRuns"
+      },
+      {
+        title: "[Game Title 35]",
+        url: "game[35]",
+        description: "Discover details about Game 35 on MineRuns"
+      },
+      {
+        title: "[Game Title 36]",
+        url: "game[36]",
+        description: "Discover details about Game 36 on MineRuns"
+      },
+      {
+        title: "[Game Title 37]",
+        url: "game[37]",
+        description: "Discover details about Game 37 on MineRuns"
+      },
+      {
+        title: "[Game Title 38]",
+        url: "game[38]",
+        description: "Discover details about Game 38 on MineRuns"
+      },
+      {
+        title: "[Game Title 39]",
+        url: "game[39]",
+        description: "Discover details about Game 39 on MineRuns"
+      },
+      {
+        title: "[Game Title 40]",
+        url: "game[40]",
+        description: "Discover details about Game 40 on MineRuns"
       }
     ];
 
-    // Variables globales pour la gestion du chargement
     let loadingComplete = false;
 
-    // Ajout du code JavaScript pour la barre de chargement
     window.addEventListener('load', () => {
       const loadingBar = document.getElementById('loadingBar');
       const loadingScreen = document.getElementById('loadingScreen');
       const mainSite = document.getElementById('mainSite');
 
-      // Animation de la barre de chargement
       setTimeout(() => {
         loadingBar.style.width = '100%';
       }, 100);
 
-      // Transition vers le site principal après le chargement
       setTimeout(() => {
         loadingScreen.classList.add('fade-out');
         mainSite.classList.add('show');
@@ -1058,7 +1733,6 @@
       }, 3000);
     });
 
-    // Création d'objets Audio avec un volume réduit
     let windSound, buttonPressSound;
     
     try {
@@ -1071,7 +1745,6 @@
       console.log('Fichiers audio non trouvés, sons désactivés');
     }
 
-    // Fonction pour jouer le son de vent (au survol)
     function playWindSound() {
       if (windSound && windSound.paused) {
         windSound.currentTime = 0;
@@ -1079,7 +1752,6 @@
       }
     }
 
-    // Fonction pour jouer le son de clic (au clic)
     function playClickSound() {
       if (buttonPressSound) {
         buttonPressSound.currentTime = 0;
@@ -1087,7 +1759,6 @@
       }
     }
 
-    // Éléments du DOM
     const toggleArrow = document.getElementById('toggleArrow');
     const homeButton = document.getElementById('homeButton');
     const sidebar = document.getElementById('sidebar');
@@ -1098,7 +1769,6 @@
     const searchBar = document.getElementById('searchBar');
     const searchResults = document.getElementById('searchResults');
 
-    // Fonction de recherche
     function searchPages(query) {
       if (!query.trim()) {
         searchResults.classList.remove('show');
@@ -1113,7 +1783,6 @@
       displaySearchResults(results, query);
     }
 
-    // Afficher les résultats de recherche
     function displaySearchResults(results, query) {
       searchResults.innerHTML = '';
 
@@ -1140,13 +1809,11 @@
       searchResults.classList.add('show');
     }
 
-    // Event listeners pour la recherche
     searchBar.addEventListener('input', (e) => {
       searchPages(e.target.value);
     });
 
     searchBar.addEventListener('blur', () => {
-      // Délai pour permettre le clic sur les résultats
       setTimeout(() => {
         searchResults.classList.remove('show');
       }, 200);
@@ -1158,7 +1825,6 @@
       }
     });
 
-    // Gestion du menu contextuel
     document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
       const contextMenu = document.getElementById('contextMenu');
@@ -1203,7 +1869,6 @@
       window.location.reload();
     }
 
-    // Fonction pour afficher un toast
     function showToast(message) {
       const toast = document.getElementById('copyToast');
       toast.textContent = message;
@@ -1213,7 +1878,6 @@
       }, 3000);
     }
 
-    // Fonction du bouton de la flèche (sidebar toggle)
     toggleArrow.addEventListener('click', () => {
       playClickSound();
       sidebar.classList.toggle('collapsed');
@@ -1226,14 +1890,12 @@
       }
     });
 
-    // Fonction du bouton de la maison (secondary sidebar)
     homeButton.addEventListener('click', () => {
       playClickSound();
       secondarySidebar.classList.toggle('active');
       overlay.classList.toggle('active');
     });
 
-    // Fonctionnalité de la recherche
     searchIcon.addEventListener('click', () => {
       playClickSound();
       searchBar.classList.toggle('active');
@@ -1245,19 +1907,16 @@
       }
     });
 
-    // Fermer les sidebars en cliquant sur l'overlay
     overlay.addEventListener('click', () => {
       secondarySidebar.classList.remove('active');
       overlay.classList.remove('active');
     });
 
-    // Ajout des sons de survol pour tous les éléments de la sidebar
     document.querySelectorAll('.sidebar-section').forEach(item => {
       item.addEventListener('mouseenter', playWindSound);
       item.addEventListener('click', playClickSound);
     });
 
-    // Fermer la recherche avec Echap
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         searchResults.classList.remove('show');
@@ -1266,7 +1925,6 @@
       }
     });
 
-    // Gestion responsive de la sidebar
     function handleResize() {
       if (window.innerWidth <= 768) {
         if (!sidebar.classList.contains('collapsed')) {
@@ -1278,7 +1936,7 @@
     }
 
     window.addEventListener('resize', handleResize);
-    handleResize(); // Appel initial
+    handleResize();
   </script>
 </body>
 </html>
