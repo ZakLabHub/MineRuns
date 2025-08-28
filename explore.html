@@ -29,14 +29,12 @@
       height: 100%;
     }
 
-    /* Rendre seulement le contenu sélectionnable */
     .content-section h1,
     .content-section h2,
     .content-section p {
       user-select: text;
     }
 
-    /* Custom Context Menu */
     .context-menu {
       position: fixed;
       background: #2a2a2a;
@@ -87,7 +85,6 @@
       width: 16px;
     }
 
-    /* Menu de recherche */
     .search-results {
       position: absolute;
       top: 100%;
@@ -151,7 +148,6 @@
       font-family: 'League Spartan', sans-serif;
     }
 
-    /* ÉCRAN DE CHARGEMENT */
     .loading-screen {
       position: fixed;
       top: 0;
@@ -230,7 +226,6 @@
       100% { transform: translateX(100%); }
     }
 
-    /* SITE PRINCIPAL (caché au début) */
     .main-site {
       opacity: 0;
       visibility: hidden;
@@ -252,7 +247,6 @@
       overflow-x: hidden;
     }
 
-    /* Logo et flèche totalement statiques */
     .static-header {
       position: fixed;
       top: 20px;
@@ -286,7 +280,6 @@
       transform: rotate(90deg);
     }
 
-    /* Sidebar principale */
     .sidebar {
       position: fixed;
       left: 0;
@@ -383,7 +376,6 @@
       cursor: pointer;
     }
 
-    /* Sidebar secondaire */
     .secondary-sidebar {
       position: fixed;
       left: 0;
@@ -409,7 +401,6 @@
       justify-content: flex-start;
     }
 
-    /* Overlay */
     .overlay {
       position: fixed;
       top: 0;
@@ -428,7 +419,6 @@
       visibility: visible;
     }
 
-    /* Mini-header */
     .mini-header {
       position: fixed;
       top: 25px;
@@ -508,13 +498,12 @@
       order: 2;
     }
 
-    /* Contenu principal avec transition - STRUCTURE CORRIGÉE */
     .main-content {
       margin-left: 200px;
-      padding: 80px 40px 0 40px; /* Suppression du padding-bottom */
-      min-height: calc(100vh - 80px); /* Hauteur minimale pour pousser le footer */
+      padding: 80px 40px 0 40px;
+      min-height: calc(100vh - 80px);
       transition: margin-left 0.3s ease;
-      flex: 1; /* Permet au contenu de s'étendre */
+      flex: 1;
     }
 
     .sidebar.collapsed ~ .main-content {
@@ -532,33 +521,14 @@
       gap: 40px;
     }
 
-    /* ==================== ZONE DE CONTENU FUTUR ==================== */
-    /* 
-       Ajoutez votre contenu principal dans .content-section > .articles-grid 
-       ou créez de nouvelles sections dans .content-section
-    */
     .articles-grid {
-      display: flex;
-      flex-direction: column;
-      gap: 40px;
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
       width: 100%;
       max-width: 800px;
     }
 
-    /* Placeholder pour le contenu futur */
-    .content-placeholder {
-      color: #888;
-      font-size: 14px;
-      background: rgba(160, 32, 240, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-      border: 2px dashed #a020f0;
-      font-family: 'Courier New', monospace;
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    /* Articles Section */
     .article-cover {
       display: block;
       text-decoration: none;
@@ -595,7 +565,7 @@
 
     .article-image img {
       width: 100%;
-      height: 400px;
+      height: 200px;
       display: block;
       object-fit: cover;
       object-position: center;
@@ -646,9 +616,7 @@
       font-family: 'Open Sans', sans-serif;
       font-size: 16px;
     }
-    /* ================================================================= */
 
-    /* Toast de confirmation */
     .toast {
       position: fixed;
       bottom: 30px;
@@ -674,14 +642,13 @@
       transform: translateX(-50%) translateY(-10px);
     }
 
-    /* Footer moderne - CORRIGÉ POUR ÊTRE EN BAS */
     .footer {
       background: linear-gradient(135deg, #a020f0, #8a1ad1);
       padding: 25px 0;
       display: flex;
       justify-content: center;
       gap: 25px;
-      margin-top: auto; /* Pousse le footer vers le bas */
+      margin-top: auto;
       width: 100%;
     }
 
@@ -707,7 +674,6 @@
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
-    /* Responsive */
     @media (max-width: 768px) {
       .loading-logo {
         font-size: 42px;
@@ -756,6 +722,10 @@
         left: 15px;
         font-size: 16px;
       }
+
+      .articles-grid {
+        grid-template-columns: 1fr;
+      }
     }
   </style>
 </head>
@@ -777,7 +747,9 @@
       <i class="fas fa-copy"></i>
       Copy Address
     </div>
-    <div class="context-menu-item" onclick="refreshPage()">
+    <div class="context-menu-item" onclick="
+
+refreshPage()">
       <i class="fas fa-redo"></i>
       Refresh
     </div>
@@ -850,43 +822,276 @@
       </div>
     </div>
 
-    <!-- ==================== ZONE CONTENU PRINCIPAL ==================== -->
     <div class="main-content">
       <div class="content-section">
         <div class="articles-grid">
-          
-          <!-- AJOUTEZ VOTRE CONTENU FUTUR ICI -->
-          <div class="content-placeholder">
-            📝 ZONE DE CONTENU PRINCIPAL<br>
-            Ajoutez vos articles, textes, images, etc. dans cette section<br>
-            Vous pouvez utiliser les classes .article-cover, .content-section h1/h2/p
-          </div>
-          
-          <!-- Exemple d'article (vous pouvez dupliquer cette structure) -->
-          <!--
-          <a href="votre-lien" class="article-cover">
+          <!-- Article Cover 1 -->
+          <a href="read1" class="article-cover">
             <div class="article-meta">
-              <span>Date de publication</span>
+              <span style="color:white;">5 min • 1,200 mots</span>
             </div>
             <div class="article-image">
-              <img src="votre-image.jpg" alt="Description">
+              <img src="article1.png" alt="Article 1">
             </div>
             <div class="article-title">
-              <h2>Titre de votre article</h2>
+              <h2 style="color:white;">Learn how to join the server !</h2>
             </div>
           </a>
-          -->
-          
+
+          <!-- Article Cover 2 -->
+          <a href="read2" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">8 min • 1,800 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article2.png" alt="Article 2">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">Learn more about server hosting.</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 3 -->
+          <a href="read3" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">3 min • 800 mots</span>
+            </divstrip>
+            <div class="article-image">
+              <img src="article3.png" alt="Article 3">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">List of availables games.</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 4 -->
+          <a href="read4" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">4 min • 1,000 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article4.png" alt="Article 4">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">List of all lobbys.</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 5 -->
+          <a href="read5" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">2 min • 500 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article5.png" alt="Article 5">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">See socials plateforms of the server and ZakMC.</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 6 -->
+          <a href="read6" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">6 min • 1,500 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article6.png" alt="Article 6">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">Learn more about story of MineRuns.</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 7 -->
+          <a href="read7" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article7.png" alt="Article 7">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 8 -->
+          <a href="read8" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article8.png" alt="Article 8">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 9 -->
+          <a href="read9" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article9.png" alt="Article 9">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 10 -->
+          <a href="read10" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article10.png" alt="Article 10">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 11 -->
+          <a href="read11" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article11.png" alt="Article 11">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 12 -->
+          <a href="read12" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article12.png" alt="Article 12">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 13 -->
+          <a href="read13" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article13.png" alt="Article 13">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 14 -->
+          <a href="read14" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article14.png" alt="Article 14">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 15 -->
+          <a href="read15" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article15.png" alt="Article 15">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 16 -->
+          <a href="read16" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article16.png" alt="Article 16">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 17 -->
+          <a href="read17" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article17.png" alt="Article 17">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 18 -->
+          <a href="read18" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article18.png" alt="Article 18">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 19 -->
+          <a href="read19" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article19.png" alt="Article 19">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 20 -->
+          <a href="read20" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">[Insert minutes and word count here, e.g., 5 min • 1,200 mots]</span>
+            </div>
+            <div class="article-image">
+              <img src="article20.png" alt="Article 20">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">[Insert article title here]</h2>
+            </div>
+          </a>
         </div>
       </div>
     </div>
-    <!-- ================================================================= -->
 
     <div class="toast" id="copyToast">
       Copied to clipboard ✓
     </div>
 
-    <!-- Footer maintenant correctement positionné en bas -->
     <div class="footer">
       <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord'"></i>
       <i class="fab fa-instagram social-icon instagram" onclick="window.open('https://instagram.com/zakmc_1', '_blank')"></i>
@@ -894,11 +1099,9 @@
       <i class="fab fa-twitch social-icon twitch" onclick="window.open('https://twitch.tv/zakmc_', '_blank')"></i>
       <i class="fab fa-pinterest social-icon pinterest" onclick="window.open('https://pinterest.com/Minecraft&Chill', '_blank')"></i>
     </div>
-
   </div>
 
   <script>
-    // Base de données des pages pour la recherche
     const pagesDatabase = [
       {
         title: "How to join the server",
@@ -967,21 +1170,17 @@
       }
     ];
 
-    // Variables globales pour la gestion du chargement
     let loadingComplete = false;
 
-    // Ajout du code JavaScript pour la barre de chargement
     window.addEventListener('load', () => {
       const loadingBar = document.getElementById('loadingBar');
       const loadingScreen = document.getElementById('loadingScreen');
       const mainSite = document.getElementById('mainSite');
 
-      // Animation de la barre de chargement
       setTimeout(() => {
         loadingBar.style.width = '100%';
       }, 100);
 
-      // Transition vers le site principal après le chargement
       setTimeout(() => {
         loadingScreen.classList.add('fade-out');
         mainSite.classList.add('show');
@@ -989,7 +1188,6 @@
       }, 3000);
     });
 
-    // Création d'objets Audio avec un volume réduit
     let windSound, buttonPressSound;
     
     try {
@@ -1002,7 +1200,6 @@
       console.log('Fichiers audio non trouvés, sons désactivés');
     }
 
-    // Fonction pour jouer le son de vent (au survol)
     function playWindSound() {
       if (windSound && windSound.paused) {
         windSound.currentTime = 0;
@@ -1010,7 +1207,6 @@
       }
     }
 
-    // Fonction pour jouer le son de clic (au clic)
     function playClickSound() {
       if (buttonPressSound) {
         buttonPressSound.currentTime = 0;
@@ -1018,7 +1214,6 @@
       }
     }
 
-    // Éléments du DOM
     const toggleArrow = document.getElementById('toggleArrow');
     const homeButton = document.getElementById('homeButton');
     const sidebar = document.getElementById('sidebar');
@@ -1029,7 +1224,6 @@
     const searchBar = document.getElementById('searchBar');
     const searchResults = document.getElementById('searchResults');
 
-    // Fonction de recherche
     function searchPages(query) {
       if (!query.trim()) {
         searchResults.classList.remove('show');
@@ -1044,7 +1238,6 @@
       displaySearchResults(results, query);
     }
 
-    // Afficher les résultats de recherche
     function displaySearchResults(results, query) {
       searchResults.innerHTML = '';
 
@@ -1071,13 +1264,11 @@
       searchResults.classList.add('show');
     }
 
-    // Event listeners pour la recherche
     searchBar.addEventListener('input', (e) => {
       searchPages(e.target.value);
     });
 
     searchBar.addEventListener('blur', () => {
-      // Délai pour permettre le clic sur les résultats
       setTimeout(() => {
         searchResults.classList.remove('show');
       }, 200);
@@ -1089,7 +1280,6 @@
       }
     });
 
-    // Gestion du menu contextuel
     document.addEventListener('contextmenu', function(e) {
       e.preventDefault();
       const contextMenu = document.getElementById('contextMenu');
@@ -1134,7 +1324,6 @@
       window.location.reload();
     }
 
-    // Fonction pour afficher un toast
     function showToast(message) {
       const toast = document.getElementById('copyToast');
       toast.textContent = message;
@@ -1144,7 +1333,6 @@
       }, 3000);
     }
 
-    // Fonction du bouton de la flèche (sidebar toggle)
     toggleArrow.addEventListener('click', () => {
       playClickSound();
       sidebar.classList.toggle('collapsed');
@@ -1157,14 +1345,12 @@
       }
     });
 
-    // Fonction du bouton de la maison (secondary sidebar)
     homeButton.addEventListener('click', () => {
       playClickSound();
       secondarySidebar.classList.toggle('active');
       overlay.classList.toggle('active');
     });
 
-    // Fonctionnalité de la recherche
     searchIcon.addEventListener('click', () => {
       playClickSound();
       searchBar.classList.toggle('active');
@@ -1176,19 +1362,16 @@
       }
     });
 
-    // Fermer les sidebars en cliquant sur l'overlay
     overlay.addEventListener('click', () => {
       secondarySidebar.classList.remove('active');
       overlay.classList.remove('active');
     });
 
-    // Ajout des sons de survol pour tous les éléments de la sidebar
     document.querySelectorAll('.sidebar-section').forEach(item => {
       item.addEventListener('mouseenter', playWindSound);
       item.addEventListener('click', playClickSound);
     });
 
-    // Fermer la recherche avec Echap
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') {
         searchResults.classList.remove('show');
@@ -1197,7 +1380,6 @@
       }
     });
 
-    // Gestion responsive de la sidebar
     function handleResize() {
       if (window.innerWidth <= 768) {
         if (!sidebar.classList.contains('collapsed')) {
@@ -1209,7 +1391,7 @@
     }
 
     window.addEventListener('resize', handleResize);
-    handleResize(); // Appel initial
+    handleResize();
   </script>
 </body>
 </html>
