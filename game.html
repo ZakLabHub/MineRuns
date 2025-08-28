@@ -623,6 +623,15 @@
       font-size: 16px;
     }
 
+    .content-section .discover-text {
+      color: white;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      letter-spacing: 0.5px;
+      text-transform: uppercase;
+    }
+
     .toast {
       position: fixed;
       bottom: 30px;
@@ -838,7 +847,7 @@
     <div class="main-content">
       <div class="content-section">
         <h1>Games Section</h1>
-        <p style="color: white; font-weight: 700; font-size: 18px;">Discover all the games on the server!</p>
+        <p class="discover-text">Discover all the games on the server!</p>
         <div class="articles-grid">
           <!-- Article Cover 1 -->
           <a href="game[1]" class="article-cover">
@@ -1381,137 +1390,137 @@
       {
         title: "How to join the server",
         url: "read1",
-        description: "Complete guide to join the MineRuns server"
+        description: ""
       },
       {
         title: "Server hosting guide",
         url: "read2",
-        description: "Learn everything about server hosting and management"
+        description: ""
       },
       {
         title: "Available games list",
         url: "read3",
-        description: "Discover all games available on MineRuns server"
+        description: ""
       },
       {
         title: "Lobbys overview",
         url: "read4",
-        description: "Complete list of all server lobbys and their features"
+        description: ""
       },
       {
         title: "Social platforms",
         url: "read5",
-        description: "Find all social media links for MineRuns and ZakMC"
+        description: ""
       },
       {
         title: "MineRuns story",
         url: "read6",
-        description: "Learn about the history and story behind MineRuns"
+        description: ""
       },
       {
         title: "Server plugins",
         url: "read7",
-        description: "Explore the plugins used on the MineRuns server"
+        description: ""
       },
       {
         title: "Server menus",
         url: "read8",
-        description: "Guide to navigating and using server menus"
+        description: ""
       },
       {
         title: "Youtube Videos",
         url: "read9",
-        description: "Watch MineRuns-related videos on YouTube"
+        description: ""
       },
       {
         title: "Statistics",
         url: "read10",
-        description: "View detailed server and player statistics"
+        description: ""
       },
       {
         title: "Future of server",
         url: "read11",
-        description: "Learn about upcoming features and plans for MineRuns"
+        description: ""
       },
       {
         title: "All members",
         url: "read12",
-        description: "Meet the MineRuns server community members"
+        description: ""
       },
       {
         title: "Ranks",
         url: "read13",
-        description: "Understand the ranking system on MineRuns"
+        description: ""
       },
       {
         title: "Commands guide",
         url: "read14",
-        description: "Complete guide to server commands"
+        description: ""
       },
       {
         title: "Rules",
         url: "read15",
-        description: "Read the official server rules and guidelines"
+        description: ""
       },
       {
         title: "Vote",
         url: "read16",
-        description: "Learn how to vote for the MineRuns server"
+        description: ""
       },
       {
         title: "Website",
         url: "read17",
-        description: "Explore the features of the MineRuns website"
+        description: ""
       },
       {
         title: "Plugins and Maps",
         url: "read18",
-        description: "Download custom plugins and maps for MineRuns"
+        description: ""
       },
       {
         title: "Lobby quests",
         url: "read19",
-        description: "Discover quests available in the server lobbies"
+        description: ""
       },
       {
         title: "MineBlock-SMP",
         url: "read20",
-        description: "Learn about the MineBlock-SMP server mode"
+        description: ""
       },
       {
         title: "Game section",
         url: "game",
-        description: "Access gaming features and multiplayer options"
+        description: ""
       },
       {
         title: "Explore section",
         url: "explore",
-        description: "Explore server worlds and discover new content"
+        description: ""
       },
       {
         title: "News section",
         url: "news",
-        description: "Latest news and updates from MineRuns server"
+        description: ""
       },
       {
         title: "Stats section",
         url: "stats",
-        description: "View server statistics and player information"
+        description: ""
       },
       {
         title: "Login page",
         url: "login",
-        description: "Sign in to your MineRuns account"
+        description: ""
       },
       {
         title: "Discord server",
         url: "discord",
-        description: "Join our Discord community"
+        description: ""
       },
       {
         title: "Home page",
         url: "home",
-        description: "MineRuns main homepage"
+        description: ""
       },
       {
         title: "BedWars",
@@ -1734,11 +1743,11 @@
     });
 
     let windSound, buttonPressSound;
-    
+
     try {
       windSound = new Audio('sfx29-wind-by-wind-gust-338387.mp3');
       windSound.volume = 0.3;
-      
+
       buttonPressSound = new Audio('button-press-382713.mp3');
       buttonPressSound.volume = 0.5;
     } catch (e) {
@@ -1775,7 +1784,7 @@
         return;
       }
 
-      const results = pagesDatabase.filter(page => 
+      const results = pagesDatabase.filter(page =>
         page.title.toLowerCase().includes(query.toLowerCase()) ||
         page.description.toLowerCase().includes(query.toLowerCase())
       );
@@ -1843,11 +1852,11 @@
     function closeTab() {
       window.close();
     }
-    
+
     function closeWindow() {
       window.close();
     }
-    
+
     function addToBookmarks() {
       if (window.external && ('AddFavorite' in window.external)) {
         window.external.AddFavorite(window.location.href, document.title);
@@ -1855,7 +1864,7 @@
         showToast('Ajouté aux favoris !');
       }
     }
-    
+
     function copyAddress() {
       navigator.clipboard.writeText(window.location.href).then(() => {
         showToast('Adresse copiée !');
@@ -1864,7 +1873,7 @@
         showToast('Erreur lors de la copie');
       });
     }
-    
+
     function refreshPage() {
       window.location.reload();
     }
@@ -1882,7 +1891,7 @@
       playClickSound();
       sidebar.classList.toggle('collapsed');
       toggleArrow.classList.toggle('rotate');
-      
+
       if (sidebar.classList.contains('collapsed')) {
         mainContent.style.marginLeft = '0';
       } else {
