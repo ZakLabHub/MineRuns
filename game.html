@@ -632,6 +632,29 @@
       text-transform: uppercase;
     }
 
+    .feedback-btn {
+      background: #a020f0;
+      color: white;
+      border: none;
+      padding: 15px 30px;
+      border-radius: 12px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 20px;
+    }
+
+    .feedback-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+      background: #8a1ad1;
+    }
+
     .toast {
       position: fixed;
       bottom: 30px;
@@ -749,6 +772,11 @@
 
       .content-section {
         padding-bottom: 40px;
+      }
+
+      .feedback-btn {
+        padding: 12px 24px;
+        font-size: 14px;
       }
     }
   </style>
@@ -1369,6 +1397,7 @@
             </div>
           </a>
         </div>
+        <a href="feedback" class="feedback-btn">Wanna more game? give feedback</a>
       </div>
     </div>
 
@@ -1520,6 +1549,11 @@
       {
         title: "Home page",
         url: "home",
+        description: ""
+      },
+      {
+        title: "Feedback",
+        url: "feedback",
         description: ""
       },
       {
