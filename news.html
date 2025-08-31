@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -23,10 +23,6 @@
       box-sizing: border-box;
       user-select: none;
       cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32"><rect x="14" y="2" width="4" height="4" fill="%23E1F5FE"/><rect x="14" y="6" width="4" height="4" fill="%238DD3F7"/><rect x="14" y="10" width="4" height="4" fill="%234FC3F7"/><rect x="10" y="14" width="12" height="4" fill="%231976D2"/><rect x="14" y="18" width="4" height="4" fill="%230D47A1"/><rect x="14" y="22" width="4" height="8" fill="%23795548"/></svg>') 16 16, auto !important;
-    }
-
-    html, body {
-      height: 100%;
     }
 
     /* Rendre seulement le contenu sélectionnable */
@@ -235,9 +231,6 @@
       opacity: 0;
       visibility: hidden;
       transition: opacity 0.8s ease 0.2s, visibility 0.8s ease 0.2s;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
     }
 
     .main-site.show {
@@ -508,17 +501,16 @@
       order: 2;
     }
 
-    /* Contenu principal avec transition - STRUCTURE CORRIGÉE */
+    /* Contenu principal avec transition */
     .main-content {
       margin-left: 200px;
-      padding: 80px 40px 0 40px; /* Suppression du padding-bottom */
-      min-height: calc(100vh - 80px); /* Hauteur minimale pour pousser le footer */
+      padding: 80px 40px 80px 40px;
+      min-height: 100vh;
       transition: margin-left 0.3s ease;
-      flex: 1; /* Permet au contenu de s'étendre */
     }
 
     .sidebar.collapsed ~ .main-content {
-      margin-left: 0;
+      margin-left: 200px;
     }
 
     .content-section {
@@ -532,11 +524,7 @@
       gap: 40px;
     }
 
-    /* ==================== ZONE DE CONTENU FUTUR ==================== */
-    /* 
-       Ajoutez votre contenu principal dans .content-section > .articles-grid 
-       ou créez de nouvelles sections dans .content-section
-    */
+    /* Articles Section */
     .articles-grid {
       display: flex;
       flex-direction: column;
@@ -545,20 +533,6 @@
       max-width: 800px;
     }
 
-    /* Placeholder pour le contenu futur */
-    .content-placeholder {
-      color: #888;
-      font-size: 14px;
-      background: rgba(160, 32, 240, 0.1);
-      padding: 20px;
-      border-radius: 10px;
-      border: 2px dashed #a020f0;
-      font-family: 'Courier New', monospace;
-      text-align: center;
-      margin: 40px 0;
-    }
-
-    /* Articles Section */
     .article-cover {
       display: block;
       text-decoration: none;
@@ -624,6 +598,16 @@
       text-align: center;
     }
 
+    .content-placeholder {
+      color: #888;
+      font-size: 14px;
+      background: rgba(160, 32, 240, 0.1);
+      padding: 15px 25px;
+      border-radius: 10px;
+      border: 1px dashed #a020f0;
+      font-family: 'Courier New', monospace;
+    }
+
     .content-section h1 {
       font-size: 36px;
       margin-bottom: 25px;
@@ -646,7 +630,6 @@
       font-family: 'Open Sans', sans-serif;
       font-size: 16px;
     }
-    /* ================================================================= */
 
     /* Toast de confirmation */
     .toast {
@@ -674,15 +657,14 @@
       transform: translateX(-50%) translateY(-10px);
     }
 
-    /* Footer moderne - CORRIGÉ POUR ÊTRE EN BAS */
+    /* Footer moderne */
     .footer {
       background: linear-gradient(135deg, #a020f0, #8a1ad1);
       padding: 25px 0;
       display: flex;
       justify-content: center;
       gap: 25px;
-      margin-top: auto; /* Pousse le footer vers le bas */
-      width: 100%;
+      margin-top: 60px;
     }
 
     .social-icon {
@@ -707,6 +689,71 @@
       box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
     }
 
+    /* IP Bar Section */
+    .ip-bar-container {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      margin-bottom: 40px;
+      justify-content: center;
+    }
+
+    .ip-button {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 50%;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .ip-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+    }
+
+    .ip-bar {
+      background: rgba(26, 26, 26, 0.95);
+      border: 2px solid #a020f0;
+      border-radius: 12px;
+      padding: 12px 20px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 18px;
+      color: #a020f0;
+      text-align: center;
+      min-width: 300px;
+    }
+
+    .copy-button {
+      background: linear-gradient(135deg, #a020f0, #8a1ad1);
+      color: white;
+      border: none;
+      padding: 12px 24px;
+      border-radius: 12px;
+      font-family: 'League Spartan', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(160, 32, 240, 0.3);
+    }
+
+    .copy-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 20px rgba(160, 32, 240, 0.4);
+    }
+
     /* Responsive */
     @media (max-width: 768px) {
       .loading-logo {
@@ -724,7 +771,7 @@
 
       .main-content {
         margin-left: 60px;
-        padding: 80px 20px 0 20px;
+        padding: 80px 20px 80px 20px;
       }
 
       .mini-header {
@@ -755,6 +802,27 @@
         top: 15px;
         left: 15px;
         font-size: 16px;
+      }
+
+      .ip-bar-container {
+        flex-direction: column;
+        gap: 15px;
+      }
+
+      .ip-bar {
+        min-width: 250px;
+        font-size: 16px;
+      }
+
+      .ip-button {
+        width: 50px;
+        height: 50px;
+        font-size: 14px;
+      }
+
+      .copy-button {
+        padding: 10px 20px;
+        font-size: 14px;
       }
     }
   </style>
@@ -850,43 +918,99 @@
       </div>
     </div>
 
-    <!-- ==================== ZONE CONTENU PRINCIPAL ==================== -->
     <div class="main-content">
       <div class="content-section">
+        <div class="ip-bar-container">
+          <button class="ip-button" onclick="window.location.href='read2.html'">IP:</button>
+          <div class="ip-bar">minerunsmc.falixsrv.me</div>
+          <button class="copy-button" onclick="copyIpAddress()">COPY</button>
+        </div>
         <div class="articles-grid">
-          
-          <!-- AJOUTEZ VOTRE CONTENU FUTUR ICI -->
-          <div class="content-placeholder">
-            📝 ZONE DE CONTENU PRINCIPAL<br>
-            Ajoutez vos articles, textes, images, etc. dans cette section<br>
-            Vous pouvez utiliser les classes .article-cover, .content-section h1/h2/p
-          </div>
-          
-          <!-- Exemple d'article (vous pouvez dupliquer cette structure) -->
-          <!--
-          <a href="votre-lien" class="article-cover">
+          <!-- Article Cover 1 -->
+          <a href="read1" class="article-cover">
             <div class="article-meta">
-              <span>Date de publication</span>
+              <span style="color:white;">5 min • 1,200 mots</span>
             </div>
             <div class="article-image">
-              <img src="votre-image.jpg" alt="Description">
+              <img src="article1.png" alt="Article 1">
             </div>
             <div class="article-title">
-              <h2>Titre de votre article</h2>
+              <h2 style="color:white;">Learn how to join the server !</h2>
             </div>
           </a>
-          -->
-          
+
+          <!-- Article Cover 2 -->
+          <a href="read2" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">8 min • 1,800 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article2.png" alt="Article 2">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">Learn more about server hosting.</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 3 -->
+          <a href="read3" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">3 min • 800 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article3.png" alt="Article 3">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">List of availables games.</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 4 -->
+          <a href="read4" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">4 min • 1,000 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article4.png" alt="Article 4">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">List of all lobbys.</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 5 -->
+          <a href="read5" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">2 min • 500 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article5.png" alt="Article 5">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">See socials plateforms of the server and ZakMC.</h2>
+            </div>
+          </a>
+
+          <!-- Article Cover 6 -->
+          <a href="read6" class="article-cover">
+            <div class="article-meta">
+              <span style="color:white;">6 min • 1,500 mots</span>
+            </div>
+            <div class="article-image">
+              <img src="article6.png" alt="Article 6">
+            </div>
+            <div class="article-title">
+              <h2 style="color:white;">Learn more about story of MineRuns.</h2>
+            </div>
+          </a>
         </div>
       </div>
     </div>
-    <!-- ================================================================= -->
 
     <div class="toast" id="copyToast">
       Copied to clipboard ✓
     </div>
 
-    <!-- Footer maintenant correctement positionné en bas -->
     <div class="footer">
       <i class="fab fa-discord social-icon discord" onclick="window.location.href='discord'"></i>
       <i class="fab fa-instagram social-icon instagram" onclick="window.open('https://instagram.com/zakmc_1', '_blank')"></i>
@@ -894,7 +1018,6 @@
       <i class="fab fa-twitch social-icon twitch" onclick="window.open('https://twitch.tv/zakmc_', '_blank')"></i>
       <i class="fab fa-pinterest social-icon pinterest" onclick="window.open('https://pinterest.com/Minecraft&Chill', '_blank')"></i>
     </div>
-
   </div>
 
  <script>
@@ -1235,7 +1358,6 @@
         description: ""
       }
     ];
-
     // Variables globales pour la gestion du chargement
     let loadingComplete = false;
 
@@ -1245,16 +1367,16 @@
       const loadingScreen = document.getElementById('loadingScreen');
       const mainSite = document.getElementById('mainSite');
 
-      // Animation de la barre de chargement
+      // La transition CSS gère l'animation sur 3s.
+      // On définit la largeur de la barre à 100% après un court délai pour que la transition s'active.
       setTimeout(() => {
         loadingBar.style.width = '100%';
-      }, 100);
+      }, 50);
 
-      // Transition vers le site principal après le chargement
+      // Une fois la barre remplie (après 3 secondes), on cache l'écran de chargement et on affiche le site principal.
       setTimeout(() => {
         loadingScreen.classList.add('fade-out');
         mainSite.classList.add('show');
-        loadingComplete = true;
       }, 3000);
     });
 
@@ -1273,7 +1395,7 @@
 
     // Fonction pour jouer le son de vent (au survol)
     function playWindSound() {
-      if (windSound && windSound.paused) {
+      if (windSound.paused) {
         windSound.currentTime = 0;
         windSound.play().catch(e => console.error("Erreur de lecture du son de vent :", e));
       }
@@ -1281,10 +1403,8 @@
 
     // Fonction pour jouer le son de clic (au clic)
     function playClickSound() {
-      if (buttonPressSound) {
-        buttonPressSound.currentTime = 0;
-        buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
-      }
+      buttonPressSound.currentTime = 0;
+      buttonPressSound.play().catch(e => console.error("Erreur de lecture du son de clic :", e));
     }
 
     // Éléments du DOM
@@ -1383,19 +1503,22 @@
     }
     
     function addToBookmarks() {
-      if (window.external && ('AddFavorite' in window.external)) {
-        window.external.AddFavorite(window.location.href, document.title);
-      } else {
-        showToast('Ajouté aux favoris !');
-      }
+      alert("Ajouté aux favoris !");
     }
     
     function copyAddress() {
       navigator.clipboard.writeText(window.location.href).then(() => {
-        showToast('Adresse copiée !');
+        showToast('Copied to clipboard ✓');
       }).catch(err => {
         console.error('Erreur de copie:', err);
-        showToast('Erreur lors de la copie');
+      });
+    }
+    
+    function copyIpAddress() {
+      navigator.clipboard.writeText('minerunsmc.falixsrv.me').then(() => {
+        showToast('Copied to clipboard ✓');
+      }).catch(err => {
+        console.error('Erreur de copie:', err);
       });
     }
     
@@ -1410,15 +1533,13 @@
       toast.classList.add('show');
       setTimeout(() => {
         toast.classList.remove('show');
-      }, 3000);
+      }, 2000);
     }
 
-    // Fonction du bouton de la flèche (sidebar toggle)
+    // Correction de la fonction du bouton de la flèche
     toggleArrow.addEventListener('click', () => {
       playClickSound();
       sidebar.classList.toggle('collapsed');
-      toggleArrow.classList.toggle('rotate');
-      
       if (sidebar.classList.contains('collapsed')) {
         mainContent.style.marginLeft = '0';
       } else {
@@ -1426,22 +1547,19 @@
       }
     });
 
-    // Fonction du bouton de la maison (secondary sidebar)
+    // Correction de la fonction du bouton de la maison
     homeButton.addEventListener('click', () => {
       playClickSound();
       secondarySidebar.classList.toggle('active');
       overlay.classList.toggle('active');
     });
 
-    // Fonctionnalité de la recherche
+    // Fonctionnalité de la recherche, qui est déjà correcte
     searchIcon.addEventListener('click', () => {
       playClickSound();
       searchBar.classList.toggle('active');
       if (searchBar.classList.contains('active')) {
         searchBar.focus();
-      } else {
-        searchResults.classList.remove('show');
-        searchBar.value = '';
       }
     });
 
@@ -1454,7 +1572,6 @@
     // Ajout des sons de survol pour tous les éléments de la sidebar
     document.querySelectorAll('.sidebar-section').forEach(item => {
       item.addEventListener('mouseenter', playWindSound);
-      item.addEventListener('click', playClickSound);
     });
 
     // Fermer la recherche avec Echap
@@ -1465,20 +1582,6 @@
         searchBar.value = '';
       }
     });
-
-    // Gestion responsive de la sidebar
-    function handleResize() {
-      if (window.innerWidth <= 768) {
-        if (!sidebar.classList.contains('collapsed')) {
-          sidebar.classList.add('collapsed');
-          toggleArrow.classList.add('rotate');
-          mainContent.style.marginLeft = '60px';
-        }
-      }
-    }
-
-    window.addEventListener('resize', handleResize);
-    handleResize(); // Appel initial
   </script>
 </body>
 </html>
